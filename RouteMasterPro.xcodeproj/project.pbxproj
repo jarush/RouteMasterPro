@@ -16,6 +16,8 @@
 		687FABC0169F090F0031C25B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 687FABBF169F090F0031C25B /* Default.png */; };
 		687FABC2169F090F0031C25B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 687FABC1169F090F0031C25B /* Default@2x.png */; };
 		687FABC4169F090F0031C25B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 687FABC3169F090F0031C25B /* Default-568h@2x.png */; };
+		687FABD0169F09320031C25B /* RouteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 687FABCF169F09320031C25B /* RouteViewController.m */; };
+		687FABD3169F0A1F0031C25B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABD2169F0A1F0031C25B /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,9 @@
 		687FABBF169F090F0031C25B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		687FABC1169F090F0031C25B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		687FABC3169F090F0031C25B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		687FABCE169F09320031C25B /* RouteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteViewController.h; sourceTree = "<group>"; };
+		687FABCF169F09320031C25B /* RouteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteViewController.m; sourceTree = "<group>"; };
+		687FABD2169F0A1F0031C25B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +47,7 @@
 				687FABAE169F090F0031C25B /* UIKit.framework in Frameworks */,
 				687FABB0169F090F0031C25B /* Foundation.framework in Frameworks */,
 				687FABB2169F090F0031C25B /* CoreGraphics.framework in Frameworks */,
+				687FABD3169F0A1F0031C25B /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +77,7 @@
 				687FABAD169F090F0031C25B /* UIKit.framework */,
 				687FABAF169F090F0031C25B /* Foundation.framework */,
 				687FABB1169F090F0031C25B /* CoreGraphics.framework */,
+				687FABD2169F0A1F0031C25B /* CoreLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -80,6 +87,8 @@
 			children = (
 				687FABBC169F090F0031C25B /* AppDelegate.h */,
 				687FABBD169F090F0031C25B /* AppDelegate.m */,
+				687FABCE169F09320031C25B /* RouteViewController.h */,
+				687FABCF169F09320031C25B /* RouteViewController.m */,
 				687FABB4169F090F0031C25B /* Supporting Files */,
 			);
 			path = RouteMasterPro;
@@ -166,6 +175,7 @@
 			files = (
 				687FABBA169F090F0031C25B /* main.m in Sources */,
 				687FABBE169F090F0031C25B /* AppDelegate.m in Sources */,
+				687FABD0169F09320031C25B /* RouteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +284,7 @@
 				687FABC9169F090F0031C25B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
