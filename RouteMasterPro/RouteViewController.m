@@ -7,67 +7,71 @@
 //
 
 #import "RouteViewController.h"
+#import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "RouteOverlayView.h"
 
-@interface RouteViewController () <CLLocationManagerDelegate> {
-    UIBarButtonItem *barButtonItem;
-    UILabel *label;
-    BOOL running;
-    CLLocationManager *locationManager;
-    CLLocation *lastLocation;
+#define DELTA_DISTANCE 10.0f
+
+@interface RouteViewController () <CLLocationManagerDelegate, MKMapViewDelegate> {
+    UIBarButtonItem *_barButtonItem;
+
+    MKMapView *_mapView;
+    RouteOverlayView *_routeOverlayView;
+
+    BOOL _running;
+    Route *_route;
+    CLLocationManager *_locationManager;
 }
 @end
 
 @implementation RouteViewController
 
+- (void)loadView {
+    _mapView = [[MKMapView alloc] init];
+    self.view = _mapView;
+}
+
 - (void)viewDidLoad {
     self.title = @"Route";
 
-    barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Start"
-                                                     style:UIBarButtonItemStyleBordered
-                                                    target:self
-                                                    action:@selector(toggleStartStop)];
-    self.navigationItem.rightBarButtonItem = barButtonItem;
+    _barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Start"
+                                                      style:UIBarButtonItemStyleBordered
+                                                     target:self
+                                                     action:@selector(toggleStartStop)];
+    self.navigationItem.rightBarButtonItem = _barButtonItem;
 
-    label = [[UILabel alloc] init];
-    label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.numberOfLines = 0;
-    [self.view addSubview:label];
+    _mapView.delegate = self;
+    _mapView.userTrackingMode = MKUserTrackingModeFollow;
+    _mapView.showsUserLocation = YES;
 
-    running = NO;
+    _running = NO;
+    _route = nil;
 
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.activityType = CLActivityTypeAutomotiveNavigation;
-    locationManager.delegate = self;
-
-    lastLocation = nil;
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
+    _locationManager.distanceFilter = DELTA_DISTANCE;
+    _locationManager.delegate = self;
 }
 
 - (void)dealloc {
-    [barButtonItem release];
-    [label release];
-    [locationManager release];
-    [lastLocation release];
+    [_barButtonItem release];
+    [_mapView release];
+    [_route release];
+    [_locationManager release];
     [super dealloc];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    label.frame = CGRectInset(self.view.bounds, 10, 10);
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
 
-    if (running) {
+    if (_running) {
         [self stopMonitoring];
     }
 }
 
 - (void)toggleStartStop {
-    if (running) {
+    if (_running) {
         [self stopMonitoring];
     } else {
         [self startMonitoring];
@@ -75,42 +79,56 @@
 }
 
 - (void)startMonitoring {
-    running = YES;
-    [locationManager startUpdatingLocation];
+    _running = YES;
 
-    barButtonItem.title = @"Stop";
-    barButtonItem.tintColor = [UIColor colorWithRed:0.7f green:0.2f blue:0.2f alpha:1.0f];
+    _route = [[Route alloc] init];
+
+    [_mapView addOverlay:_route];
+    _mapView.userTrackingMode = MKUserTrackingModeFollow;
+
+    [_locationManager startUpdatingLocation];
+
+    _barButtonItem.title = @"Stop";
+    _barButtonItem.tintColor = [UIColor colorWithRed:0.7f green:0.2f blue:0.2f alpha:1.0f];
 }
 
 - (void)stopMonitoring {
-    running = NO;
-    [locationManager stopUpdatingLocation];
+    _running = NO;
 
-    barButtonItem.title = @"Start";
-    barButtonItem.tintColor = nil;
+    [_mapView removeOverlay:_route];
+    
+    [_routeOverlayView release];
+    _routeOverlayView = nil;
+
+    NSLog(@"Route: %@", _route);
+    [_route release];
+
+    [_locationManager stopUpdatingLocation];
+
+    _barButtonItem.title = @"Start";
+    _barButtonItem.tintColor = nil;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    CLLocation *location = [locations lastObject];
+    for (CLLocation *location in locations) {
+        [_route addLocation:location];
+    }
 
-    double distance = [lastLocation distanceFromLocation:location];
-
-    label.text = [NSString stringWithFormat:@"Lat: %f\nLon: %f\nAlt: %f\nCourse: %f\nSpeed: %f\nhdop: %f\nvdop: %f\nTime: %@\nDist: %f",
-                  location.coordinate.latitude,
-                  location.coordinate.longitude,
-                  location.altitude,
-                  location.course,
-                  location.speed,
-                  location.horizontalAccuracy,
-                  location.verticalAccuracy,
-                  location.timestamp,
-                  distance];
-
-    lastLocation = [location retain];
+    [_routeOverlayView invalidatePath];
+    [_routeOverlayView setNeedsDisplayInMapRect:MKMapRectWorld];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"Error: %@", error);
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay {
+    if (_routeOverlayView == nil) {
+        _routeOverlayView = [[RouteOverlayView alloc] initWithOverlay:overlay];
+        _routeOverlayView.strokeColor = [UIColor redColor];
+    }
+    
+    return _routeOverlayView;
 }
 
 @end
