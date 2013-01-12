@@ -76,7 +76,7 @@ enum {
 - (void)stopMonitoring {
     _running = NO;
 
-    NSLog(@"Route: %@", _route);
+    [self saveRoute];
     [_route release];
 
     [_locationManager stopUpdatingLocation];
@@ -93,6 +93,31 @@ enum {
     }
 }
 
+- (void)saveRoute {
+    // Get the current timestamp for the filename
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss'.xml'";
+    NSString *filename = [dateFormatter stringFromDate:[NSDate date]];
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
+
+    NSMutableArray *coordinates = [NSMutableArray array];
+    for (CLLocation *location in _route.locations) {
+        [coordinates addObject:[NSString stringWithFormat:@"%f,%f,%f",
+                                location.coordinate.latitude,
+                                location.coordinate.longitude,
+                                location.altitude]];
+    }
+
+    NSDictionary *dictionary = @{
+        @"startTimestamp" : _route.firstLocation.timestamp,
+        @"stopTimestamp" : _route.lastLocation.timestamp,
+        @"coordinates" : coordinates
+    };
+    [dictionary writeToFile:filePath atomically:YES];
+}
 
 #pragma mark - Table view data source
 
