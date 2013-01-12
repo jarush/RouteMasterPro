@@ -7,6 +7,7 @@
 //
 
 #import "RoutesViewController.h"
+#import "RouteDetailsViewController.h"
 
 @interface RoutesViewController () {
     NSArray *_files;
@@ -47,7 +48,7 @@
     return [_files count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -63,6 +64,19 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *filename = [_files objectAtIndex:indexPath.row];
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *path = [documentsPath stringByAppendingPathComponent:filename];
+
+    Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if (route != nil) {
+        // Push on a details view
+        RouteDetailsViewController *routeDetailsViewController = [[[RouteDetailsViewController alloc] init] autorelease];
+        routeDetailsViewController.route = route;
+        [self.navigationController pushViewController:routeDetailsViewController animated:YES];
+    }
 }
 
 @end
