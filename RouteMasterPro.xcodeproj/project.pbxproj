@@ -18,6 +18,10 @@
 		687FABC4169F090F0031C25B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 687FABC3169F090F0031C25B /* Default-568h@2x.png */; };
 		687FABD0169F09320031C25B /* RouteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 687FABCF169F09320031C25B /* RouteViewController.m */; };
 		687FABD3169F0A1F0031C25B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABD2169F0A1F0031C25B /* CoreLocation.framework */; };
+		68BCCE4816A1D4CA00C369C1 /* Icon@2x~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */; };
+		68BCCE4A16A1D4D000C369C1 /* Icon~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */; };
+		68BCCE4C16A1D4D400C369C1 /* Icon@2x~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */; };
+		68BCCE4E16A1D4D900C369C1 /* Icon~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4D16A1D4D900C369C1 /* Icon~iPad.png */; };
 		68F5C75B169FC1040083170C /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F5C75A169FC1040083170C /* Route.m */; };
 		68F5C75E169FC6BC0083170C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F5C75D169FC6BC0083170C /* MapKit.framework */; };
 		68F5C761169FD04E0083170C /* RouteOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F5C760169FD04E0083170C /* RouteOverlayView.m */; };
@@ -40,6 +44,10 @@
 		687FABCE169F09320031C25B /* RouteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteViewController.h; sourceTree = "<group>"; };
 		687FABCF169F09320031C25B /* RouteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteViewController.m; sourceTree = "<group>"; };
 		687FABD2169F0A1F0031C25B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPhone.png"; sourceTree = "<group>"; };
+		68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPhone.png"; sourceTree = "<group>"; };
+		68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPad.png"; sourceTree = "<group>"; };
+		68BCCE4D16A1D4D900C369C1 /* Icon~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPad.png"; sourceTree = "<group>"; };
 		68F5C759169FC1040083170C /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
 		68F5C75A169FC1040083170C /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		68F5C75D169FC6BC0083170C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -67,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				687FABB3169F090F0031C25B /* RouteMasterPro */,
+				68BCCE5016A1D4ED00C369C1 /* Resources */,
 				687FABAC169F090F0031C25B /* Frameworks */,
 				687FABAA169F090F0031C25B /* Products */,
 			);
@@ -120,6 +129,17 @@
 				687FABC3169F090F0031C25B /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		68BCCE5016A1D4ED00C369C1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				68BCCE4D16A1D4D900C369C1 /* Icon~iPad.png */,
+				68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */,
+				68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */,
+				68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +197,10 @@
 				687FABC0169F090F0031C25B /* Default.png in Resources */,
 				687FABC2169F090F0031C25B /* Default@2x.png in Resources */,
 				687FABC4169F090F0031C25B /* Default-568h@2x.png in Resources */,
+				68BCCE4816A1D4CA00C369C1 /* Icon@2x~iPhone.png in Resources */,
+				68BCCE4A16A1D4D000C369C1 /* Icon~iPhone.png in Resources */,
+				68BCCE4C16A1D4D400C369C1 /* Icon@2x~iPad.png in Resources */,
+				68BCCE4E16A1D4D900C369C1 /* Icon~iPad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +289,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RouteMasterPro/RouteMasterPro-Prefix.pch";
 				INFOPLIST_FILE = "RouteMasterPro/RouteMasterPro-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -276,6 +301,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RouteMasterPro/RouteMasterPro-Prefix.pch";
 				INFOPLIST_FILE = "RouteMasterPro/RouteMasterPro-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
