@@ -7,6 +7,7 @@
 //
 
 #import "CurrentRouteViewController.h"
+#import "AppDelegate.h"
 
 #define MPS_TO_MIPH    2.23694
 #define DELTA_DISTANCE 10.0
@@ -100,9 +101,8 @@ enum {
     dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss'.xml'";
     NSString *filename = [dateFormatter stringFromDate:[NSDate date]];
 
-    // Find the Documents path
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
+    // Create a path for the file in the Documents folder
+    NSString *documentsPath = [AppDelegate documentsPath];
     NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
 
     // Save the route to the file

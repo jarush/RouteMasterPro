@@ -37,4 +37,13 @@
     [super dealloc];
 }
 
++ (AppDelegate *)appDelegate {
+    return [[UIApplication sharedApplication] delegate];
+}
+
++ (NSString *)documentsPath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    return [paths objectAtIndex:0];
+}
+
 @end

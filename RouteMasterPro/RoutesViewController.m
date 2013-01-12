@@ -8,9 +8,10 @@
 
 #import "RoutesViewController.h"
 #import "RouteDetailsViewController.h"
+#import "AppDelegate.h"
 
 @interface RoutesViewController () {
-    NSArray *_files;
+    NSMutableArray *_files;
 }
 @end
 
@@ -32,12 +33,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *documentsPath = [AppDelegate documentsPath];
     NSArray *contentsOfDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:nil];
 
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self endswith[c] '.xml'"];
-    _files = [[contentsOfDirectory filteredArrayUsingPredicate:predicate] retain];
+    _files = [[contentsOfDirectory filteredArrayUsingPredicate:predicate] mutableCopy];
 
     [self.tableView reloadData];
 }
@@ -61,13 +61,35 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle != UITableViewCellEditingStyleDelete) {
+        return;
+    }
+
+    // Get the filename to delete
+    NSString *filename = [_files objectAtIndex:indexPath.row];
+
+    // Get the path to the file in the Documents folder
+    NSString *documentsPath = [AppDelegate documentsPath];
+    NSString *path = [documentsPath stringByAppendingPathComponent:filename];
+
+    // Delete the file
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+
+    // Remove the filename from the array
+    [_files removeObjectAtIndex:indexPath.row];
+
+    // Notify the table view the row was deleted
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *filename = [_files objectAtIndex:indexPath.row];
 
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
+    // Get the path to the file in the Documents folder
+    NSString *documentsPath = [AppDelegate documentsPath];
     NSString *path = [documentsPath stringByAppendingPathComponent:filename];
 
     Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
