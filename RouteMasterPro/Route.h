@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface Route : NSObject
+@interface Route : NSObject <NSCoding>
 
 @property (nonatomic, readonly) NSArray *locations;
 

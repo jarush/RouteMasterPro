@@ -67,4 +67,17 @@
             [self distance], [self duration], [_locations count]];
 }
 
+#pragma mark -- NSCoding
+
+#define kLocations @"Locations"
+
+- (id)initWithCoder:(NSCoder *)coder {
+    _locations = [[coder decodeObjectForKey:kLocations] retain];
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:_locations forKey:kLocations];
+}
+
 @end
