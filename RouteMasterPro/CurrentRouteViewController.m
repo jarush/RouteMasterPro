@@ -18,6 +18,7 @@ enum {
     RowSpeed,
     RowCourse,
     RowDuration,
+    RowPoints,
     RowCount
 };
 
@@ -169,6 +170,11 @@ enum {
             NSInteger sec = duration % 60;
 
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
+            break;
+
+        case RowPoints:
+            cell.textLabel.text = @"Points";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_route.locations count]];
             break;
 
         default:
