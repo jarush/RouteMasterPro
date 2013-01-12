@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import <MapKit/MapKit.h>
 
-@interface Route : NSObject <MKOverlay>
+@interface Route : NSObject
 
 @property (nonatomic, readonly) NSArray *locations;
 

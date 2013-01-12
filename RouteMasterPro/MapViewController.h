@@ -1,5 +1,5 @@
 //
-//  RouteOverlayView.h
+//  MapViewController.h
 //  RouteMasterPro
 //
 //  Created by Jason Rush on 1/10/13.
@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
+#import "Route.h"
 
-@interface RouteOverlayView : MKOverlayPathView
+@interface MapViewController : UIViewController
 
 @end

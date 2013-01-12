@@ -10,7 +10,6 @@
 
 @interface Route () {
     NSMutableArray *_locations;
-    MKMapRect _boundingMapRect;
 }
 
 @end
@@ -18,13 +17,11 @@
 @implementation Route
 
 @synthesize locations = _locations;
-@synthesize boundingMapRect = _boundingMapRect;
 
 - (id)init {
     self = [super init];
     if (self) {
         _locations = [[NSMutableArray alloc] init];
-        _boundingMapRect = MKMapRectWorld;
     }
     return self;
 }
@@ -63,10 +60,6 @@
     CLLocation *firstLocation = [self firstLocation];
     CLLocation *lastLocation = [self lastLocation];
     return [lastLocation.timestamp timeIntervalSinceDate:firstLocation.timestamp];
-}
-
-- (CLLocationCoordinate2D)coordinate {
-    return [self firstLocation].coordinate;
 }
 
 - (NSString *)description {
