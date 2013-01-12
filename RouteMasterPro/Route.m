@@ -72,7 +72,10 @@
 #define kLocations @"Locations"
 
 - (id)initWithCoder:(NSCoder *)coder {
-    _locations = [[coder decodeObjectForKey:kLocations] retain];
+    self = [super init];
+    if (self) {
+        _locations = [[coder decodeObjectForKey:kLocations] retain];
+    }
     return self;
 }
 
