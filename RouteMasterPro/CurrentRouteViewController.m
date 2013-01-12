@@ -100,24 +100,13 @@ enum {
     dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss'.xml'";
     NSString *filename = [dateFormatter stringFromDate:[NSDate date]];
 
+    // Find the Documents path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
 
-    NSMutableArray *coordinates = [NSMutableArray array];
-    for (CLLocation *location in _route.locations) {
-        [coordinates addObject:[NSString stringWithFormat:@"%f,%f,%f",
-                                location.coordinate.latitude,
-                                location.coordinate.longitude,
-                                location.altitude]];
-    }
-
-    NSDictionary *dictionary = @{
-        @"startTimestamp" : _route.firstLocation.timestamp,
-        @"stopTimestamp" : _route.lastLocation.timestamp,
-        @"coordinates" : coordinates
-    };
-    [dictionary writeToFile:filePath atomically:YES];
+    // Save the route to the file
+    [NSKeyedArchiver archiveRootObject:_route toFile:filePath];
 }
 
 #pragma mark - Table view data source
@@ -126,7 +115,7 @@ enum {
     return RowCount;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -193,8 +182,10 @@ enum {
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     for (CLLocation *location in locations) {
         [_route addLocation:location];
-        _lastLocation = location;
     }
+
+    [_lastLocation release];
+    _lastLocation = [[locations lastObject] retain];
 
     [self.tableView reloadData];
 }
