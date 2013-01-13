@@ -100,13 +100,15 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     static NSString *ReuseIdentifier = @"Pin";
-    MKAnnotationView *annotationView = nil;
 
-    if (annotation == _pointAnnotation) {
-        annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:ReuseIdentifier] autorelease];
-        annotationView.draggable = YES;
+    if ([annotation class] == MKUserLocation.class) {
+        return nil;
     }
-    
+
+    MKPinAnnotationView *annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation
+                                                                           reuseIdentifier:ReuseIdentifier] autorelease];
+    annotationView.draggable = YES;
+
     return annotationView;
 }
 
