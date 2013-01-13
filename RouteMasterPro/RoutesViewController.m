@@ -21,6 +21,8 @@
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
         self.title = @"Routes";
+        self.tabBarItem.title = @"Routes";
+        self.tabBarItem.image = [UIImage imageNamed:@"list"];
     }
     return self;
 }

@@ -21,6 +21,8 @@
     self = [super init];
     if (self) {
         self.title = @"Map";
+        self.tabBarItem.title = @"Map";
+        self.tabBarItem.image = [UIImage imageNamed:@"map"];
 
         _mapView = [[MKMapView alloc] init];
         self.view = _mapView;

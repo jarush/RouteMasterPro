@@ -35,7 +35,9 @@ enum {
 - (id)init {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.title = @"Current";
+        self.title = @"Current Route";
+        self.tabBarItem.title = @"Current";
+        self.tabBarItem.image = [UIImage imageNamed:@"location"];
 
         _startStopButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Start"
                                                                  style:UIBarButtonItemStyleBordered
