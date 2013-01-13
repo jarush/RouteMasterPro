@@ -40,6 +40,13 @@
 
         _pointAnnotation = nil;
 
+        AppDelegate *appDelegate = [AppDelegate appDelegate];
+        if (appDelegate.stopRegion != nil) {
+            _pointAnnotation = [[MKPointAnnotation alloc] init];
+            _pointAnnotation.coordinate = appDelegate.stopRegion.center;
+            [_mapView addAnnotation:_pointAnnotation];
+        }
+
         self.view = _mapView;
     }
     return self;
