@@ -7,8 +7,7 @@
 //
 
 #import "RouteDetailsViewController.h"
-
-#define METER_TO_MILES 0.000621371
+#include "constants.h"
 
 enum {
     RowDistance = 0,

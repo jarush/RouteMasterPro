@@ -8,9 +8,7 @@
 
 #import "CurrentRouteViewController.h"
 #import "AppDelegate.h"
-
-#define MPS_TO_MIPH    2.23694
-#define DELTA_DISTANCE 10.0
+#import "constants.h"
 
 enum {
     RowLatitude = 0,
@@ -18,6 +16,7 @@ enum {
     RowAltitude,
     RowSpeed,
     RowCourse,
+    RowDistance,
     RowDuration,
     RowPoints,
     RowCount
@@ -26,6 +25,7 @@ enum {
 @interface CurrentRouteViewController () <CLLocationManagerDelegate> {
     CLLocationManager *_locationManager;
     CLLocation *_lastLocation;
+    CLLocationDistance _distance;
     BOOL _running;
 }
 @end
@@ -48,6 +48,7 @@ enum {
         _route = nil;
 
         _lastLocation = nil;
+        _distance = 0.0;
         _running = NO;
 
         _locationManager = [[CLLocationManager alloc] init];
@@ -70,6 +71,10 @@ enum {
     _running = YES;
 
     _route = [[Route alloc] init];
+    
+    [_lastLocation release];
+    _lastLocation = nil;
+    _distance = 0.0;
 
     [_locationManager startUpdatingLocation];
 	
@@ -152,6 +157,11 @@ enum {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", _lastLocation.speed * MPS_TO_MIPH];
             break;
 
+        case RowDistance:
+            cell.textLabel.text = @"Distance";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _distance * METER_TO_MILES];
+            break;
+
         case RowDuration:
             cell.textLabel.text = @"Duration";
 
@@ -186,8 +196,11 @@ enum {
         [_route addLocation:location];
     }
 
+    CLLocation *location = [locations lastObject];
+    _distance += [_lastLocation distanceFromLocation:location];
+
     [_lastLocation release];
-    _lastLocation = [[locations lastObject] retain];
+    _lastLocation = [location retain];
 
     [self.tableView reloadData];
 }
