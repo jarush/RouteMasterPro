@@ -13,7 +13,7 @@
 #define METER_TO_MILES 0.000621371
 
 // Factor to convert from meters/second to miles/hour
-#define MPS_TO_MIPH    2.23694
+#define MPS_TO_MIPH 2.23694
 
 // Minimum distance in meters to collect locations
 #define LOCATION_DISTANCE_FILTER 10.0
