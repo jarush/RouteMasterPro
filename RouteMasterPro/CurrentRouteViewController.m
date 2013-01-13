@@ -15,6 +15,7 @@ enum {
     RowLongitude,
     RowAltitude,
     RowSpeed,
+    RowAvgSpeed,
     RowCourse,
     RowDistance,
     RowDuration,
@@ -71,13 +72,13 @@ enum {
     _running = YES;
 
     _route = [[Route alloc] init];
-    
+
     [_lastLocation release];
     _lastLocation = nil;
     _distance = 0.0;
 
     [_locationManager startUpdatingLocation];
-	
+
     self.startStopButtonItem.title = @"Stop";
     self.startStopButtonItem.tintColor = [UIColor colorWithRed:0.7f green:0.2f blue:0.2f alpha:1.0f];
 }
@@ -132,37 +133,56 @@ enum {
     }
 
     switch (indexPath.row) {
-        case RowLatitude:
+        case RowLatitude: {
             cell.textLabel.text = @"Latitude";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.5f", _lastLocation.coordinate.latitude];
             break;
+        }
 
-        case RowLongitude:
+        case RowLongitude: {
             cell.textLabel.text = @"Latitude";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.5f", _lastLocation.coordinate.longitude];
             break;
+        }
 
-        case RowAltitude:
+        case RowAltitude: {
             cell.textLabel.text = @"Altitude";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f", _lastLocation.altitude];
             break;
+        }
 
-        case RowCourse:
+        case RowCourse: {
             cell.textLabel.text = @"Course";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f", _lastLocation.course];
             break;
+        }
 
-        case RowSpeed:
+        case RowSpeed: {
             cell.textLabel.text = @"Speed";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", _lastLocation.speed * MPS_TO_MIPH];
             break;
+        }
 
-        case RowDistance:
+        case RowAvgSpeed: {
+            cell.textLabel.text = @"Avg Speed";
+
+            NSTimeInterval duration = [_lastLocation.timestamp timeIntervalSinceDate:[_route firstLocation].timestamp];
+            if (duration < 10.0) {
+                cell.detailTextLabel.text = @"Calculating";
+            } else {
+                double avgSpeed = _distance / duration;
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
+            }
+            break;
+        }
+
+        case RowDistance: {
             cell.textLabel.text = @"Distance";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _distance * METER_TO_MILES];
             break;
+        }
 
-        case RowDuration:
+        case RowDuration: {
             cell.textLabel.text = @"Duration";
 
             NSInteger duration = (NSInteger)[_route duration];
@@ -172,11 +192,13 @@ enum {
 
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
             break;
+        }
 
-        case RowPoints:
+        case RowPoints: {
             cell.textLabel.text = @"Points";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_route.locations count]];
             break;
+        }
 
         default:
             break;
@@ -196,12 +218,12 @@ enum {
         [_route addLocation:location];
     }
 
-    CLLocation *location = [locations lastObject];
-    _distance += [_lastLocation distanceFromLocation:location];
+    CLLocation *currentLocation = [locations lastObject];
+    _distance += [_lastLocation distanceFromLocation:currentLocation];
 
     [_lastLocation release];
-    _lastLocation = [location retain];
-
+    _lastLocation = [currentLocation retain];
+    
     [self.tableView reloadData];
 }
 

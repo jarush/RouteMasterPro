@@ -11,6 +11,7 @@
 
 enum {
     RowDistance = 0,
+    RowAvgSpeed,
     RowDuration,
     RowStart,
     RowStop,
@@ -61,12 +62,26 @@ enum {
     }
 
     switch (indexPath.row) {
-        case RowDistance:
+        case RowDistance: {
             cell.textLabel.text = @"Distance";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", [_route distance] * METER_TO_MILES];
             break;
+        }
 
-        case RowDuration:
+        case RowAvgSpeed: {
+            cell.textLabel.text = @"Avg Speed";
+
+            NSTimeInterval duration = [_route duration];
+            if (duration == 0.0) {
+                cell.detailTextLabel.text = @"Calculating";
+            } else {
+                double avgSpeed = [_route distance] / duration;
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
+            }
+            break;
+        }
+
+        case RowDuration: {
             cell.textLabel.text = @"Duration";
 
             NSInteger duration = (NSInteger)[_route duration];
@@ -76,6 +91,7 @@ enum {
 
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
             break;
+        }
 
         case RowStart: {
             cell.textLabel.text = @"Start";
@@ -83,15 +99,17 @@ enum {
             break;
         }
 
-        case RowStop:
+        case RowStop: {
             cell.textLabel.text = @"Stop";
             cell.detailTextLabel.text = [_dateFormatter stringFromDate:[_route lastLocation].timestamp];
             break;
+        }
 
-        case RowPoints:
+        case RowPoints: {
             cell.textLabel.text = @"Points";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_route.locations count]];
             break;
+        }
 
         default:
             break;
