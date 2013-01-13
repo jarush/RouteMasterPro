@@ -10,6 +10,7 @@
 #import "CurrentRouteViewController.h"
 #import "MapViewController.h"
 #import "RoutesViewController.h"
+#import "StatsViewController.h"
 
 @implementation AppDelegate
 
@@ -17,12 +18,14 @@
     CurrentRouteViewController *currentRouteViewController = [[[CurrentRouteViewController alloc] init] autorelease];
     MapViewController *mapViewController = [[[MapViewController alloc] init] autorelease];
     RoutesViewController *routesViewController = [[[RoutesViewController alloc] init] autorelease];
+    StatsViewController *statsViewController = [[[StatsViewController alloc] init] autorelease];
 
     UITabBarController *tabBarController = [[[UITabBarController alloc] init] autorelease];
     tabBarController.viewControllers = @[
         [[UINavigationController alloc] initWithRootViewController:currentRouteViewController],
         [[UINavigationController alloc] initWithRootViewController:mapViewController],
-        [[UINavigationController alloc] initWithRootViewController:routesViewController]
+        [[UINavigationController alloc] initWithRootViewController:routesViewController],
+        [[UINavigationController alloc] initWithRootViewController:statsViewController]
     ];
 
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
