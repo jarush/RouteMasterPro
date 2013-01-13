@@ -24,6 +24,7 @@ enum {
 };
 
 @interface CurrentRouteViewController () <CLLocationManagerDelegate> {
+    UIBarButtonItem *_startStopButtonItem;
     CLLocationManager *_locationManager;
     CLLocation *_lastLocation;
     CLLocationDistance _distance;
@@ -80,8 +81,8 @@ enum {
 
     [_locationManager startUpdatingLocation];
 
-    self.startStopButtonItem.title = @"Stop";
-    self.startStopButtonItem.tintColor = [UIColor colorWithRed:0.7f green:0.2f blue:0.2f alpha:1.0f];
+    _startStopButtonItem.title = @"Stop";
+    _startStopButtonItem.tintColor = [UIColor colorWithRed:0.7f green:0.2f blue:0.2f alpha:1.0f];
 }
 
 - (void)stopMonitoring {
@@ -91,8 +92,8 @@ enum {
 
     [_locationManager stopUpdatingLocation];
 
-    self.startStopButtonItem.title = @"Start";
-    self.startStopButtonItem.tintColor = nil;
+    _startStopButtonItem.title = @"Start";
+    _startStopButtonItem.tintColor = nil;
 }
 
 - (void)toggleStartStop {
@@ -223,6 +224,11 @@ enum {
 
     [_lastLocation release];
     _lastLocation = [currentLocation retain];
+
+    AppDelegate *appDelegate = [AppDelegate appDelegate];
+    if ([appDelegate.stopRegion containsCoordinate:currentLocation.coordinate]) {
+        [self stopMonitoring];
+    }
     
     [self.tableView reloadData];
 }

@@ -11,7 +11,6 @@
 
 @interface CurrentRouteViewController : UITableViewController
 
-@property (nonatomic, readonly) UIBarButtonItem *startStopButtonItem;
 @property (nonatomic, readonly) Route *route;
 
 @end
