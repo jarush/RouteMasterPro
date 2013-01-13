@@ -54,7 +54,7 @@ enum {
 
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
-        _locationManager.distanceFilter = DELTA_DISTANCE;
+        _locationManager.distanceFilter = LOCATION_DISTANCE_FILTER;
         _locationManager.delegate = self;
     }
     return self;
