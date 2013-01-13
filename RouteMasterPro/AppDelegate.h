@@ -14,5 +14,6 @@
 
 + (AppDelegate *)appDelegate;
 + (NSString *)documentsPath;
++ (NSArray *)routeFilenames;
 
 @end

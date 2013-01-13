@@ -22,10 +22,10 @@
 
     UITabBarController *tabBarController = [[[UITabBarController alloc] init] autorelease];
     tabBarController.viewControllers = @[
-        [[UINavigationController alloc] initWithRootViewController:currentRouteViewController],
-        [[UINavigationController alloc] initWithRootViewController:mapViewController],
-        [[UINavigationController alloc] initWithRootViewController:routesViewController],
-        [[UINavigationController alloc] initWithRootViewController:statsViewController]
+        [[[UINavigationController alloc] initWithRootViewController:currentRouteViewController] autorelease],
+        [[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease],
+        [[[UINavigationController alloc] initWithRootViewController:routesViewController] autorelease],
+        [[[UINavigationController alloc] initWithRootViewController:statsViewController] autorelease]
     ];
 
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
@@ -47,6 +47,14 @@
 + (NSString *)documentsPath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return [paths objectAtIndex:0];
+}
+
++ (NSArray *)routeFilenames {
+    NSString *documentsPath = [AppDelegate documentsPath];
+    NSArray *contentsOfDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:nil];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self endswith[c] '.xml'"];
+    return [contentsOfDirectory filteredArrayUsingPredicate:predicate];
 }
 
 @end

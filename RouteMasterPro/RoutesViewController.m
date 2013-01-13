@@ -35,11 +35,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    NSString *documentsPath = [AppDelegate documentsPath];
-    NSArray *contentsOfDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:nil];
-
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self endswith[c] '.xml'"];
-    _files = [[contentsOfDirectory filteredArrayUsingPredicate:predicate] mutableCopy];
+    // Load the list of route files
+    _files = [[AppDelegate routeFilenames] mutableCopy];
 
     [self.tableView reloadData];
 }
