@@ -39,10 +39,10 @@ enum {
         self.tabBarItem.title = @"Current";
         self.tabBarItem.image = [UIImage imageNamed:@"location"];
 
-        _startStopButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Start"
-                                                                 style:UIBarButtonItemStyleBordered
-                                                                target:self
-                                                                action:@selector(toggleStartStop)] autorelease];
+        _startStopButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Start"
+                                                                style:UIBarButtonItemStyleBordered
+                                                               target:self
+                                                               action:@selector(toggleStartStop)];
         self.navigationItem.rightBarButtonItem = _startStopButtonItem;
 
         _route = nil;
