@@ -71,6 +71,7 @@ enum {
 - (void)startMonitoring {
     _running = YES;
 
+    [_route release];
     _route = [[Route alloc] init];
 
     [_lastLocation release];
@@ -87,7 +88,6 @@ enum {
     _running = NO;
 
     [self saveRoute];
-    [_route release];
 
     [_locationManager stopUpdatingLocation];
 
