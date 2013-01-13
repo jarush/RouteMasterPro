@@ -20,4 +20,7 @@
 - (CLLocationDistance)distance;
 - (NSTimeInterval)duration;
 
+- (CLLocationDistance)distanceToRoute:(Route *)route;
+- (CLLocationDistance)distanceToLocation:(CLLocation *)location;
+
 @end

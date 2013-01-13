@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		682BC6AF16A31A150070FBEA /* RouteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 682BC6AE16A31A150070FBEA /* RouteManager.m */; };
 		687FABAE169F090F0031C25B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAD169F090F0031C25B /* UIKit.framework */; };
 		687FABB0169F090F0031C25B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAF169F090F0031C25B /* Foundation.framework */; };
 		687FABB2169F090F0031C25B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABB1169F090F0031C25B /* CoreGraphics.framework */; };
@@ -40,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		682BC6AB16A268730070FBEA /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		682BC6AD16A31A150070FBEA /* RouteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteManager.h; sourceTree = "<group>"; };
+		682BC6AE16A31A150070FBEA /* RouteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteManager.m; sourceTree = "<group>"; };
 		687FABA9169F090F0031C25B /* RouteMasterPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMasterPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		687FABAD169F090F0031C25B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		687FABAF169F090F0031C25B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -141,6 +144,8 @@
 				68F5C75A169FC1040083170C /* Route.m */,
 				68D78BA016A203670099E64B /* RouteDetailsViewController.h */,
 				68D78BA116A203670099E64B /* RouteDetailsViewController.m */,
+				682BC6AD16A31A150070FBEA /* RouteManager.h */,
+				682BC6AE16A31A150070FBEA /* RouteManager.m */,
 				68BCCE5416A1D6A700C369C1 /* RoutesViewController.h */,
 				68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */,
 				68D78BCA16A22E4D0099E64B /* StatsViewController.h */,
@@ -277,6 +282,7 @@
 				68BCCE5616A1D6A700C369C1 /* RoutesViewController.m in Sources */,
 				68D78BA216A203670099E64B /* RouteDetailsViewController.m in Sources */,
 				68D78BCC16A22E4D0099E64B /* StatsViewController.m in Sources */,
+				682BC6AF16A31A150070FBEA /* RouteManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

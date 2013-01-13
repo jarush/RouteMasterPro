@@ -67,6 +67,36 @@
             [self distance], [self duration], [_locations count]];
 }
 
+#pragma mark -- Route matching methods
+
+- (CLLocationDistance)distanceToRoute:(Route *)route {
+    CLLocationDistance maxDistance = -INFINITY;
+
+    for (CLLocation *currentLocation in _locations) {
+        // Compute the distance from the current location and the supplied location
+        CLLocationDistance distance = [route distanceToLocation:currentLocation];
+        if (distance > maxDistance) {
+            maxDistance = distance;
+        }
+    }
+
+    return maxDistance;
+}
+
+- (CLLocationDistance)distanceToLocation:(CLLocation *)location {
+    CLLocationDistance minDistance = INFINITY;
+
+    for (CLLocation *currentLocation in _locations) {
+        // Compute the distance from the current location and the supplied location
+        CLLocationDistance distance = [location distanceFromLocation:currentLocation];
+        if (distance < minDistance) {
+            minDistance = distance;
+        }
+    }
+    
+    return minDistance;
+}
+
 #pragma mark -- NSCoding
 
 #define kLocations @"Locations"
