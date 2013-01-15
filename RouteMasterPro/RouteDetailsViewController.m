@@ -103,6 +103,32 @@ enum {
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == SectionTrips) {
+        // Only allow deleting non-template trips
+        NSString *file = [_route.tripFiles objectAtIndex:indexPath.row];
+        return ![_route.templateFile isEqualToString:file];
+    }
+
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Get the selected trip path
+    NSString *file = [_route.tripFiles objectAtIndex:indexPath.row];
+    NSString *path = [[AppDelegate documentsPath] stringByAppendingPathComponent:file];
+
+    // Delete the trip
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+
+    // Remove the trip from the route and save it
+    [_route removeTripFile:file];
+    [_route save];
+
+    // Notify the table view the row was deleted
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
