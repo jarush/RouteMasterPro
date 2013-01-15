@@ -16,6 +16,10 @@
 @property (nonatomic, readonly) NSArray *tripFiles;
 
 - (void)addTripFile:(NSString *)tripFile;
+- (void)removeTripFile:(NSString *)tripFile;
+
 - (CLLocationDistance)distanceToTrip:(Trip *)inTrip;
+
+- (void)save;
 
 @end

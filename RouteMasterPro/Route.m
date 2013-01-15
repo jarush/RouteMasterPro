@@ -37,6 +37,10 @@
     [_tripFiles addObject:tripFile];
 }
 
+- (void)removeTripFile:(NSString *)tripFile {
+    [_tripFiles removeObject:tripFile];
+}
+
 #pragma mark -- Route Matching
 
 - (CLLocationDistance)distanceToTrip:(Trip *)inTrip {
@@ -52,6 +56,17 @@
     }
 
     return distance;
+}
+
+#pragma mark -- Saving
+
+- (void)save {
+    // Create a path for the route file in the Documents folder
+    NSString *file = [_name stringByAppendingPathExtension:@"route"];
+    NSString *path = [[AppDelegate documentsPath] stringByAppendingPathComponent:file];
+
+    // Save the route to the file
+    [NSKeyedArchiver archiveRootObject:self toFile:path];
 }
 
 #pragma mark -- NSCoding
