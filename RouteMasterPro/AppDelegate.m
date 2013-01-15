@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "CurrentRouteViewController.h"
+#import "CurrentTripViewController.h"
 #import "MapViewController.h"
 #import "RoutesViewController.h"
 #import "StatsViewController.h"
@@ -17,14 +17,14 @@
 @synthesize stopRegion = _stopRegion;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    CurrentRouteViewController *currentRouteViewController = [[[CurrentRouteViewController alloc] init] autorelease];
+    CurrentTripViewController *currentTripViewController = [[[CurrentTripViewController alloc] init] autorelease];
     MapViewController *mapViewController = [[[MapViewController alloc] init] autorelease];
     RoutesViewController *routesViewController = [[[RoutesViewController alloc] init] autorelease];
     StatsViewController *statsViewController = [[[StatsViewController alloc] init] autorelease];
 
     UITabBarController *tabBarController = [[[UITabBarController alloc] init] autorelease];
     tabBarController.viewControllers = @[
-        [[[UINavigationController alloc] initWithRootViewController:currentRouteViewController] autorelease],
+        [[[UINavigationController alloc] initWithRootViewController:currentTripViewController] autorelease],
         [[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease],
         [[[UINavigationController alloc] initWithRootViewController:routesViewController] autorelease],
         [[[UINavigationController alloc] initWithRootViewController:statsViewController] autorelease]

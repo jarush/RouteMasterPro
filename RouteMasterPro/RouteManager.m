@@ -12,35 +12,35 @@
 
 @implementation RouteManager
 
-- (Route *)match:(Route *)inRoute {
+- (Trip *)match:(Trip *)inTrip {
     CLLocationDistance minDistance = INFINITY;
-    Route *minRoute = nil;
+    Trip *minTrip = nil;
 
     // Get the path to the Documents folder
     NSString *documentsPath = [AppDelegate documentsPath];
 
-    // Loop through the route files
+    // Loop through the trip files
     for (NSString *file in [AppDelegate routeFilenames]) {
         NSString *path = [documentsPath stringByAppendingPathComponent:file];
 
-        // Load the route
-        Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-        if (route != nil) {
-            // Compare the routes
-            CLLocationDistance distance = [inRoute distanceToRoute:route];
+        // Load the trip
+        Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        if (trip != nil) {
+            // Compare the trip
+            CLLocationDistance distance = [inTrip distanceToTrip:trip];
             if (distance < minDistance) {
                 minDistance = distance;
-                minRoute = route;
+                minTrip = trip;
             }
         }
     }
 
-    // Make sure the minimum distance route is within matching range
-    if (minDistance > MAX_ROUTE_MATCH_DISTANCE) {
+    // Make sure the trip with the minimum distance is within matching range
+    if (minDistance > MAX_TRIP_MATCH_DISTANCE) {
         return nil;
     }
 
-    return minRoute;
+    return minTrip;
 }
 
 @end

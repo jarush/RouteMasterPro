@@ -18,8 +18,8 @@
 // Minimum distance in meters to collect locations
 #define LOCATION_DISTANCE_FILTER 10.0
 
-// Maximum distance in meters to consider two routes as the same route
-#define MAX_ROUTE_MATCH_DISTANCE 50.0
+// Maximum distance in meters to consider two trips to belong to the same route
+#define MAX_TRIP_MATCH_DISTANCE 50.0
 
 // Radius in meters to the stop coordinate that monitoring will automatically stop
 #define RADIUS_STOP_MONITORING 150.0

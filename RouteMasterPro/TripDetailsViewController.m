@@ -1,12 +1,12 @@
 //
-//  RouteDetailsViewController.m
+//  TripDetailsViewController.m
 //  RouteMasterPro
 //
 //  Created by Jason Rush on 1/12/13.
 //  Copyright (c) 2013 Flush Software LLC. All rights reserved.
 //
 
-#import "RouteDetailsViewController.h"
+#import "TripDetailsViewController.h"
 #include "constants.h"
 
 enum {
@@ -19,19 +19,19 @@ enum {
     RowCount
 };
 
-@interface RouteDetailsViewController () {
+@interface TripDetailsViewController () {
     NSDateFormatter *_dateFormatter;
 }
 @end
 
-@implementation RouteDetailsViewController
+@implementation TripDetailsViewController
 
 - (id)init {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.title = @"Route Details";
+        self.title = @"Trip Details";
 
-        _route = nil;
+        _trip = nil;
 
         _dateFormatter = [[NSDateFormatter alloc] init];
         _dateFormatter.dateStyle = NSDateFormatterShortStyle;
@@ -41,7 +41,7 @@ enum {
 }
 
 - (void)dealloc {
-    [_route release];
+    [_trip release];
     [_dateFormatter release];
     [super dealloc];
 }
@@ -64,18 +64,18 @@ enum {
     switch (indexPath.row) {
         case RowDistance: {
             cell.textLabel.text = @"Distance";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", [_route distance] * METER_TO_MILES];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", [_trip distance] * METER_TO_MILES];
             break;
         }
 
         case RowAvgSpeed: {
             cell.textLabel.text = @"Avg Speed";
 
-            NSTimeInterval duration = [_route duration];
+            NSTimeInterval duration = [_trip duration];
             if (duration == 0.0) {
                 cell.detailTextLabel.text = @"Calculating";
             } else {
-                double avgSpeed = [_route distance] / duration;
+                double avgSpeed = [_trip distance] / duration;
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
             }
             break;
@@ -84,7 +84,7 @@ enum {
         case RowDuration: {
             cell.textLabel.text = @"Duration";
 
-            NSInteger duration = (NSInteger)[_route duration];
+            NSInteger duration = (NSInteger)[_trip duration];
             NSInteger hour = duration / 3600;
             NSInteger min = (duration / 60) % 60;
             NSInteger sec = duration % 60;
@@ -95,19 +95,19 @@ enum {
 
         case RowStart: {
             cell.textLabel.text = @"Start";
-            cell.detailTextLabel.text = [_dateFormatter stringFromDate:[_route firstLocation].timestamp];
+            cell.detailTextLabel.text = [_dateFormatter stringFromDate:[_trip firstLocation].timestamp];
             break;
         }
 
         case RowStop: {
             cell.textLabel.text = @"Stop";
-            cell.detailTextLabel.text = [_dateFormatter stringFromDate:[_route lastLocation].timestamp];
+            cell.detailTextLabel.text = [_dateFormatter stringFromDate:[_trip lastLocation].timestamp];
             break;
         }
 
         case RowPoints: {
             cell.textLabel.text = @"Points";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_route.locations count]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_trip.locations count]];
             break;
         }
 

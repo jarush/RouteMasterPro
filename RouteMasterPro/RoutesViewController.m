@@ -7,7 +7,7 @@
 //
 
 #import "RoutesViewController.h"
-#import "RouteDetailsViewController.h"
+#import "TripDetailsViewController.h"
 #import "AppDelegate.h"
 
 @interface RoutesViewController () {
@@ -91,12 +91,12 @@
     NSString *documentsPath = [AppDelegate documentsPath];
     NSString *path = [documentsPath stringByAppendingPathComponent:filename];
 
-    Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    if (route != nil) {
+    Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if (trip != nil) {
         // Push on a details view
-        RouteDetailsViewController *routeDetailsViewController = [[[RouteDetailsViewController alloc] init] autorelease];
-        routeDetailsViewController.route = route;
-        [self.navigationController pushViewController:routeDetailsViewController animated:YES];
+        TripDetailsViewController *tripDetailsViewController = [[[TripDetailsViewController alloc] init] autorelease];
+        tripDetailsViewController.trip = trip;
+        [self.navigationController pushViewController:tripDetailsViewController animated:YES];
     }
 }
 

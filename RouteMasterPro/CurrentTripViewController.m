@@ -1,12 +1,12 @@
 //
-//  CurrentRouteViewController.m
+//  CurrentTripViewController.m
 //  RouteMasterPro
 //
 //  Created by Jason Rush on 1/12/13.
 //  Copyright (c) 2013 Flush Software LLC. All rights reserved.
 //
 
-#import "CurrentRouteViewController.h"
+#import "CurrentTripViewController.h"
 #import "AppDelegate.h"
 #import "constants.h"
 
@@ -23,7 +23,7 @@ enum {
     RowCount
 };
 
-@interface CurrentRouteViewController () <CLLocationManagerDelegate> {
+@interface CurrentTripViewController () <CLLocationManagerDelegate> {
     UIBarButtonItem *_startStopButtonItem;
     CLLocationManager *_locationManager;
     CLLocation *_lastLocation;
@@ -32,13 +32,13 @@ enum {
 }
 @end
 
-@implementation CurrentRouteViewController
+@implementation CurrentTripViewController
 
 - (id)init {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.title = @"Current Route";
-        self.tabBarItem.title = @"Current";
+        self.title = @"Current Trip";
+        self.tabBarItem.title = @"Current Trip";
         self.tabBarItem.image = [UIImage imageNamed:@"location"];
 
         _startStopButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Start"
@@ -47,7 +47,7 @@ enum {
                                                                action:@selector(toggleStartStop)];
         self.navigationItem.rightBarButtonItem = _startStopButtonItem;
 
-        _route = nil;
+        _trip = nil;
 
         _lastLocation = nil;
         _distance = 0.0;
@@ -63,7 +63,7 @@ enum {
 
 - (void)dealloc {
     [_startStopButtonItem release];
-    [_route release];
+    [_trip release];
     [_lastLocation release];
     [_locationManager release];
     [super dealloc];
@@ -72,8 +72,8 @@ enum {
 - (void)startMonitoring {
     _running = YES;
 
-    [_route release];
-    _route = [[Route alloc] init];
+    [_trip release];
+    _trip = [[Trip alloc] init];
 
     [_lastLocation release];
     _lastLocation = nil;
@@ -88,7 +88,7 @@ enum {
 - (void)stopMonitoring {
     _running = NO;
 
-    [self saveRoute];
+    [self saveTrip];
 
     [_locationManager stopUpdatingLocation];
 
@@ -104,7 +104,7 @@ enum {
     }
 }
 
-- (void)saveRoute {
+- (void)saveTrip {
     // Get the current timestamp for the filename
     NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss'.xml'";
@@ -114,8 +114,8 @@ enum {
     NSString *documentsPath = [AppDelegate documentsPath];
     NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
 
-    // Save the route to the file
-    [NSKeyedArchiver archiveRootObject:_route toFile:filePath];
+    // Save the trip to the file
+    [NSKeyedArchiver archiveRootObject:_trip toFile:filePath];
 }
 
 #pragma mark - Table view data source
@@ -167,7 +167,7 @@ enum {
         case RowAvgSpeed: {
             cell.textLabel.text = @"Avg Speed";
 
-            NSTimeInterval duration = [_lastLocation.timestamp timeIntervalSinceDate:[_route firstLocation].timestamp];
+            NSTimeInterval duration = [_lastLocation.timestamp timeIntervalSinceDate:[_trip firstLocation].timestamp];
             if (duration < 10.0) {
                 cell.detailTextLabel.text = @"Calculating";
             } else {
@@ -186,7 +186,7 @@ enum {
         case RowDuration: {
             cell.textLabel.text = @"Duration";
 
-            NSInteger duration = (NSInteger)[_route duration];
+            NSInteger duration = (NSInteger)[_trip duration];
             NSInteger hour = duration / 3600;
             NSInteger min = (duration / 60) % 60;
             NSInteger sec = duration % 60;
@@ -197,7 +197,7 @@ enum {
 
         case RowPoints: {
             cell.textLabel.text = @"Points";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_route.locations count]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_trip.locations count]];
             break;
         }
 
@@ -216,7 +216,7 @@ enum {
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     for (CLLocation *location in locations) {
-        [_route addLocation:location];
+        [_trip addLocation:location];
     }
 
     CLLocation *currentLocation = [locations lastObject];

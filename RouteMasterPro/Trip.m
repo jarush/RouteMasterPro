@@ -1,20 +1,20 @@
 //
-//  Route.m
+//  Trip.m
 //  RouteMasterPro
 //
 //  Created by Jason Rush on 1/10/13.
 //  Copyright (c) 2013 Flush Software LLC. All rights reserved.
 //
 
-#import "Route.h"
+#import "Trip.h"
 
-@interface Route () {
+@interface Trip () {
     NSMutableArray *_locations;
 }
 
 @end
 
-@implementation Route
+@implementation Trip
 
 @synthesize locations = _locations;
 
@@ -63,18 +63,18 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"Route [distance=%f, duration=%f, points=%d]",
+    return [NSString stringWithFormat:@"Trip [distance=%f, duration=%f, points=%d]",
             [self distance], [self duration], [_locations count]];
 }
 
-#pragma mark -- Route matching methods
+#pragma mark -- Trip matching methods
 
-- (CLLocationDistance)distanceToRoute:(Route *)route {
+- (CLLocationDistance)distanceToTrip:(Trip *)trip {
     CLLocationDistance maxDistance = -INFINITY;
 
     for (CLLocation *currentLocation in _locations) {
         // Compute the distance from the current location and the supplied location
-        CLLocationDistance distance = [route distanceToLocation:currentLocation];
+        CLLocationDistance distance = [trip distanceToLocation:currentLocation];
         if (distance > maxDistance) {
             maxDistance = distance;
         }

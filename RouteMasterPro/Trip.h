@@ -1,5 +1,5 @@
 //
-//  Route.h
+//  Trip.h
 //  RouteMasterPro
 //
 //  Created by Jason Rush on 1/10/13.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface Route : NSObject <NSCoding>
+@interface Trip : NSObject <NSCoding>
 
 @property (nonatomic, readonly) NSArray *locations;
 
@@ -20,7 +20,7 @@
 - (CLLocationDistance)distance;
 - (NSTimeInterval)duration;
 
-- (CLLocationDistance)distanceToRoute:(Route *)route;
+- (CLLocationDistance)distanceToTrip:(Trip *)trip;
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location;
 
 @end

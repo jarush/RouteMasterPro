@@ -1,5 +1,5 @@
 //
-//  CurrentRouteViewController.h
+//  CurrentTripViewController.h
 //  RouteMasterPro
 //
 //  Created by Jason Rush on 1/12/13.
@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Route.h"
+#import "Trip.h"
 
-@interface CurrentRouteViewController : UITableViewController
+@interface CurrentTripViewController : UITableViewController
 
-@property (nonatomic, readonly) Route *route;
+@property (nonatomic, readonly) Trip *trip;
 
 @end

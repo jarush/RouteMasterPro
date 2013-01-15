@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Route.h"
+#import "Trip.h"
 
 @interface RouteManager : NSObject
 
-- (Route *)match:(Route *)inRoute;
+- (Trip *)match:(Trip *)inTrip;
 
 @end
