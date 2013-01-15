@@ -92,6 +92,7 @@ enum {
             NSString *file = [_route.tripFiles objectAtIndex:indexPath.row];
             cell.textLabel.text = [file stringByDeletingPathExtension];
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
 
