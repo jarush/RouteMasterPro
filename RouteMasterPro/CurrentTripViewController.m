@@ -134,12 +134,8 @@ enum {
     // Add the trip to the route
     [route addTripFile:tripFile];
 
-    // Create a path for the route file in the Documents folder
-    NSString *routeFile = [route.name stringByAppendingPathExtension:@"route"];
-    NSString *routePath = [documentsPath stringByAppendingPathComponent:routeFile];
-
-    // Save the route to the file
-    [NSKeyedArchiver archiveRootObject:route toFile:routePath];
+    // Save the route
+    [route save];
 }
 
 #pragma mark - Table view data source
