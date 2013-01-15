@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Route.h"
+#import "Trip.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -16,6 +18,7 @@
 
 + (AppDelegate *)appDelegate;
 + (NSString *)documentsPath;
-+ (NSArray *)routeFilenames;
++ (NSArray *)routePaths;
++ (Route *)findMatchingRoute:(Trip *)trip;
 
 @end

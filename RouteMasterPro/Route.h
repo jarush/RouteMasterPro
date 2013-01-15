@@ -12,9 +12,10 @@
 @interface Route : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *templatePath;
-@property (nonatomic, readonly) NSArray *tripPaths;
+@property (nonatomic, copy) NSString *templateFile;
+@property (nonatomic, readonly) NSArray *tripFiles;
 
-- (void)addTripPath:(Trip *)trip;
+- (void)addTripFile:(NSString *)tripFile;
+- (CLLocationDistance)distanceToTrip:(Trip *)inTrip;
 
 @end

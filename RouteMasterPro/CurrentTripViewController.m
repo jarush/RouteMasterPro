@@ -88,7 +88,11 @@ enum {
 - (void)stopMonitoring {
     _running = NO;
 
-    [self saveTrip];
+    // Process the trip
+    [self processTrip];
+
+
+    // Save the route
 
     [_locationManager stopUpdatingLocation];
 
@@ -104,18 +108,36 @@ enum {
     }
 }
 
-- (void)saveTrip {
+- (void)processTrip {
     // Get the current timestamp for the filename
     NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-    dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss'.xml'";
-    NSString *filename = [dateFormatter stringFromDate:[NSDate date]];
+    dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss";
+    NSString *timestamp = [dateFormatter stringFromDate:[NSDate date]];
 
-    // Create a path for the file in the Documents folder
+    // Create a path for the trip file in the Documents folder
     NSString *documentsPath = [AppDelegate documentsPath];
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
+    NSString *tripFile = [timestamp stringByAppendingPathExtension:@".trip"];
+    NSString *tripPath = [documentsPath stringByAppendingPathComponent:tripFile];
 
     // Save the trip to the file
-    [NSKeyedArchiver archiveRootObject:_trip toFile:filePath];
+    [NSKeyedArchiver archiveRootObject:_trip toFile:tripPath];
+
+    // Find a matching route for the trip
+    Route *route = [AppDelegate findMatchingRoute:_trip];
+    if (route != nil) {
+        [route addTripFile:tripFile];
+    } else {
+        route = [[Route alloc] init];
+        route.name = timestamp;
+        route.templateFile = tripFile;
+    }
+
+    // Create a path for the route file in the Documents folder
+    NSString *routeFile = [route.name stringByAppendingPathExtension:@".route"];
+    NSString *routePath = [documentsPath stringByAppendingPathComponent:routeFile];
+
+    // Save the route to the file
+    [NSKeyedArchiver archiveRootObject:route toFile:routePath];
 }
 
 #pragma mark - Table view data source

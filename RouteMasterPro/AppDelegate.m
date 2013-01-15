@@ -11,6 +11,7 @@
 #import "MapViewController.h"
 #import "RoutesViewController.h"
 #import "StatsViewController.h"
+#import "constants.h"
 
 @implementation AppDelegate
 
@@ -72,12 +73,48 @@
     return [paths objectAtIndex:0];
 }
 
-+ (NSArray *)routeFilenames {
++ (NSArray *)routePaths {
+    // Get the list of files in the Documents folder
     NSString *documentsPath = [AppDelegate documentsPath];
-    NSArray *contentsOfDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:nil];
+    NSArray *filenames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:nil];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self endswith[c] '.xml'"];
-    return [contentsOfDirectory filteredArrayUsingPredicate:predicate];
+    // Filter the list of filename for names ending in .route
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self endswith[c] '.route'"];
+    filenames = [filenames filteredArrayUsingPredicate:predicate];
+
+    // Append the filtered filenames to the Documents folder to create absolute paths
+    NSMutableArray *paths = [NSMutableArray array];
+    for (NSString *filename in filenames) {
+        [paths addObject:[documentsPath stringByAppendingPathComponent:filename]];
+    }
+
+    return paths;
+}
+
++ (Route *)findMatchingRoute:(Trip *)trip {
+    CLLocationDistance minDistance = INFINITY;
+    Route *minRoute = nil;
+
+    // Loop through the route files
+    for (NSString *path in [AppDelegate routePaths]) {
+        // Load the route
+        Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        if (route != nil) {
+            // Get the distance of the trip to the route
+            CLLocationDistance distance = [route distanceToTrip:trip];
+            if (distance < minDistance) {
+                minDistance = distance;
+                minRoute = route;;
+            }
+        }
+    }
+
+    // Make sure the trip with the minimum distance is within matching range
+    if (minDistance > MAX_TRIP_MATCH_DISTANCE) {
+        return nil;
+    }
+
+    return minRoute;
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "Route.h"
+#import "AppDelegate.h"
 
 @interface Route () {
     NSMutableArray *_tripPaths;
@@ -15,48 +16,64 @@
 
 @implementation Route
 
-@synthesize tripPaths = _tripPaths;
+@synthesize tripFiles = _tripFiles;
 
 - (id)init {
     self = [super init];
     if (self) {
-        _tripPaths = [[NSMutableArray alloc] init];
+        _tripFiles = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)dealloc {
     [_name release];
-    [_templatePath release];
-    [_tripPaths release];
+    [_templateFile release];
+    [_tripFiles release];
     [super dealloc];
 }
 
-- (void)addTripPath:(Trip *)trip {
-    [_tripPaths addObject:trip];
+- (void)addTripFile:(NSString *)tripFile {
+    [_tripFiles addObject:tripFile];
 }
 
+#pragma mark -- Route Matching
+
+- (CLLocationDistance)distanceToTrip:(Trip *)inTrip {
+    CLLocationDistance distance = INFINITY;
+
+    // Get the path to the template
+    NSString *path = [[AppDelegate documentsPath] stringByAppendingPathComponent:_templateFile];
+
+    // Load the trip
+    Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if (trip != nil) {
+        distance = [inTrip distanceToTrip:trip];
+    }
+
+    return distance;
+}
 
 #pragma mark -- NSCoding
 
 #define kName @"Name"
-#define kTemplatePath @"TemplatePath"
-#define kTripPaths @"TripPaths"
+#define kTemplateFile @"TemplateFile"
+#define kTripFiles @"TripFiles"
 
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
         _name = [[coder decodeObjectForKey:kName] copy];
-        _templatePath = [[coder decodeObjectForKey:kTemplatePath] copy];
-        _tripPaths = [[coder decodeObjectForKey:kTripPaths] retain];
+        _templateFile = [[coder decodeObjectForKey:kTemplateFile] copy];
+        _tripFiles = [[coder decodeObjectForKey:kTripFiles] retain];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:_name forKey:kName];
-    [coder encodeObject:_templatePath forKey:kTemplatePath];
-    [coder encodeObject:_tripPaths forKey:kTripPaths];
+    [coder encodeObject:_templateFile forKey:kTemplateFile];
+    [coder encodeObject:_tripPaths forKey:kTripFiles];
 }
 
 @end

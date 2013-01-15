@@ -7,11 +7,12 @@
 //
 
 #import "RoutesViewController.h"
-#import "TripDetailsViewController.h"
+#import "Route.h"
+#import "RouteDetailsViewController.h"
 #import "AppDelegate.h"
 
 @interface RoutesViewController () {
-    NSMutableArray *_files;
+    NSMutableArray *_paths;
 }
 @end
 
@@ -28,7 +29,7 @@
 }
 
 - (void)dealloc {
-    [_files release];
+    [_paths release];
     [super dealloc];
 }
 
@@ -36,7 +37,7 @@
     [super viewWillAppear:animated];
 
     // Load the list of route files
-    _files = [[AppDelegate routeFilenames] mutableCopy];
+    _paths = [[AppDelegate routePaths] mutableCopy];
 
     [self.tableView reloadData];
 }
@@ -44,7 +45,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_files count];
+    return [_paths count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -55,7 +56,9 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
 
-    cell.textLabel.text = [_files objectAtIndex:indexPath.row];
+    NSString *path = [_paths objectAtIndex:indexPath.row];
+    NSString *routeName = [[path lastPathComponent] stringByDeletingPathExtension];
+    cell.textLabel.text = routeName;
 
     return cell;
 }
@@ -66,17 +69,13 @@
     }
 
     // Get the filename to delete
-    NSString *filename = [_files objectAtIndex:indexPath.row];
-
-    // Get the path to the file in the Documents folder
-    NSString *documentsPath = [AppDelegate documentsPath];
-    NSString *path = [documentsPath stringByAppendingPathComponent:filename];
+    NSString *path = [_paths objectAtIndex:indexPath.row];
 
     // Delete the file
     [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
 
     // Remove the filename from the array
-    [_files removeObjectAtIndex:indexPath.row];
+    [_paths removeObjectAtIndex:indexPath.row];
 
     // Notify the table view the row was deleted
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -85,18 +84,14 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *filename = [_files objectAtIndex:indexPath.row];
+    NSString *path = [_paths objectAtIndex:indexPath.row];
 
-    // Get the path to the file in the Documents folder
-    NSString *documentsPath = [AppDelegate documentsPath];
-    NSString *path = [documentsPath stringByAppendingPathComponent:filename];
-
-    Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    if (trip != nil) {
-        // Push on a details view
-        TripDetailsViewController *tripDetailsViewController = [[[TripDetailsViewController alloc] init] autorelease];
-        tripDetailsViewController.trip = trip;
-        [self.navigationController pushViewController:tripDetailsViewController animated:YES];
+    Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if (route != nil) {
+        // Push on a route details view
+        RouteDetailsViewController *routeDetailsViewController = [[[RouteDetailsViewController alloc] init] autorelease];
+        routeDetailsViewController.route = route;
+        [self.navigationController pushViewController:routeDetailsViewController animated:YES];
     }
 }
 

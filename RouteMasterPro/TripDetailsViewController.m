@@ -7,7 +7,7 @@
 //
 
 #import "TripDetailsViewController.h"
-#include "constants.h"
+#import "constants.h"
 
 enum {
     RowDistance = 0,
