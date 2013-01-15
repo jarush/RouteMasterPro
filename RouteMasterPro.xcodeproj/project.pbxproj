@@ -11,6 +11,7 @@
 		6879392916A4D86500A4292B /* Trip.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392616A4D86500A4292B /* Trip.m */; };
 		6879392A16A4D86500A4292B /* TripDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392816A4D86500A4292B /* TripDetailsViewController.m */; };
 		6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392C16A4D90300A4292B /* CurrentTripViewController.m */; };
+		6879393016A4DBA700A4292B /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392F16A4DBA700A4292B /* Route.m */; };
 		687FABAE169F090F0031C25B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAD169F090F0031C25B /* UIKit.framework */; };
 		687FABB0169F090F0031C25B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAF169F090F0031C25B /* Foundation.framework */; };
 		687FABB2169F090F0031C25B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABB1169F090F0031C25B /* CoreGraphics.framework */; };
@@ -49,6 +50,8 @@
 		6879392816A4D86500A4292B /* TripDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripDetailsViewController.m; sourceTree = "<group>"; };
 		6879392B16A4D90300A4292B /* CurrentTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentTripViewController.h; sourceTree = "<group>"; };
 		6879392C16A4D90300A4292B /* CurrentTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentTripViewController.m; sourceTree = "<group>"; };
+		6879392E16A4DBA700A4292B /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		6879392F16A4DBA700A4292B /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		687FABA9169F090F0031C25B /* RouteMasterPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMasterPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		687FABAD169F090F0031C25B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		687FABAF169F090F0031C25B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -140,6 +143,8 @@
 				6879392C16A4D90300A4292B /* CurrentTripViewController.m */,
 				687FABCE169F09320031C25B /* MapViewController.h */,
 				687FABCF169F09320031C25B /* MapViewController.m */,
+				6879392E16A4DBA700A4292B /* Route.h */,
+				6879392F16A4DBA700A4292B /* Route.m */,
 				682BC6AD16A31A150070FBEA /* RouteManager.h */,
 				682BC6AE16A31A150070FBEA /* RouteManager.m */,
 				68BCCE5416A1D6A700C369C1 /* RoutesViewController.h */,
@@ -283,6 +288,7 @@
 				6879392916A4D86500A4292B /* Trip.m in Sources */,
 				6879392A16A4D86500A4292B /* TripDetailsViewController.m in Sources */,
 				6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */,
+				6879393016A4DBA700A4292B /* Route.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
