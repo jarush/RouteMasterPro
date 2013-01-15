@@ -134,6 +134,9 @@ enum {
     // Add the trip to the route
     [route addTripFile:tripFile];
 
+    // Add this trip's stats to the route
+    [route updateTripStats:_trip];
+
     // Save the route
     [route save];
 }

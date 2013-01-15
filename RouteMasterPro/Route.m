@@ -22,6 +22,8 @@
     self = [super init];
     if (self) {
         _tripFiles = [[NSMutableArray alloc] init];
+        _numberSamples = 0;
+        _meanDuration = 0.0;
     }
     return self;
 }
@@ -39,6 +41,17 @@
 
 - (void)removeTripFile:(NSString *)tripFile {
     [_tripFiles removeObject:tripFile];
+}
+
+- (void)updateTripStats:(Trip *)trip {
+    _numberSamples += 1;
+    if (_numberSamples == 1) {
+        _meanDuration = [trip duration];
+        _meanDistance = [trip distance];
+    } else {
+        _meanDuration += ([trip duration] - _meanDuration) / _numberSamples;
+        _meanDistance += ([trip distance] - _meanDistance) / _numberSamples;
+    }
 }
 
 #pragma mark -- Route Matching
@@ -74,6 +87,9 @@
 #define kName @"Name"
 #define kTemplateFile @"TemplateFile"
 #define kTripFiles @"TripFiles"
+#define kNumberSamples @"NumberSamples"
+#define kMeanDuration @"MeanDuration"
+#define kMeanDistance @"MeanDistance"
 
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super init];
@@ -81,6 +97,9 @@
         _name = [[coder decodeObjectForKey:kName] copy];
         _templateFile = [[coder decodeObjectForKey:kTemplateFile] copy];
         _tripFiles = [[coder decodeObjectForKey:kTripFiles] retain];
+        _numberSamples = [coder decodeIntegerForKey:kNumberSamples];
+        _meanDuration = [coder decodeDoubleForKey:kMeanDuration];
+        _meanDistance = [coder decodeDoubleForKey:kMeanDistance];
     }
     return self;
 }
@@ -89,6 +108,9 @@
     [coder encodeObject:_name forKey:kName];
     [coder encodeObject:_templateFile forKey:kTemplateFile];
     [coder encodeObject:_tripFiles forKey:kTripFiles];
+    [coder encodeInteger:_numberSamples forKey:kNumberSamples];
+    [coder encodeDouble:_meanDuration forKey:kMeanDuration];
+    [coder encodeDouble:_meanDistance forKey:kMeanDistance];
 }
 
 @end

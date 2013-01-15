@@ -9,11 +9,21 @@
 #import "RouteDetailsViewController.h"
 #import "TripDetailsViewController.h"
 #import "AppDelegate.h"
+#import "constants.h"
 
 enum {
     SectionDetails = 0,
     SectionTrips,
     SectionCount
+};
+
+enum {
+    RowDetailsName = 0,
+    RowDetailsAvgDuration,
+    RowDetailsAvgDistance,
+    RowDetailsAvgSpeed,
+    RowDetailsNumberSamples,
+    RowDetailsCount
 };
 
 @implementation RouteDetailsViewController
@@ -42,7 +52,7 @@ enum {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case SectionDetails:
-            return 1;
+            return RowDetailsCount;
 
         case SectionTrips:
             return [_route.tripFiles count];
@@ -50,7 +60,7 @@ enum {
         default:
             break;
     }
-    
+
     return 0;
 }
 
@@ -65,40 +75,106 @@ enum {
         default:
             break;
     }
-    
+
     return nil;
 }
 
-#define kDetailCellIdentifier @"DetailCell"
 #define kTripCellIdentifier @"TripCell"
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellIdentifier = indexPath.section == 0 ? kDetailCellIdentifier : kTripCellIdentifier;
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] autorelease];
-    }
+    UITableViewCell *cell = nil;
 
     switch (indexPath.section) {
         case SectionDetails: {
-            cell.textLabel.text = @"Name";
-            cell.detailTextLabel.text = _route.name;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell = [self tableView:tableView detailCellForRow:indexPath.row];
             break;
         }
 
         case SectionTrips: {
-            NSString *file = [_route.tripFiles objectAtIndex:indexPath.row];
-            cell.textLabel.text = [file stringByDeletingPathExtension];
-            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell = [self tableView:tableView tripCellForRow:indexPath.row];
             break;
         }
 
         default:
             break;
     }
+
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView detailCellForRow:(NSInteger)row {
+    static NSString *CellIdentifier = @"DetailCell";
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+
+    switch (row) {
+        case RowDetailsName: {
+            cell.textLabel.text = @"Name";
+            cell.detailTextLabel.text = _route.name;
+            break;
+        }
+
+        case RowDetailsAvgDuration: {
+            cell.textLabel.text = @"Avg Duration";
+
+            NSInteger duration = _route.meanDuration;
+            NSInteger hour = duration / 3600;
+            NSInteger min = (duration / 60) % 60;
+            NSInteger sec = duration % 60;
+
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
+            break;
+        }
+
+        case RowDetailsAvgDistance: {
+            cell.textLabel.text = @"Avg Distance";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _route.meanDistance * METER_TO_MILES];
+            break;
+        }
+
+        case RowDetailsAvgSpeed: {
+            cell.textLabel.text = @"Avg Speed";
+
+            double duration = _route.meanDuration;
+            if (duration == 0.0) {
+                cell.detailTextLabel.text = @"Unknown";
+            } else {
+                double avgSpeed = _route.meanDistance / duration;
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
+            }
+            break;
+        }
+
+        case RowDetailsNumberSamples: {
+            cell.textLabel.text = @"Num Samples";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", _route.numberSamples];
+            break;
+        }
+
+        default:
+            break;
+    }
+
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView tripCellForRow:(NSInteger)row {
+    static NSString *CellIdentifier = @"TripCell";
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+
+
+    NSString *file = [_route.tripFiles objectAtIndex:row];
+    cell.textLabel.text = [file stringByDeletingPathExtension];
 
     return cell;
 }
