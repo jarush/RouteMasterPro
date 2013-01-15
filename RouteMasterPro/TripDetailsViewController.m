@@ -73,7 +73,7 @@ enum {
 
             NSTimeInterval duration = [_trip duration];
             if (duration == 0.0) {
-                cell.detailTextLabel.text = @"Calculating";
+                cell.detailTextLabel.text = @"Unknown";
             } else {
                 double avgSpeed = [_trip distance] / duration;
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
