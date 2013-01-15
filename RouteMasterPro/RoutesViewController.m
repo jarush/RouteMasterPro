@@ -70,10 +70,20 @@
     }
 
     // Get the filename to delete
-    NSString *path = [_paths objectAtIndex:indexPath.row];
+    NSString *routePath = [_paths objectAtIndex:indexPath.row];
 
-    // Delete the file
-    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    // Load the route
+    Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
+    if (route != nil) {
+        // Delete all the trips associated with the route
+        for (NSString *tripFile in route.tripFiles) {
+            NSString *tripPath = [[AppDelegate documentsPath] stringByAppendingPathComponent:tripFile];
+            [[NSFileManager defaultManager] removeItemAtPath:tripPath error:nil];
+        }
+    }
+
+    // Delete the route file
+    [[NSFileManager defaultManager] removeItemAtPath:routePath error:nil];
 
     // Remove the filename from the array
     [_paths removeObjectAtIndex:indexPath.row];
@@ -87,6 +97,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *path = [_paths objectAtIndex:indexPath.row];
 
+    // Load the route
     Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if (route != nil) {
         // Push on a route details view
