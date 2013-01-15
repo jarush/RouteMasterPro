@@ -114,6 +114,7 @@ enum {
     NSString *file = [_route.tripFiles objectAtIndex:indexPath.row];
     NSString *path = [[AppDelegate documentsPath] stringByAppendingPathComponent:file];
 
+    // Load the trip
     Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if (trip != nil) {
         // Push on a trip details view
