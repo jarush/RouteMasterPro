@@ -54,18 +54,36 @@ enum {
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case SectionDetails:
+            return @"Details";
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        case SectionTrips:
+            return @"Trips";
+
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+#define kDetailCellIdentifier @"DetailCell"
+#define kTripCellIdentifier @"TripCell"
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *cellIdentifier = indexPath.section == 0 ? kDetailCellIdentifier : kTripCellIdentifier;
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] autorelease];
     }
 
     switch (indexPath.section) {
         case SectionDetails: {
-            cell.textLabel.text = @"Blah";
+            cell.textLabel.text = @"Name";
+            cell.detailTextLabel.text = _route.name;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }

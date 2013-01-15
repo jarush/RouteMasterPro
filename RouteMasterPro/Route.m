@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 
 @interface Route () {
-    NSMutableArray *_tripPaths;
+    NSMutableArray *_tripFiles;
 }
 @end
 
@@ -73,7 +73,7 @@
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:_name forKey:kName];
     [coder encodeObject:_templateFile forKey:kTemplateFile];
-    [coder encodeObject:_tripPaths forKey:kTripFiles];
+    [coder encodeObject:_tripFiles forKey:kTripFiles];
 }
 
 @end

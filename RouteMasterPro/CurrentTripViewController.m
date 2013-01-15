@@ -116,7 +116,7 @@ enum {
 
     // Create a path for the trip file in the Documents folder
     NSString *documentsPath = [AppDelegate documentsPath];
-    NSString *tripFile = [timestamp stringByAppendingPathExtension:@".trip"];
+    NSString *tripFile = [timestamp stringByAppendingPathExtension:@"trip"];
     NSString *tripPath = [documentsPath stringByAppendingPathComponent:tripFile];
 
     // Save the trip to the file
@@ -124,16 +124,18 @@ enum {
 
     // Find a matching route for the trip
     Route *route = [AppDelegate findMatchingRoute:_trip];
-    if (route != nil) {
-        [route addTripFile:tripFile];
-    } else {
-        route = [[Route alloc] init];
+    if (route == nil) {
+        // Create a new route
+        route = [[[Route alloc] init] autorelease];
         route.name = timestamp;
         route.templateFile = tripFile;
     }
 
+    // Add the trip to the route
+    [route addTripFile:tripFile];
+
     // Create a path for the route file in the Documents folder
-    NSString *routeFile = [route.name stringByAppendingPathExtension:@".route"];
+    NSString *routeFile = [route.name stringByAppendingPathExtension:@"route"];
     NSString *routePath = [documentsPath stringByAppendingPathComponent:routeFile];
 
     // Save the route to the file
