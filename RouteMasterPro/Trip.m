@@ -7,6 +7,7 @@
 //
 
 #import "Trip.h"
+#import "constants.h"
 
 @interface Trip () {
     NSMutableArray *_locations;
@@ -75,8 +76,23 @@
     for (CLLocation *currentLocation in _locations) {
         // Compute the distance from the current location and the supplied location
         CLLocationDistance distance = [trip distanceToLocation:currentLocation];
-        if (distance > maxDistance) {
-            maxDistance = distance;
+
+        // Check if the current location is within maching range
+        if (distance > MAX_TRIP_MATCH_DISTANCE) {
+            // Ignore the point if it's within 2x RADIUS_STOP_MONITORING of the first/last point
+            distance = [currentLocation distanceFromLocation:[trip firstLocation]];
+            if (distance > RADIUS_STOP_MONITORING * 2) {
+                distance = [currentLocation distanceFromLocation:[trip lastLocation]];
+                if (distance > RADIUS_STOP_MONITORING * 2) {
+                    // These trips can't possibly match
+                    return INFINITY;
+                }
+            }
+        } else {
+            // Check if this location is larger than any others
+            if (distance > maxDistance) {
+                maxDistance = distance;
+            }
         }
     }
 
@@ -93,7 +109,7 @@
             minDistance = distance;
         }
     }
-    
+
     return minDistance;
 }
 
