@@ -59,9 +59,18 @@
     [super dealloc];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
     _mapView.showsUserLocation = YES;
     [_mapView setUserTrackingMode:MKUserTrackingModeFollow animated:NO];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+
+    _mapView.showsUserLocation = NO;
+    [_mapView setUserTrackingMode:MKUserTrackingModeNone animated:NO];
 }
 
 - (void)toggleTracking {
