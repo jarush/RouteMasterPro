@@ -89,10 +89,7 @@ enum {
     _running = NO;
 
     // Process the trip
-    [self processTrip];
-
-
-    // Save the route
+    [AppDelegate processTrip:_trip];
 
     [_locationManager stopUpdatingLocation];
 
@@ -106,39 +103,6 @@ enum {
     } else {
         [self startMonitoring];
     }
-}
-
-- (void)processTrip {
-    // Get the current timestamp for the filename
-    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-    dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss";
-    NSString *timestamp = [dateFormatter stringFromDate:[NSDate date]];
-
-    // Create a path for the trip file in the Documents folder
-    NSString *documentsPath = [AppDelegate documentsPath];
-    NSString *tripFile = [timestamp stringByAppendingPathExtension:@"trip"];
-    NSString *tripPath = [documentsPath stringByAppendingPathComponent:tripFile];
-
-    // Save the trip to the file
-    [NSKeyedArchiver archiveRootObject:_trip toFile:tripPath];
-
-    // Find a matching route for the trip
-    Route *route = [AppDelegate findMatchingRoute:_trip];
-    if (route == nil) {
-        // Create a new route
-        route = [[[Route alloc] init] autorelease];
-        route.name = timestamp;
-        route.templateFile = tripFile;
-    }
-
-    // Add the trip to the route
-    [route addTripFile:tripFile];
-
-    // Add this trip's stats to the route
-    [route updateTripStats:_trip];
-
-    // Save the route
-    [route save];
 }
 
 #pragma mark - Table view data source

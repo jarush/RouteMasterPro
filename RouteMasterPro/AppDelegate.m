@@ -91,6 +91,24 @@
     return paths;
 }
 
++ (NSArray *)tripPaths {
+    // Get the list of files in the Documents folder
+    NSString *documentsPath = [AppDelegate documentsPath];
+    NSArray *filenames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:nil];
+
+    // Filter the list of filename for names ending in .route
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self endswith[c] '.trip'"];
+    filenames = [filenames filteredArrayUsingPredicate:predicate];
+
+    // Append the filtered filenames to the Documents folder to create absolute paths
+    NSMutableArray *paths = [NSMutableArray array];
+    for (NSString *filename in filenames) {
+        [paths addObject:[documentsPath stringByAppendingPathComponent:filename]];
+    }
+
+    return paths;
+}
+
 + (Route *)findMatchingRoute:(Trip *)trip {
     CLLocationDistance minDistance = INFINITY;
     Route *minRoute = nil;
@@ -115,6 +133,39 @@
     }
 
     return minRoute;
+}
+
++ (void)processTrip:(Trip *)trip {
+    // Get the current timestamp for the filename
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss";
+    NSString *timestamp = [dateFormatter stringFromDate:[NSDate date]];
+
+    // Create a path for the trip file in the Documents folder
+    NSString *documentsPath = [AppDelegate documentsPath];
+    NSString *tripFile = [timestamp stringByAppendingPathExtension:@"trip"];
+    NSString *tripPath = [documentsPath stringByAppendingPathComponent:tripFile];
+
+    // Save the trip to the file
+    [NSKeyedArchiver archiveRootObject:trip toFile:tripPath];
+
+    // Find a matching route for the trip
+    Route *route = [AppDelegate findMatchingRoute:trip];
+    if (route == nil) {
+        // Create a new route
+        route = [[[Route alloc] init] autorelease];
+        route.name = timestamp;
+        route.templateFile = tripFile;
+    }
+
+    // Add the trip to the route
+    [route addTripFile:tripFile];
+
+    // Add this trip's stats to the route
+    [route updateTripStats:trip];
+
+    // Save the route
+    [route save];
 }
 
 @end

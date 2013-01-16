@@ -24,6 +24,13 @@
         self.title = @"Routes";
         self.tabBarItem.title = @"Routes";
         self.tabBarItem.image = [UIImage imageNamed:@"list"];
+
+        UIBarButtonItem *barButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Recompute"
+                                                                           style:UIBarButtonItemStyleBordered
+                                                                          target:self
+                                                                          action:@selector(recomputeRoutes)] autorelease];
+        self.navigationItem.rightBarButtonItem = barButtonItem;
+
     }
     return self;
 }
@@ -35,6 +42,27 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    // Load the list of route files
+    _paths = [[AppDelegate routePaths] mutableCopy];
+
+    [self.tableView reloadData];
+}
+
+- (void)recomputeRoutes {
+    // Delete all the route files
+    for (NSString *path in _paths) {
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    }
+
+    // Process the trip
+    for (NSString *path in [AppDelegate tripPaths]) {
+        // Load the trip
+        Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        if (trip != nil) {
+            [AppDelegate processTrip:trip];
+        }
+    }
 
     // Load the list of route files
     _paths = [[AppDelegate routePaths] mutableCopy];

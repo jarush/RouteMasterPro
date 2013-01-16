@@ -17,8 +17,12 @@
 @property (nonatomic, retain) CLRegion *stopRegion;
 
 + (AppDelegate *)appDelegate;
+
 + (NSString *)documentsPath;
 + (NSArray *)routePaths;
++ (NSArray *)tripPaths;
+
 + (Route *)findMatchingRoute:(Trip *)trip;
++ (void)processTrip:(Trip *)trip;
 
 @end
