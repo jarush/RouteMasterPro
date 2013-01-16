@@ -23,4 +23,6 @@
 - (CLLocationDistance)distanceToTrip:(Trip *)trip;
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location;
 
+- (void)saveToCsvPath:(NSString *)path;
+
 @end

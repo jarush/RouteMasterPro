@@ -77,16 +77,20 @@ double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p);
     CLLocationDistance maxDistance = -INFINITY;
 
     for (CLLocation *currentLocation in _locations) {
+        if (currentLocation.horizontalAccuracy > 10) {
+            NSLog(@"acc: %f", currentLocation.horizontalAccuracy);
+        }
         // Compute the distance from the current location and the supplied location
         double distance = [trip distanceToLocation:currentLocation];
 
         // Check if the current location is within maching range
         if (distance > MAX_TRIP_MATCH_DISTANCE) {
             // Ignore the point if it's within 2x RADIUS_STOP_MONITORING of the first/last point
-            distance = [currentLocation distanceFromLocation:[trip firstLocation]];
-            if (distance > RADIUS_STOP_MONITORING * 2) {
-                distance = [currentLocation distanceFromLocation:[trip lastLocation]];
-                if (distance > RADIUS_STOP_MONITORING * 2) {
+            double startDistance = [currentLocation distanceFromLocation:[trip firstLocation]];
+            if (startDistance > RADIUS_STOP_MONITORING * 2) {
+                double stopDistance = [currentLocation distanceFromLocation:[trip lastLocation]];
+                if (stopDistance > RADIUS_STOP_MONITORING * 2) {
+                    NSLog(@"Bad Point: [%f] %f", distance, stopDistance < startDistance ? stopDistance : startDistance);
                     // These trips can't possibly match
                     return INFINITY;
                 }
@@ -152,6 +156,26 @@ double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p) {
     }
 
     return dist2(p, MKMapPointMake(a.x + t * (b.x - a.x), a.y + t * (b.y - a.y)));
+}
+
+#pragma mark -- Saving
+
+- (void)saveToCsvPath:(NSString *)path {
+    NSFileHandle *fh = [NSFileHandle fileHandleForWritingAtPath:path];
+    if (fh == nil) {
+        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
+        fh = [NSFileHandle fileHandleForWritingAtPath:path];
+    }
+
+    NSString *string = @"Latitude,Longitude,Altitude,HorizontalAccuracy,VerticalAccuracy,Course,Speed,Timestamp\n";
+    [fh writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+
+    for (CLLocation *currentLocation in _locations) {
+        string = [NSString stringWithFormat:@"%f,%f,%f,%f,%f,%f,%f,%@\n", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, currentLocation.altitude, currentLocation.horizontalAccuracy, currentLocation.verticalAccuracy, currentLocation.course, currentLocation.speed, currentLocation.timestamp];
+        [fh writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [fh closeFile];
 }
 
 #pragma mark -- NSCoding

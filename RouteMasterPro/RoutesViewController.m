@@ -25,11 +25,17 @@
         self.tabBarItem.title = @"Routes";
         self.tabBarItem.image = [UIImage imageNamed:@"list"];
 
-        UIBarButtonItem *barButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Recompute"
-                                                                           style:UIBarButtonItemStyleBordered
-                                                                          target:self
-                                                                          action:@selector(recomputeRoutes)] autorelease];
-        self.navigationItem.rightBarButtonItem = barButtonItem;
+        UIBarButtonItem *recomputeButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Recompute"
+                                                                                 style:UIBarButtonItemStyleBordered
+                                                                                target:self
+                                                                                action:@selector(recomputeRoutes)] autorelease];
+        self.navigationItem.leftBarButtonItem = recomputeButtonItem;
+
+        UIBarButtonItem *exportButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Export"
+                                                                              style:UIBarButtonItemStyleBordered
+                                                                             target:self
+                                                                             action:@selector(exportTrips)] autorelease];
+        self.navigationItem.rightBarButtonItem = exportButtonItem;
 
     }
     return self;
@@ -68,6 +74,18 @@
     _paths = [[AppDelegate routePaths] mutableCopy];
 
     [self.tableView reloadData];
+}
+
+- (void)exportTrips {
+    // Process the trip
+    for (NSString *tripPath in [AppDelegate tripPaths]) {
+        // Load the trip
+        Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:tripPath];
+        if (trip != nil) {
+            NSString *csvPath = [[tripPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"csv"];
+            [trip saveToCsvPath:csvPath];
+        }
+    }
 }
 
 #pragma mark - Table view data source
