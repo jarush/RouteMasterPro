@@ -60,7 +60,7 @@
         // Load the trip
         Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
         if (trip != nil) {
-            [AppDelegate processTrip:trip];
+            [AppDelegate matchTrip:trip tripPath:path];
         }
     }
 

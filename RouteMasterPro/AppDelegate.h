@@ -24,5 +24,6 @@
 
 + (Route *)findMatchingRoute:(Trip *)trip;
 + (void)processTrip:(Trip *)trip;
++ (void)matchTrip:(Trip *)trip tripPath:(NSString *)tripPath;
 
 @end

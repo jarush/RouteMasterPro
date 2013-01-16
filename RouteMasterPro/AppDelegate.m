@@ -120,16 +120,12 @@
         if (route != nil) {
             // Get the distance of the trip to the route
             CLLocationDistance distance = [route distanceToTrip:trip];
-            if (distance < minDistance) {
+            NSLog(@"Distance to route: %f", distance);
+            if (distance < minDistance && minDistance < MAX_TRIP_MATCH_DISTANCE) {
                 minDistance = distance;
                 minRoute = route;;
             }
         }
-    }
-
-    // Make sure the trip with the minimum distance is within matching range
-    if (minDistance > MAX_TRIP_MATCH_DISTANCE) {
-        return nil;
     }
 
     return minRoute;
@@ -146,20 +142,36 @@
     NSString *tripFile = [timestamp stringByAppendingPathExtension:@"trip"];
     NSString *tripPath = [documentsPath stringByAppendingPathComponent:tripFile];
 
+    // Make sure the filename is unique
+    int index = 1;
+    while ([[NSFileManager defaultManager] fileExistsAtPath:tripPath]) {
+        NSString *file = [[timestamp stringByAppendingFormat:@"-%d", index] stringByAppendingPathExtension:@"trip"];
+        tripPath = [documentsPath stringByAppendingPathComponent:file];
+    }
+
     // Save the trip to the file
     [NSKeyedArchiver archiveRootObject:trip toFile:tripPath];
 
+    // Try and match the trip to the route
+    [AppDelegate matchTrip:trip tripPath:tripPath];
+}
+
++ (void)matchTrip:(Trip *)trip tripPath:(NSString *)tripPath {
     // Find a matching route for the trip
     Route *route = [AppDelegate findMatchingRoute:trip];
     if (route == nil) {
+        NSString *name = [[tripPath lastPathComponent] stringByDeletingPathExtension];
+
+        NSLog(@"new route: %@", name);
+
         // Create a new route
         route = [[[Route alloc] init] autorelease];
-        route.name = timestamp;
-        route.templateFile = tripFile;
+        route.name = name;
+        route.templateFile = [tripPath lastPathComponent];
     }
 
     // Add the trip to the route
-    [route addTripFile:tripFile];
+    [route addTripFile:[tripPath lastPathComponent]];
 
     // Add this trip's stats to the route
     [route updateTripStats:trip];
