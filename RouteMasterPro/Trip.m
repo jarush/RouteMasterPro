@@ -7,6 +7,7 @@
 //
 
 #import "Trip.h"
+#import <MapKit/MapKit.h>
 #import "constants.h"
 
 @interface Trip () {
@@ -18,6 +19,8 @@
 @implementation Trip
 
 @synthesize locations = _locations;
+
+double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p);
 
 - (id)init {
     self = [super init];
@@ -75,7 +78,7 @@
 
     for (CLLocation *currentLocation in _locations) {
         // Compute the distance from the current location and the supplied location
-        CLLocationDistance distance = [trip distanceToLocation:currentLocation];
+        double distance = [trip distanceToLocation:currentLocation];
 
         // Check if the current location is within maching range
         if (distance > MAX_TRIP_MATCH_DISTANCE) {
@@ -100,17 +103,55 @@
 }
 
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location {
-    CLLocationDistance minDistance = INFINITY;
+    CLLocationDistance minDistance2 = INFINITY;
+    MKMapPoint lastMapPoint;
+    bool hasLastMapPoint = NO;
+
+    MKMapPoint mapPoint = MKMapPointForCoordinate(location.coordinate);
 
     for (CLLocation *currentLocation in _locations) {
-        // Compute the distance from the current location and the supplied location
-        CLLocationDistance distance = [location distanceFromLocation:currentLocation];
-        if (distance < minDistance) {
-            minDistance = distance;
+        MKMapPoint currentMapPoint = MKMapPointForCoordinate(currentLocation.coordinate);
+
+        if (hasLastMapPoint) {
+            // Compute the distance from the current location and the line segment from last to current
+            double distance2 = distanceToSegment2(lastMapPoint, currentMapPoint, mapPoint);
+            if (distance2 < minDistance2) {
+                minDistance2 = distance2;
+            }
+        } else {
+            hasLastMapPoint = YES;
         }
+
+        lastMapPoint = currentMapPoint;
     }
 
-    return minDistance;
+    return sqrt(minDistance2);
+}
+
+double dist2(MKMapPoint a, MKMapPoint b) {
+    double dx = a.x - b.x;
+    double dy = a.y - b.y;
+    return dx * dx + dy * dy;
+}
+
+double dist(MKMapPoint a, MKMapPoint b) {
+    return sqrt(dist2(a, b));
+}
+
+double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p) {
+    double d2 = dist2(a, b);
+    if (d2 == 0.0) {
+        return dist2(a, p);
+    }
+
+    double t = ((p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y)) / d2;
+    if (t < 0.0) {
+        return dist2(p, a);
+    } else if (t > 1.0) {
+        return dist2(p, b);
+    }
+
+    return dist2(p, MKMapPointMake(a.x + t * (b.x - a.x), a.y + t * (b.y - a.y)));
 }
 
 #pragma mark -- NSCoding
