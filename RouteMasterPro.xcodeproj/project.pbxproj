@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6822F28016A7BE03008683B4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6822F27F16A7BE03008683B4 /* MessageUI.framework */; };
 		6879392916A4D86500A4292B /* Trip.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392616A4D86500A4292B /* Trip.m */; };
 		6879392A16A4D86500A4292B /* TripDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392816A4D86500A4292B /* TripDetailsViewController.m */; };
 		6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392C16A4D90300A4292B /* CurrentTripViewController.m */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6822F27F16A7BE03008683B4 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		682BC6AB16A268730070FBEA /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		6879392516A4D86500A4292B /* Trip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trip.h; sourceTree = "<group>"; };
 		6879392616A4D86500A4292B /* Trip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trip.m; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				687FABAE169F090F0031C25B /* UIKit.framework in Frameworks */,
 				687FABB0169F090F0031C25B /* Foundation.framework in Frameworks */,
 				687FABB2169F090F0031C25B /* CoreGraphics.framework in Frameworks */,
+				6822F28016A7BE03008683B4 /* MessageUI.framework in Frameworks */,
 				687FABD3169F0A1F0031C25B /* CoreLocation.framework in Frameworks */,
 				68F5C75E169FC6BC0083170C /* MapKit.framework in Frameworks */,
 			);
@@ -130,6 +133,7 @@
 				687FABAD169F090F0031C25B /* UIKit.framework */,
 				687FABAF169F090F0031C25B /* Foundation.framework */,
 				687FABB1169F090F0031C25B /* CoreGraphics.framework */,
+				6822F27F16A7BE03008683B4 /* MessageUI.framework */,
 				687FABD2169F0A1F0031C25B /* CoreLocation.framework */,
 				68F5C75D169FC6BC0083170C /* MapKit.framework */,
 			);

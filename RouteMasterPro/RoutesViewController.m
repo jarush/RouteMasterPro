@@ -7,11 +7,12 @@
 //
 
 #import "RoutesViewController.h"
+#import <MessageUI/MessageUI.h>
 #import "Route.h"
 #import "RouteDetailsViewController.h"
 #import "AppDelegate.h"
 
-@interface RoutesViewController () {
+@interface RoutesViewController () <MFMailComposeViewControllerDelegate> {
     NSMutableArray *_paths;
 }
 @end
@@ -77,7 +78,27 @@
     [self.tableView reloadData];
 }
 
+#pragma mark -- Export via mail
+
 - (void)exportTrips {
+    MFMailComposeViewController *viewController = [[[MFMailComposeViewController alloc] init] autorelease];
+    viewController.mailComposeDelegate = self;
+    [viewController setSubject:@"Trips"];
+    [viewController setMessageBody:@"See attached trip files:" isHTML:NO];
+
+    for (NSString *tripPath in [AppDelegate tripPaths]) {
+        [viewController addAttachmentData:[NSData dataWithContentsOfFile:tripPath]
+                                 mimeType:@"text/csv"
+                                 fileName:[tripPath lastPathComponent]];
+    }
+
+    [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
