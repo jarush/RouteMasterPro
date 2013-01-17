@@ -62,11 +62,12 @@
     }
 
     // Process the trip
-    for (NSString *path in [AppDelegate tripPaths]) {
+    for (NSString *tripPath in [AppDelegate tripPaths]) {
         // Load the trip
-        Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
         if (trip != nil) {
-            [AppDelegate matchTrip:trip tripPath:path];
+            // FIXME
+            [AppDelegate matchTrip:trip tripPath:tripPath];
         }
     }
 
@@ -77,15 +78,6 @@
 }
 
 - (void)exportTrips {
-    // Process the trip
-    for (NSString *tripPath in [AppDelegate tripPaths]) {
-        // Load the trip
-        Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:tripPath];
-        if (trip != nil) {
-            NSString *csvPath = [[tripPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"csv"];
-            [trip saveToCsvPath:csvPath];
-        }
-    }
 }
 
 #pragma mark - Table view data source
@@ -141,10 +133,10 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *path = [_paths objectAtIndex:indexPath.row];
+    NSString *routePath = [_paths objectAtIndex:indexPath.row];
 
     // Load the route
-    Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
     if (route != nil) {
         // Push on a route details view
         RouteDetailsViewController *routeDetailsViewController = [[[RouteDetailsViewController alloc] init] autorelease];

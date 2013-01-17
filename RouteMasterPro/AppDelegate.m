@@ -114,13 +114,12 @@
     Route *minRoute = nil;
 
     // Loop through the route files
-    for (NSString *path in [AppDelegate routePaths]) {
+    for (NSString *routePath in [AppDelegate routePaths]) {
         // Load the route
-        Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
         if (route != nil) {
             // Get the distance of the trip to the route
             CLLocationDistance distance = [route distanceToTrip:trip];
-            NSLog(@"Distance to route: %f", distance);
             if (distance < minDistance && minDistance < MAX_TRIP_MATCH_DISTANCE) {
                 minDistance = distance;
                 minRoute = route;;
@@ -150,7 +149,7 @@
     }
 
     // Save the trip to the file
-    [NSKeyedArchiver archiveRootObject:trip toFile:tripPath];
+    [trip writeToPath:tripPath];
 
     // Try and match the trip to the route
     [AppDelegate matchTrip:trip tripPath:tripPath];
@@ -161,8 +160,6 @@
     Route *route = [AppDelegate findMatchingRoute:trip];
     if (route == nil) {
         NSString *name = [[tripPath lastPathComponent] stringByDeletingPathExtension];
-
-        NSLog(@"new route: %@", name);
 
         // Create a new route
         route = [[[Route alloc] init] autorelease];

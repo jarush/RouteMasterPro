@@ -8,6 +8,7 @@
 
 #import "Trip.h"
 #import <MapKit/MapKit.h>
+#import "BufferedReader.h"
 #import "constants.h"
 
 @interface Trip () {
@@ -77,9 +78,6 @@ double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p);
     CLLocationDistance maxDistance = -INFINITY;
 
     for (CLLocation *currentLocation in _locations) {
-        if (currentLocation.horizontalAccuracy > 10) {
-            NSLog(@"acc: %f", currentLocation.horizontalAccuracy);
-        }
         // Compute the distance from the current location and the supplied location
         double distance = [trip distanceToLocation:currentLocation];
 
@@ -90,7 +88,6 @@ double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p);
             if (startDistance > RADIUS_STOP_MONITORING * 2) {
                 double stopDistance = [currentLocation distanceFromLocation:[trip lastLocation]];
                 if (stopDistance > RADIUS_STOP_MONITORING * 2) {
-                    NSLog(@"Bad Point: [%f] %f", distance, stopDistance < startDistance ? stopDistance : startDistance);
                     // These trips can't possibly match
                     return INFINITY;
                 }
@@ -158,9 +155,9 @@ double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p) {
     return dist2(p, MKMapPointMake(a.x + t * (b.x - a.x), a.y + t * (b.y - a.y)));
 }
 
-#pragma mark -- Saving
+#pragma mark -- Reading/Writing
 
-- (void)saveToCsvPath:(NSString *)path {
+- (void)writeToPath:(NSString *)path {
     NSFileHandle *fh = [NSFileHandle fileHandleForWritingAtPath:path];
     if (fh == nil) {
         [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
@@ -170,28 +167,64 @@ double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p) {
     NSString *string = @"Latitude,Longitude,Altitude,HorizontalAccuracy,VerticalAccuracy,Course,Speed,Timestamp\n";
     [fh writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 
+
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+
     for (CLLocation *currentLocation in _locations) {
-        string = [NSString stringWithFormat:@"%f,%f,%f,%f,%f,%f,%f,%@\n", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude, currentLocation.altitude, currentLocation.horizontalAccuracy, currentLocation.verticalAccuracy, currentLocation.course, currentLocation.speed, currentLocation.timestamp];
+        string = [NSString stringWithFormat:@"%f,%f,%f,%f,%f,%f,%f,%@\n",
+                  currentLocation.coordinate.latitude,
+                  currentLocation.coordinate.longitude,
+                  currentLocation.altitude,
+                  currentLocation.horizontalAccuracy,
+                  currentLocation.verticalAccuracy,
+                  currentLocation.course,
+                  currentLocation.speed,
+                  [dateFormatter stringFromDate:currentLocation.timestamp]];
         [fh writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
     }
-    
+
     [fh closeFile];
 }
 
-#pragma mark -- NSCoding
-
-#define kLocations @"Locations"
-
-- (id)initWithCoder:(NSCoder *)coder {
-    self = [super init];
+- (id)initWithPath:(NSString *)path {
+    self = [self init];
     if (self) {
-        _locations = [[coder decodeObjectForKey:kLocations] retain];
+        NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:path];
+        [inputStream open];
+        BufferedReader *reader = [[BufferedReader alloc] initWithInputStream:inputStream];
+
+        // Skip the first line since it's the header
+        [reader readLine];
+
+        NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+
+        NSString *line = nil;
+        while ((line = [reader readLine]) != nil) {
+            NSArray *tokens = [line componentsSeparatedByString:@","];
+            double latitude = [[tokens objectAtIndex:0] doubleValue];
+            double longitude = [[tokens objectAtIndex:1] doubleValue];
+            double altitude = [[tokens objectAtIndex:2] doubleValue];
+            double horizontalAccuracy = [[tokens objectAtIndex:3] doubleValue];
+            double verticalAccuracy = [[tokens objectAtIndex:4] doubleValue];
+            double course = [[tokens objectAtIndex:5] doubleValue];
+            double speed = [[tokens objectAtIndex:6] doubleValue];
+            NSDate *timestamp = [dateFormatter dateFromString:[tokens objectAtIndex:7]];
+
+            CLLocation *location = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude)
+                                                                 altitude:altitude
+                                                       horizontalAccuracy:horizontalAccuracy
+                                                         verticalAccuracy:verticalAccuracy
+                                                                   course:course
+                                                                    speed:speed
+                                                                timestamp:timestamp];
+            [_locations addObject:location];
+        }
+
+        [inputStream close];
     }
     return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-    [coder encodeObject:_locations forKey:kLocations];
 }
 
 @end

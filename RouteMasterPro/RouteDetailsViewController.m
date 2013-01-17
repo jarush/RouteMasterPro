@@ -213,11 +213,11 @@ enum {
     }
 
     // Get the selected trip path
-    NSString *file = [_route.tripFiles objectAtIndex:indexPath.row];
-    NSString *path = [[AppDelegate documentsPath] stringByAppendingPathComponent:file];
+    NSString *tripFile = [_route.tripFiles objectAtIndex:indexPath.row];
+    NSString *tripPath = [[AppDelegate documentsPath] stringByAppendingPathComponent:tripFile];
 
     // Load the trip
-    Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
     if (trip != nil) {
         // Push on a trip details view
         TripDetailsViewController *tripDetailsViewController = [[[TripDetailsViewController alloc] init] autorelease];

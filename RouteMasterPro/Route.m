@@ -60,10 +60,10 @@
     CLLocationDistance distance = INFINITY;
 
     // Get the path to the template
-    NSString *path = [[AppDelegate documentsPath] stringByAppendingPathComponent:_templateFile];
+    NSString *tripPath = [[AppDelegate documentsPath] stringByAppendingPathComponent:_templateFile];
 
     // Load the trip
-    Trip *trip = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
     if (trip != nil) {
         distance = [inTrip distanceToTrip:trip];
     }
@@ -75,11 +75,11 @@
 
 - (void)save {
     // Create a path for the route file in the Documents folder
-    NSString *file = [_name stringByAppendingPathExtension:@"route"];
-    NSString *path = [[AppDelegate documentsPath] stringByAppendingPathComponent:file];
+    NSString *routeFile = [_name stringByAppendingPathExtension:@"route"];
+    NSString *routePath = [[AppDelegate documentsPath] stringByAppendingPathComponent:routeFile];
 
     // Save the route to the file
-    [NSKeyedArchiver archiveRootObject:self toFile:path];
+    [NSKeyedArchiver archiveRootObject:self toFile:routePath];
 }
 
 #pragma mark -- NSCoding

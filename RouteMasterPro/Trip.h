@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface Trip : NSObject <NSCoding>
+@interface Trip : NSObject
 
 @property (nonatomic, readonly) NSArray *locations;
 
@@ -23,6 +23,7 @@
 - (CLLocationDistance)distanceToTrip:(Trip *)trip;
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location;
 
-- (void)saveToCsvPath:(NSString *)path;
+- (void)writeToPath:(NSString *)path;
+- (id)initWithPath:(NSString *)path;
 
 @end

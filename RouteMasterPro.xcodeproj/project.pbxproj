@@ -23,6 +23,7 @@
 		687FABC4169F090F0031C25B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 687FABC3169F090F0031C25B /* Default-568h@2x.png */; };
 		687FABD0169F09320031C25B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 687FABCF169F09320031C25B /* MapViewController.m */; };
 		687FABD3169F0A1F0031C25B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABD2169F0A1F0031C25B /* CoreLocation.framework */; };
+		68A97C3816A7837D00FC2318 /* BufferedReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A97C3716A7837C00FC2318 /* BufferedReader.m */; };
 		68BCCE4816A1D4CA00C369C1 /* Icon@2x~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */; };
 		68BCCE4A16A1D4D000C369C1 /* Icon~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */; };
 		68BCCE4C16A1D4D400C369C1 /* Icon@2x~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */; };
@@ -68,6 +69,8 @@
 		687FABCE169F09320031C25B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		687FABCF169F09320031C25B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		687FABD2169F0A1F0031C25B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		68A97C3616A7837C00FC2318 /* BufferedReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferedReader.h; sourceTree = "<group>"; };
+		68A97C3716A7837C00FC2318 /* BufferedReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferedReader.m; sourceTree = "<group>"; };
 		68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPad.png"; sourceTree = "<group>"; };
@@ -138,6 +141,8 @@
 			children = (
 				687FABBC169F090F0031C25B /* AppDelegate.h */,
 				687FABBD169F090F0031C25B /* AppDelegate.m */,
+				68A97C3616A7837C00FC2318 /* BufferedReader.h */,
+				68A97C3716A7837C00FC2318 /* BufferedReader.m */,
 				682BC6AB16A268730070FBEA /* constants.h */,
 				6879392B16A4D90300A4292B /* CurrentTripViewController.h */,
 				6879392C16A4D90300A4292B /* CurrentTripViewController.m */,
@@ -289,6 +294,7 @@
 				6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */,
 				6879393016A4DBA700A4292B /* Route.m in Sources */,
 				6879393716A5089F00A4292B /* RouteDetailsViewController.m in Sources */,
+				68A97C3816A7837D00FC2318 /* BufferedReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
