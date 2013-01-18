@@ -14,9 +14,9 @@ enum {
     RowLatitude = 0,
     RowLongitude,
     RowAltitude,
+    RowCourse,
     RowSpeed,
     RowAvgSpeed,
-    RowCourse,
     RowDistance,
     RowDuration,
     RowPoints,
@@ -24,11 +24,13 @@ enum {
 };
 
 @interface CurrentTripViewController () <CLLocationManagerDelegate> {
+    UIBarButtonItem *_monitorButtonItem;
     UIBarButtonItem *_startStopButtonItem;
     CLLocationManager *_locationManager;
     CLLocation *_lastLocation;
     CLLocationDistance _distance;
-    BOOL _running;
+    BOOL _monitoring;
+    BOOL _tracking;
 }
 @end
 
@@ -41,21 +43,27 @@ enum {
         self.tabBarItem.title = @"Current Trip";
         self.tabBarItem.image = [UIImage imageNamed:@"location"];
 
-        _startStopButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Start"
+        _monitorButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Monitor"
+                                                              style:UIBarButtonItemStyleBordered
+                                                             target:self
+                                                             action:@selector(toggleMonitor)];
+        self.navigationItem.leftBarButtonItem = _monitorButtonItem;
+
+        _startStopButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Track"
                                                                 style:UIBarButtonItemStyleBordered
                                                                target:self
-                                                               action:@selector(toggleStartStop)];
+                                                               action:@selector(toggleTracking)];
         self.navigationItem.rightBarButtonItem = _startStopButtonItem;
 
         _trip = nil;
 
         _lastLocation = nil;
         _distance = 0.0;
-        _running = NO;
+        _monitoring = NO;
+        _tracking = NO;
 
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
-        _locationManager.distanceFilter = LOCATION_DISTANCE_FILTER;
         _locationManager.delegate = self;
     }
     return self;
@@ -70,38 +78,60 @@ enum {
 }
 
 - (void)startMonitoring {
-    _running = YES;
+    _monitoring = YES;
+
+    [_locationManager startUpdatingLocation];
+    _monitorButtonItem.style = UIBarButtonItemStyleDone;
+}
+
+- (void)stopMonitoring {
+    _monitoring = NO;
+
+    [_locationManager stopUpdatingLocation];
+    _monitorButtonItem.style = UIBarButtonItemStyleBordered;
+}
+
+- (void)toggleMonitor {
+    if (!_monitoring) {
+        [self startMonitoring];
+    } else {
+        [self stopMonitoring];
+    }
+}
+
+- (void)startTracking {
+    _tracking = YES;
 
     [_trip release];
     _trip = [[Trip alloc] init];
 
-    [_lastLocation release];
-    _lastLocation = nil;
     _distance = 0.0;
 
-    [_locationManager startUpdatingLocation];
+    [self startMonitoring];
 
-    _startStopButtonItem.title = @"Stop";
-    _startStopButtonItem.tintColor = [UIColor colorWithRed:0.7f green:0.2f blue:0.2f alpha:1.0f];
+    _monitorButtonItem.enabled = NO;
+
+    _startStopButtonItem.style = UIBarButtonItemStyleDone;
 }
 
-- (void)stopMonitoring {
-    _running = NO;
+- (void)stopTracking {
+    _tracking = NO;
 
     // Process the trip
     [AppDelegate processTrip:_trip];
 
-    [_locationManager stopUpdatingLocation];
+    [self stopMonitoring];
 
-    _startStopButtonItem.title = @"Start";
-    _startStopButtonItem.tintColor = nil;
+    _monitorButtonItem.enabled = YES;
+
+    _startStopButtonItem.style = UIBarButtonItemStyleBordered;
 }
 
-- (void)toggleStartStop {
-    if (_running) {
-        [self stopMonitoring];
+- (void)toggleTracking {
+    if (_tracking) {
+        [self stopTracking];
     } else {
-        [self startMonitoring];
+        [self startTracking];
     }
 }
 
@@ -141,7 +171,12 @@ enum {
 
         case RowCourse: {
             cell.textLabel.text = @"Course";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f", _lastLocation.course];
+
+            if (_lastLocation.course != -1) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f", _lastLocation.course];
+            } else {
+                cell.detailTextLabel.text = @"";
+            }
             break;
         }
 
@@ -154,37 +189,57 @@ enum {
         case RowAvgSpeed: {
             cell.textLabel.text = @"Avg Speed";
 
-            NSTimeInterval duration = [_lastLocation.timestamp timeIntervalSinceDate:[_trip firstLocation].timestamp];
-            if (duration < 10.0) {
-                cell.detailTextLabel.text = @"Calculating";
+            if (_tracking) {
+                CLLocation *firstLocation = [_trip firstLocation];
+                NSTimeInterval duration = [_lastLocation.timestamp timeIntervalSinceDate:firstLocation.timestamp];
+
+                if (firstLocation == nil || duration < 10.0) {
+                    cell.detailTextLabel.text = @"Calculating";
+                } else {
+                    double avgSpeed = _distance / duration;
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
+                }
             } else {
-                double avgSpeed = _distance / duration;
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
+                cell.detailTextLabel.text = @"";
             }
             break;
         }
 
         case RowDistance: {
             cell.textLabel.text = @"Distance";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _distance * METER_TO_MILES];
+
+            if (_tracking) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _distance * METER_TO_MILES];
+            } else {
+                cell.detailTextLabel.text = @"";
+            }
             break;
         }
 
         case RowDuration: {
             cell.textLabel.text = @"Duration";
 
-            NSInteger duration = (NSInteger)[_trip duration];
-            NSInteger hour = duration / 3600;
-            NSInteger min = (duration / 60) % 60;
-            NSInteger sec = duration % 60;
+            if (_tracking) {
+                NSInteger duration = (NSInteger)[_trip duration];
+                NSInteger hour = duration / 3600;
+                NSInteger min = (duration / 60) % 60;
+                NSInteger sec = duration % 60;
 
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
+            } else {
+                cell.detailTextLabel.text = @"";
+            }
             break;
         }
 
         case RowPoints: {
             cell.textLabel.text = @"Points";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_trip.locations count]];
+
+            if (_tracking) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_trip.locations count]];
+            } else {
+                cell.detailTextLabel.text = @"";
+            }
             break;
         }
 
@@ -202,21 +257,30 @@ enum {
 #pragma mark - Location manager data source
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    for (CLLocation *location in locations) {
-        [_trip addLocation:location];
-    }
-
     CLLocation *currentLocation = [locations lastObject];
-    _distance += [_lastLocation distanceFromLocation:currentLocation];
 
-    [_lastLocation release];
-    _lastLocation = [currentLocation retain];
+    if (_tracking) {
+        // Add the locations to the trip
+        double currentDistance = [_lastLocation distanceFromLocation:currentLocation];
+        if (currentDistance > LOCATION_DISTANCE_FILTER || _lastLocation == nil) {
+            [_trip addLocation:currentLocation];
+        }
 
-    AppDelegate *appDelegate = [AppDelegate appDelegate];
-    if ([appDelegate.stopRegion containsCoordinate:currentLocation.coordinate]) {
-        [self stopMonitoring];
+        // Update the distance calculation
+        _distance += currentDistance;
+
+        // Check if we're in the stop region
+        AppDelegate *appDelegate = [AppDelegate appDelegate];
+        if ([appDelegate.stopRegion containsCoordinate:currentLocation.coordinate]) {
+            [self stopTracking];
+        }
     }
     
+    // Update the last location with the current location
+    [_lastLocation release];
+    _lastLocation = [currentLocation retain];
+    
+    // Update the table
     [self.tableView reloadData];
 }
 
