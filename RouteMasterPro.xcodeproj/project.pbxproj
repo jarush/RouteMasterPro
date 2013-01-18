@@ -13,6 +13,7 @@
 		6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392C16A4D90300A4292B /* CurrentTripViewController.m */; };
 		6879393016A4DBA700A4292B /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392F16A4DBA700A4292B /* Route.m */; };
 		6879393716A5089F00A4292B /* RouteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879393616A5089F00A4292B /* RouteDetailsViewController.m */; };
+		687D7AB616A9E3B5002A7110 /* NSOutputStream+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */; };
 		687FABAE169F090F0031C25B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAD169F090F0031C25B /* UIKit.framework */; };
 		687FABB0169F090F0031C25B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAF169F090F0031C25B /* Foundation.framework */; };
 		687FABB2169F090F0031C25B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABB1169F090F0031C25B /* CoreGraphics.framework */; };
@@ -56,6 +57,8 @@
 		6879392F16A4DBA700A4292B /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		6879393516A5089F00A4292B /* RouteDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDetailsViewController.h; sourceTree = "<group>"; };
 		6879393616A5089F00A4292B /* RouteDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteDetailsViewController.m; sourceTree = "<group>"; };
+		687D7AB416A9E3B5002A7110 /* NSOutputStream+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+Utils.h"; sourceTree = "<group>"; };
+		687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+Utils.m"; sourceTree = "<group>"; };
 		687FABA9169F090F0031C25B /* RouteMasterPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMasterPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		687FABAD169F090F0031C25B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		687FABAF169F090F0031C25B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,6 +160,8 @@
 				68A8AA4F16A8D7AA0088CFEC /* Ecef.m */,
 				687FABCE169F09320031C25B /* MapViewController.h */,
 				687FABCF169F09320031C25B /* MapViewController.m */,
+				687D7AB416A9E3B5002A7110 /* NSOutputStream+Utils.h */,
+				687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */,
 				6879392E16A4DBA700A4292B /* Route.h */,
 				6879392F16A4DBA700A4292B /* Route.m */,
 				6879393516A5089F00A4292B /* RouteDetailsViewController.h */,
@@ -305,6 +310,7 @@
 				6879393716A5089F00A4292B /* RouteDetailsViewController.m in Sources */,
 				68A97C3816A7837D00FC2318 /* BufferedReader.m in Sources */,
 				68A8AA5016A8D7AA0088CFEC /* Ecef.m in Sources */,
+				687D7AB616A9E3B5002A7110 /* NSOutputStream+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

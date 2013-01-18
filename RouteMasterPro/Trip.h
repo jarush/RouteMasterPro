@@ -24,6 +24,7 @@
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location;
 
 - (void)writeToPath:(NSString *)path;
+- (void)writeKmlToPath:(NSString *)path;
 - (id)initWithPath:(NSString *)path;
 
 @end

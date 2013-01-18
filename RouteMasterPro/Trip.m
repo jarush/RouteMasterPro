@@ -9,6 +9,7 @@
 #import "Trip.h"
 #import "BufferedReader.h"
 #import "Ecef.h"
+#import "NSOutputStream+Utils.h"
 #import "constants.h"
 
 @interface Trip () {
@@ -156,6 +157,38 @@
     [fh closeFile];
 }
 
+- (void)writeKmlToPath:(NSString *)path {
+    NSOutputStream *outputStream = [NSOutputStream outputStreamToFileAtPath:path append:NO];
+    [outputStream open];
+
+    [outputStream writeString:@"<kml xmlns=\"http://earth.google.com/kml/2.0\">\n"];
+    [outputStream writeString:@" <Document>\n"];
+    [outputStream writeString:@"  <Style id=\"linestyle\">\n"];
+    [outputStream writeString:@"   <LineStyle>\n"];
+    [outputStream writeString:@"    <color>7f0000ff</color>\n"];
+    [outputStream writeString:@"   </LineStyle>\n"];
+    [outputStream writeString:@"  </Style>\n"];
+    [outputStream writeString:@"  <Placemark>\n"];
+    [outputStream writeString:@"   <styleUrl>#linestyle</styleUrl>\n"];
+    [outputStream writeString:@"   <LineString>\n"];
+    [outputStream writeString:@"    <coordinates>\n"];
+
+    for (CLLocation *currentLocation in _locations) {
+        [outputStream writeString:[NSString stringWithFormat:@"      %f,%f,%f\n",
+                                   currentLocation.coordinate.longitude,
+                                   currentLocation.coordinate.latitude,
+                                   currentLocation.altitude]];
+    }
+
+    [outputStream writeString:@"    </coordinates>\n"];
+    [outputStream writeString:@"   </LineString>\n"];
+    [outputStream writeString:@"  </Placemark>\n"];
+    [outputStream writeString:@" </Document>\n"];
+    [outputStream writeString:@"</kml>\n"];
+
+    [outputStream close];
+}
+
 - (id)initWithPath:(NSString *)path {
     self = [self init];
     if (self) {
@@ -190,7 +223,7 @@
                                                                 timestamp:timestamp];
             [_locations addObject:location];
         }
-
+        
         [inputStream close];
     }
     return self;

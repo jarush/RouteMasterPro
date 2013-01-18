@@ -32,11 +32,15 @@
                                                                                 action:@selector(recomputeRoutes)] autorelease];
         self.navigationItem.leftBarButtonItem = recomputeButtonItem;
 
-        UIBarButtonItem *exportButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Export"
-                                                                              style:UIBarButtonItemStyleBordered
-                                                                             target:self
-                                                                             action:@selector(exportTrips)] autorelease];
-        self.navigationItem.rightBarButtonItem = exportButtonItem;
+        UIBarButtonItem *exportTripsButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"CSV"
+                                                                                   style:UIBarButtonItemStyleBordered
+                                                                                  target:self
+                                                                                  action:@selector(exportTrips)] autorelease];
+        UIBarButtonItem *exportKmlButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"KML"
+                                                                                 style:UIBarButtonItemStyleBordered
+                                                                                target:self
+                                                                                action:@selector(exportKml)] autorelease];
+        self.navigationItem.rightBarButtonItems = @[exportTripsButtonItem, exportKmlButtonItem];
 
     }
     return self;
@@ -90,6 +94,26 @@
         [viewController addAttachmentData:[NSData dataWithContentsOfFile:tripPath]
                                  mimeType:@"text/csv"
                                  fileName:[tripPath lastPathComponent]];
+    }
+
+    [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)exportKml {
+    MFMailComposeViewController *viewController = [[[MFMailComposeViewController alloc] init] autorelease];
+    viewController.mailComposeDelegate = self;
+    [viewController setSubject:@"KML Files"];
+    [viewController setMessageBody:@"See attached KML files:" isHTML:NO];
+
+    for (NSString *tripPath in [AppDelegate tripPaths]) {
+        NSString *kmlPath = [[tripPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"kml"];
+
+        Trip *trip = [[Trip alloc] initWithPath:tripPath];
+        [trip writeKmlToPath:kmlPath];
+
+        [viewController addAttachmentData:[NSData dataWithContentsOfFile:kmlPath]
+                                 mimeType:@"text/xml"
+                                 fileName:[kmlPath lastPathComponent]];
     }
 
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
