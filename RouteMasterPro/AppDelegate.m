@@ -120,7 +120,7 @@
         if (route != nil) {
             // Get the distance of the trip to the route
             CLLocationDistance distance = [route distanceToTrip:trip];
-            if (distance < minDistance && minDistance < MAX_TRIP_MATCH_DISTANCE) {
+            if (distance < minDistance && distance < MAX_TRIP_MATCH_DISTANCE) {
                 minDistance = distance;
                 minRoute = route;;
             }

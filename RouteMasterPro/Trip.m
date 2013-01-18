@@ -7,8 +7,8 @@
 //
 
 #import "Trip.h"
-#import <MapKit/MapKit.h>
 #import "BufferedReader.h"
+#import "Ecef.h"
 #import "constants.h"
 
 @interface Trip () {
@@ -20,8 +20,6 @@
 @implementation Trip
 
 @synthesize locations = _locations;
-
-double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p);
 
 - (id)init {
     self = [super init];
@@ -105,54 +103,25 @@ double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p);
 
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location {
     CLLocationDistance minDistance2 = INFINITY;
-    MKMapPoint lastMapPoint;
-    bool hasLastMapPoint = NO;
+    Ecef *lastEcef = nil;
 
-    MKMapPoint mapPoint = MKMapPointForCoordinate(location.coordinate);
+    Ecef *ecef = [Ecef ecefFromCoord:location.coordinate height:location.altitude];
 
-    for (CLLocation *currentLocation in _locations) {
-        MKMapPoint currentMapPoint = MKMapPointForCoordinate(currentLocation.coordinate);
+    for (CLLocation *location in _locations) {
+        Ecef *currentEcef = [Ecef ecefFromCoord:location.coordinate height:location.altitude];
 
-        if (hasLastMapPoint) {
+        if (lastEcef != nil) {
             // Compute the distance from the current location and the line segment from last to current
-            double distance2 = distanceToSegment2(lastMapPoint, currentMapPoint, mapPoint);
+            double distance2 = [ecef distanceToSegmentSquaredFrom:lastEcef to:currentEcef];
             if (distance2 < minDistance2) {
                 minDistance2 = distance2;
             }
-        } else {
-            hasLastMapPoint = YES;
         }
 
-        lastMapPoint = currentMapPoint;
+        lastEcef = currentEcef;
     }
 
     return sqrt(minDistance2);
-}
-
-double dist2(MKMapPoint a, MKMapPoint b) {
-    double dx = a.x - b.x;
-    double dy = a.y - b.y;
-    return dx * dx + dy * dy;
-}
-
-double dist(MKMapPoint a, MKMapPoint b) {
-    return sqrt(dist2(a, b));
-}
-
-double distanceToSegment2(MKMapPoint a, MKMapPoint b, MKMapPoint p) {
-    double d2 = dist2(a, b);
-    if (d2 == 0.0) {
-        return dist2(a, p);
-    }
-
-    double t = ((p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y)) / d2;
-    if (t < 0.0) {
-        return dist2(p, a);
-    } else if (t > 1.0) {
-        return dist2(p, b);
-    }
-
-    return dist2(p, MKMapPointMake(a.x + t * (b.x - a.x), a.y + t * (b.y - a.y)));
 }
 
 #pragma mark -- Reading/Writing
