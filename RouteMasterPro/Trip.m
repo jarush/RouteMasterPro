@@ -128,33 +128,27 @@
 #pragma mark -- Reading/Writing
 
 - (void)writeToPath:(NSString *)path {
-    NSFileHandle *fh = [NSFileHandle fileHandleForWritingAtPath:path];
-    if (fh == nil) {
-        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
-        fh = [NSFileHandle fileHandleForWritingAtPath:path];
-    }
+    NSOutputStream *outputStream = [NSOutputStream outputStreamToFileAtPath:path append:NO];
+    [outputStream open];
 
-    NSString *string = @"Latitude,Longitude,Altitude,HorizontalAccuracy,VerticalAccuracy,Course,Speed,Timestamp\n";
-    [fh writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
-
+    [outputStream writeString:@"Latitude,Longitude,Altitude,HorizontalAccuracy,VerticalAccuracy,Course,Speed,Timestamp\n"];
 
     NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
 
     for (CLLocation *currentLocation in _locations) {
-        string = [NSString stringWithFormat:@"%f,%f,%f,%f,%f,%f,%f,%@\n",
-                  currentLocation.coordinate.latitude,
-                  currentLocation.coordinate.longitude,
-                  currentLocation.altitude,
-                  currentLocation.horizontalAccuracy,
-                  currentLocation.verticalAccuracy,
-                  currentLocation.course,
-                  currentLocation.speed,
-                  [dateFormatter stringFromDate:currentLocation.timestamp]];
-        [fh writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+        [outputStream writeString:[NSString stringWithFormat:@"%f,%f,%f,%f,%f,%f,%f,%@\n",
+                                   currentLocation.coordinate.latitude,
+                                   currentLocation.coordinate.longitude,
+                                   currentLocation.altitude,
+                                   currentLocation.horizontalAccuracy,
+                                   currentLocation.verticalAccuracy,
+                                   currentLocation.course,
+                                   currentLocation.speed,
+                                   [dateFormatter stringFromDate:currentLocation.timestamp]]];
     }
 
-    [fh closeFile];
+    [outputStream close];
 }
 
 - (void)writeKmlToPath:(NSString *)path {
