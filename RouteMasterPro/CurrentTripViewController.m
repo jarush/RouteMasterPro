@@ -7,6 +7,7 @@
 //
 
 #import "CurrentTripViewController.h"
+#import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
 #import "constants.h"
 
@@ -273,6 +274,7 @@ enum {
         AppDelegate *appDelegate = [AppDelegate appDelegate];
         if ([appDelegate.stopRegion containsCoordinate:currentLocation.coordinate]) {
             [self stopTracking];
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         }
     }
     

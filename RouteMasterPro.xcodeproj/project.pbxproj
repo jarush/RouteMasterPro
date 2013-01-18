@@ -14,6 +14,7 @@
 		6879393016A4DBA700A4292B /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392F16A4DBA700A4292B /* Route.m */; };
 		6879393716A5089F00A4292B /* RouteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879393616A5089F00A4292B /* RouteDetailsViewController.m */; };
 		687D7AB616A9E3B5002A7110 /* NSOutputStream+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */; };
+		687D7AB916A9EBE4002A7110 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687D7AB816A9EBE4002A7110 /* AudioToolbox.framework */; };
 		687FABAE169F090F0031C25B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAD169F090F0031C25B /* UIKit.framework */; };
 		687FABB0169F090F0031C25B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAF169F090F0031C25B /* Foundation.framework */; };
 		687FABB2169F090F0031C25B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABB1169F090F0031C25B /* CoreGraphics.framework */; };
@@ -59,6 +60,7 @@
 		6879393616A5089F00A4292B /* RouteDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteDetailsViewController.m; sourceTree = "<group>"; };
 		687D7AB416A9E3B5002A7110 /* NSOutputStream+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+Utils.h"; sourceTree = "<group>"; };
 		687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+Utils.m"; sourceTree = "<group>"; };
+		687D7AB816A9EBE4002A7110 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		687FABA9169F090F0031C25B /* RouteMasterPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMasterPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		687FABAD169F090F0031C25B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		687FABAF169F090F0031C25B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -109,6 +111,7 @@
 				6822F28016A7BE03008683B4 /* MessageUI.framework in Frameworks */,
 				687FABD3169F0A1F0031C25B /* CoreLocation.framework in Frameworks */,
 				68F5C75E169FC6BC0083170C /* MapKit.framework in Frameworks */,
+				687D7AB916A9EBE4002A7110 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +145,7 @@
 				6822F27F16A7BE03008683B4 /* MessageUI.framework */,
 				687FABD2169F0A1F0031C25B /* CoreLocation.framework */,
 				68F5C75D169FC6BC0083170C /* MapKit.framework */,
+				687D7AB816A9EBE4002A7110 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
