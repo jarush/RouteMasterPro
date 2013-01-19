@@ -7,20 +7,30 @@
 //
 
 #import "TripDetailsViewController.h"
+#import <MapKit/MapKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "constants.h"
 
+
 enum {
-    RowDistance = 0,
-    RowAvgSpeed,
-    RowDuration,
-    RowStart,
-    RowStop,
-    RowPoints,
-    RowCount
+    SectionDetails = 0,
+    SectionMap,
+    SectionCount
+};
+
+enum {
+    RowDetailsDistance = 0,
+    RowDetailsAvgSpeed,
+    RowDetailsDuration,
+    RowDetailsStart,
+    RowDetailsStop,
+    RowDetailsPoints,
+    RowDetailsCount
 };
 
 @interface TripDetailsViewController () {
     NSDateFormatter *_dateFormatter;
+    MKMapView *_mapView;
 }
 @end
 
@@ -36,6 +46,8 @@ enum {
         _dateFormatter = [[NSDateFormatter alloc] init];
         _dateFormatter.dateStyle = NSDateFormatterShortStyle;
         _dateFormatter.timeStyle = NSDateFormatterShortStyle;
+
+        _mapView = nil;
     }
     return self;
 }
@@ -43,17 +55,69 @@ enum {
 - (void)dealloc {
     [_trip release];
     [_dateFormatter release];
+    [_mapView release];
     [super dealloc];
 }
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return SectionCount;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return RowCount;
+    switch (section) {
+        case SectionDetails:
+            return RowDetailsCount;
+
+        case SectionMap:
+            return 1;
+
+        default:
+            break;
+    }
+    
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case SectionDetails:
+            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+
+        case SectionMap:
+            return 300;
+
+        default:
+            break;
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = nil;
+
+    switch (indexPath.section) {
+        case SectionDetails: {
+            cell = [self tableView:tableView detailCellForRow:indexPath.row];
+            break;
+        }
+
+        case SectionMap: {
+            cell = [self tableView:tableView mapCellForRow:indexPath.row];
+            break;
+        }
+
+        default:
+            break;
+    }
+
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView detailCellForRow:(NSInteger)row {
+    static NSString *CellIdentifier = @"DetailCell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -61,14 +125,14 @@ enum {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    switch (indexPath.row) {
-        case RowDistance: {
+    switch (row) {
+        case RowDetailsDistance: {
             cell.textLabel.text = @"Distance";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", [_trip distance] * METER_TO_MILES];
             break;
         }
 
-        case RowAvgSpeed: {
+        case RowDetailsAvgSpeed: {
             cell.textLabel.text = @"Avg Speed";
 
             NSTimeInterval duration = [_trip duration];
@@ -81,7 +145,7 @@ enum {
             break;
         }
 
-        case RowDuration: {
+        case RowDetailsDuration: {
             cell.textLabel.text = @"Duration";
 
             NSInteger duration = (NSInteger)[_trip duration];
@@ -93,19 +157,19 @@ enum {
             break;
         }
 
-        case RowStart: {
+        case RowDetailsStart: {
             cell.textLabel.text = @"Start";
             cell.detailTextLabel.text = [_dateFormatter stringFromDate:[_trip firstLocation].timestamp];
             break;
         }
 
-        case RowStop: {
+        case RowDetailsStop: {
             cell.textLabel.text = @"Stop";
             cell.detailTextLabel.text = [_dateFormatter stringFromDate:[_trip lastLocation].timestamp];
             break;
         }
 
-        case RowPoints: {
+        case RowDetailsPoints: {
             cell.textLabel.text = @"Points";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_trip.locations count]];
             break;
@@ -113,6 +177,27 @@ enum {
 
         default:
             break;
+    }
+
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView mapCellForRow:(NSInteger)row {
+    static NSString *CellIdentifier = @"MapCell";
+
+    if (_mapView == nil) {
+        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+        _mapView.mapType = MKMapTypeStandard;
+        _mapView.showsUserLocation = NO;
+        _mapView.userInteractionEnabled = NO;
+        _mapView.layer.cornerRadius = 10.0;
+    }
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell.contentView addSubview:_mapView];
     }
 
     return cell;
