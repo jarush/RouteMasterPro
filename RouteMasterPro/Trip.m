@@ -125,6 +125,24 @@
     return sqrt(minDistance2);
 }
 
+#pragma mark -- Mapping
+
+- (MKPolyline *)mapAnnotation {
+    NSUInteger n = [_locations count];
+    NSUInteger i = 0;
+
+    CLLocationCoordinate2D *coords = (CLLocationCoordinate2D*)malloc(n * sizeof(CLLocationCoordinate2D));
+    for (CLLocation *location in _locations) {
+        coords[i++] = location.coordinate;
+    }
+
+    MKPolyline *polyline = [MKPolyline polylineWithCoordinates:coords count:n];
+
+    free(coords);
+
+    return polyline;
+}
+
 #pragma mark -- Reading/Writing
 
 - (void)writeToPath:(NSString *)path {

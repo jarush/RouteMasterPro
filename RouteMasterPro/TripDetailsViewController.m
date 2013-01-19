@@ -28,7 +28,7 @@ enum {
     RowDetailsCount
 };
 
-@interface TripDetailsViewController () {
+@interface TripDetailsViewController () <MKMapViewDelegate> {
     NSDateFormatter *_dateFormatter;
     MKMapView *_mapView;
 }
@@ -76,7 +76,7 @@ enum {
         default:
             break;
     }
-    
+
     return 0;
 }
 
@@ -91,7 +91,7 @@ enum {
         default:
             break;
     }
-    
+
     return 0;
 }
 
@@ -191,6 +191,12 @@ enum {
         _mapView.showsUserLocation = NO;
         _mapView.userInteractionEnabled = NO;
         _mapView.layer.cornerRadius = 10.0;
+        _mapView.delegate = self;
+
+        MKPolyline *polyline = [_trip mapAnnotation];
+        [_mapView addOverlay:polyline];
+
+        [_mapView setRegion:MKCoordinateRegionForMapRect(polyline.boundingMapRect) animated:NO];
     }
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -201,6 +207,14 @@ enum {
     }
 
     return cell;
+}
+
+#pragma mark -- MapView delegate
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay {
+    MKPolylineView *polylineView = [[[MKPolylineView alloc] initWithPolyline:overlay] autorelease];
+    polylineView.strokeColor = [UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:0.5f];
+    return polylineView;
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 @interface Trip : NSObject
 
@@ -22,6 +23,8 @@
 
 - (CLLocationDistance)distanceToTrip:(Trip *)trip;
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location;
+
+- (MKPolyline *)mapAnnotation;
 
 - (void)writeToPath:(NSString *)path;
 - (void)writeKmlToPath:(NSString *)path;
