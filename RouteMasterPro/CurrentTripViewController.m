@@ -9,7 +9,6 @@
 #import "CurrentTripViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
-#import "Ecef.h"
 #import "constants.h"
 
 enum {

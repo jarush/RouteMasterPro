@@ -30,4 +30,6 @@
 - (void)writeKmlToPath:(NSString *)path;
 - (id)initWithPath:(NSString *)path;
 
+- (void)reducePoints;
+
 @end

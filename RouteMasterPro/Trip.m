@@ -8,7 +8,7 @@
 
 #import "Trip.h"
 #import "BufferedReader.h"
-#import "Ecef.h"
+#import "Vec3D.h"
 #import "NSOutputStream+Utils.h"
 #import "constants.h"
 
@@ -104,22 +104,22 @@
 
 - (CLLocationDistance)distanceToLocation:(CLLocation *)location {
     CLLocationDistance minDistance2 = INFINITY;
-    Ecef *lastEcef = nil;
+    Vec3D *lastPoint = nil;
 
-    Ecef *ecef = [Ecef ecefFromCoord:location.coordinate height:location.altitude];
+    Vec3D *point = [Vec3D vec3DEcefFromCoord:location.coordinate height:location.altitude];
 
     for (CLLocation *location in _locations) {
-        Ecef *currentEcef = [Ecef ecefFromCoord:location.coordinate height:location.altitude];
+        Vec3D *currentPoint = [Vec3D vec3DEcefFromCoord:location.coordinate height:location.altitude];
 
-        if (lastEcef != nil) {
+        if (lastPoint != nil) {
             // Compute the distance from the current location and the line segment from last to current
-            double distance2 = [ecef distanceToSegmentSquaredFrom:lastEcef to:currentEcef];
+            double distance2 = [point distanceSqToSegmentFrom:lastPoint to:currentPoint];
             if (distance2 < minDistance2) {
                 minDistance2 = distance2;
             }
         }
 
-        lastEcef = currentEcef;
+        lastPoint = currentPoint;
     }
 
     return sqrt(minDistance2);
@@ -235,10 +235,58 @@
                                                                 timestamp:timestamp];
             [_locations addObject:location];
         }
-        
+
         [inputStream close];
     }
     return self;
+}
+
+- (void)reducePoints {
+}
+
+- (NSArray *)douglasPeucker:(NSArray *)points epsilon:(float)epsilon {
+    int count = [points count];
+    if (count < 3) {
+        return points;
+    }
+
+    // Find the point with the maximum perpendicular distance
+    float dmax = 0;
+    int index = 0;
+    for (int i = 1; i < count - 1; i++) {
+        CGPoint point = [[points objectAtIndex:i] CGPointValue];
+        CGPoint lineA = [[points objectAtIndex:0] CGPointValue];
+        CGPoint lineB = [[points objectAtIndex:count - 1] CGPointValue];
+        float d = [self perpendicularDistance:point lineA:lineA lineB:lineB];
+        if (d > dmax) {
+            index = i;
+            dmax = d;
+        }
+    }
+
+    // If max distance is greater than epsilon, recursively simplify
+    if (dmax > epsilon) {
+        NSArray *results1 = [self douglasPeucker:[points subarrayWithRange:NSMakeRange(0, index + 1)] epsilon:epsilon];
+
+        NSArray *results2 = [self douglasPeucker:[points subarrayWithRange:NSMakeRange(index, count - index)] epsilon:epsilon];
+
+        NSMutableArray *resultList = [NSMutableArray arrayWithArray:results1];
+        [resultList removeLastObject];
+        [resultList addObjectsFromArray:results2];
+
+        return resultList;
+    } else {
+        return @[[points objectAtIndex:0], [points objectAtIndex:count - 1]];
+    }
+}
+
+- (float)perpendicularDistance:(CGPoint)point lineA:(CGPoint)lineA lineB:(CGPoint)lineB {
+    CGPoint v1 = CGPointMake(lineB.x - lineA.x, lineB.y - lineA.y);
+    CGPoint v2 = CGPointMake(point.x - lineA.x, point.y - lineA.y);
+    float lenV1 = sqrt(v1.x * v1.x + v1.y * v1.y);
+    float lenV2 = sqrt(v2.x * v2.x + v2.y * v2.y);
+    float angle = acos((v1.x * v2.x + v1.y * v2.y) / (lenV1 * lenV2));
+    return sin(angle) * lenV2;
 }
 
 @end
