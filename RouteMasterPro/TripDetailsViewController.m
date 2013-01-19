@@ -196,7 +196,11 @@ enum {
         MKPolyline *polyline = [_trip mapAnnotation];
         [_mapView addOverlay:polyline];
 
-        [_mapView setRegion:MKCoordinateRegionForMapRect(polyline.boundingMapRect) animated:NO];
+        MKCoordinateRegion coordinateRegion = MKCoordinateRegionForMapRect(polyline.boundingMapRect);
+        coordinateRegion.span.latitudeDelta += 0.01;
+        coordinateRegion.span.longitudeDelta += 0.01;
+
+        [_mapView setRegion:coordinateRegion animated:NO];
     }
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
