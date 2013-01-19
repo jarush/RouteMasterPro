@@ -160,8 +160,6 @@
 				682BC6AB16A268730070FBEA /* constants.h */,
 				6879392B16A4D90300A4292B /* CurrentTripViewController.h */,
 				6879392C16A4D90300A4292B /* CurrentTripViewController.m */,
-				68A8AA4E16A8D7AA0088CFEC /* Vec3D.h */,
-				68A8AA4F16A8D7AA0088CFEC /* Vec3D.m */,
 				687FABCE169F09320031C25B /* MapViewController.h */,
 				687FABCF169F09320031C25B /* MapViewController.m */,
 				687D7AB416A9E3B5002A7110 /* NSOutputStream+Utils.h */,
@@ -178,6 +176,8 @@
 				6879392616A4D86500A4292B /* Trip.m */,
 				6879392716A4D86500A4292B /* TripDetailsViewController.h */,
 				6879392816A4D86500A4292B /* TripDetailsViewController.m */,
+				68A8AA4E16A8D7AA0088CFEC /* Vec3D.h */,
+				68A8AA4F16A8D7AA0088CFEC /* Vec3D.m */,
 				687FABB4169F090F0031C25B /* Supporting Files */,
 			);
 			path = RouteMasterPro;
