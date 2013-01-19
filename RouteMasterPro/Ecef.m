@@ -75,7 +75,7 @@
 }
 
 - (double)norm2 {
-    return _x * _x + _y * _y + _z + _z;
+    return _x * _x + _y * _y + _z * _z;
 }
 
 - (double)norm {
