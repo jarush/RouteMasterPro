@@ -183,7 +183,7 @@ enum {
 
         case RowSpeed: {
             cell.textLabel.text = @"Speed";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", _lastLocation.speed * MPS_TO_MIPH];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d MPH", (int)round(_lastLocation.speed * MPS_TO_MIPH)];
             break;
         }
 
@@ -198,7 +198,7 @@ enum {
                     cell.detailTextLabel.text = @"Calculating";
                 } else {
                     double avgSpeed = _distance / duration;
-                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d MPH", (int)round(avgSpeed * MPS_TO_MIPH)];
                 }
             } else {
                 cell.detailTextLabel.text = @"";

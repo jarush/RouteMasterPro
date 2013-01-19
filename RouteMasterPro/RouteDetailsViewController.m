@@ -142,7 +142,7 @@ enum {
                 cell.detailTextLabel.text = @"Unknown";
             } else {
                 double avgSpeed = _route.meanDistance / duration;
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MPH", avgSpeed * MPS_TO_MIPH];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%d MPH", (int)round(avgSpeed * MPS_TO_MIPH)];
             }
             break;
         }
