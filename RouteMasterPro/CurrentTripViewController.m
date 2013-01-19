@@ -274,7 +274,14 @@ enum {
         AppDelegate *appDelegate = [AppDelegate appDelegate];
         if ([appDelegate.stopRegion containsCoordinate:currentLocation.coordinate]) {
             [self stopTracking];
+
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+
+            UILocalNotification *localNotification = [[[UILocalNotification alloc] init] autorelease];
+            localNotification.alertBody = @"Stop region reached";
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
         }
     }
     
