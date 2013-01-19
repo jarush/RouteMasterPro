@@ -15,11 +15,14 @@
 // Factor to convert from meters/second to miles/hour
 #define MPS_TO_MIPH 2.23694
 
+// Radians to degrees
+#define RAD2DEG (180.0 / M_PI)
+
 // Minimum distance in meters to collect locations
 #define LOCATION_DISTANCE_FILTER 10.0
 
 // Maximum distance in meters to consider two trips to belong to the same route
-#define MAX_TRIP_MATCH_DISTANCE 40.0
+#define MAX_TRIP_MATCH_DISTANCE 25.0
 
 // Radius in meters to the stop coordinate that monitoring will automatically stop
 #define RADIUS_STOP_MONITORING 100.0

@@ -67,7 +67,7 @@
 }
 
 - (double)dot:(Ecef *)v {
-    return (_x - v.x) + (_y - v.y) + (_z - v.z);
+    return (_x * v.x) + (_y * v.y) + (_z * v.z);
 }
 
 - (Ecef *)mult:(double)s {
@@ -76,6 +76,10 @@
 
 - (double)norm2 {
     return _x * _x + _y * _y + _z + _z;
+}
+
+- (double)norm {
+    return sqrt([self norm2]);
 }
 
 - (double)dist2:(Ecef *)ecef {
@@ -97,6 +101,10 @@
     }
 
     return [self dist2:[ecef1 add:[v mult:c1 / c2]]];
+}
+
+- (double)angle:(Ecef *)ecef {
+    return acos([self dot:ecef] / ([self norm] * [ecef norm]));
 }
 
 - (NSString *)description {

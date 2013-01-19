@@ -26,7 +26,9 @@
 - (double)dot:(Ecef *)v;
 - (Ecef *)mult:(double)s;
 - (double)norm2;
+- (double)norm;
 - (double)dist2:(Ecef *)ecef;
 - (double)distanceToSegmentSquaredFrom:(Ecef *)ecef1 to:(Ecef *)ecef2;
+- (double)angle:(Ecef *)ecef;
 
 @end
