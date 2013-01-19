@@ -79,8 +79,6 @@ enum {
     return nil;
 }
 
-#define kTripCellIdentifier @"TripCell"
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
 
