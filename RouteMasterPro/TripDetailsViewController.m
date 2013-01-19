@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "constants.h"
 
-
 enum {
     SectionDetails = 0,
     SectionMap,
