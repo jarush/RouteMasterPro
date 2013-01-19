@@ -24,10 +24,16 @@
 - (Vec3D *)sub:(Vec3D *)v;
 - (double)dot:(Vec3D *)v;
 - (Vec3D *)mult:(double)s;
-- (double)norm2;
+
+- (double)normSq;
 - (double)norm;
-- (double)dist2:(Vec3D *)ecef;
-- (double)distanceSqToSegmentFrom:(Vec3D *)p1 to:(Vec3D *)p2;
+
+- (double)distSq:(Vec3D *)p;
+- (double)dist:(Vec3D *)p;
+
 - (double)angle:(Vec3D *)v;
+
+- (double)distanceSqToSegmentFrom:(Vec3D *)p1 to:(Vec3D *)p2;
+- (double)perpDistanceToSegmentFrom:(Vec3D *)p1 to:(Vec3D *)p2;
 
 @end

@@ -68,16 +68,24 @@
     return [Vec3D vec3DWithX:(_x * s) y:(_y * s) z:(_z * s)];
 }
 
-- (double)norm2 {
+- (double)normSq {
     return _x * _x + _y * _y + _z * _z;
 }
 
 - (double)norm {
-    return sqrt([self norm2]);
+    return sqrt([self normSq]);
 }
 
-- (double)dist2:(Vec3D *)v {
-    return [[self sub:v] norm2];
+- (double)distSq:(Vec3D *)p {
+    return [[self sub:p] normSq];
+}
+
+- (double)dist:(Vec3D *)p {
+    return sqrt([self distSq:p]);
+}
+
+- (double)angle:(Vec3D *)v {
+    return acos([self dot:v] / ([self norm] * [v norm]));
 }
 
 - (double)distanceSqToSegmentFrom:(Vec3D *)p1 to:(Vec3D *)p2 {
@@ -86,19 +94,27 @@
 
     double c1 = [w dot:v];
     if (c1 <= 0.0) {
-        return [self dist2:p1];
+        return [self distSq:p1];
     }
 
-    double c2 = [v norm2];
+    double c2 = [v normSq];
     if (c2 <= c1) {
-        return [self dist2:p2];
+        return [self distSq:p2];
     }
 
-    return [self dist2:[p1 add:[v mult:c1 / c2]]];
+    return [self distSq:[p1 add:[v mult:c1 / c2]]];
 }
 
-- (double)angle:(Vec3D *)v {
-    return acos([self dot:v] / ([self norm] * [v norm]));
+- (double)perpDistanceToSegmentFrom:(Vec3D *)p1 to:(Vec3D *)p2 {
+    Vec3D *v = [p2 sub:p1];
+    Vec3D *w = [self sub:p1];
+
+    double lv = [v norm];
+    double lw = [w norm];
+
+    double angle = acos([v dot:w] / (lv * lw));
+
+    return sin(angle) * lw;
 }
 
 - (NSString *)description {
