@@ -7,8 +7,7 @@
 //
 
 #import "TripDetailsViewController.h"
-#import <MapKit/MapKit.h>
-#import <QuartzCore/QuartzCore.h>
+#import "MapCell.h"
 #import "constants.h"
 
 enum {
@@ -29,7 +28,7 @@ enum {
 
 @interface TripDetailsViewController () <MKMapViewDelegate> {
     NSDateFormatter *_dateFormatter;
-    MKMapView *_mapView;
+    MapCell *_mapCell;
 }
 @end
 
@@ -46,7 +45,7 @@ enum {
         _dateFormatter.dateStyle = NSDateFormatterShortStyle;
         _dateFormatter.timeStyle = NSDateFormatterShortStyle;
 
-        _mapView = nil;
+        _mapCell = nil;
     }
     return self;
 }
@@ -54,7 +53,7 @@ enum {
 - (void)dealloc {
     [_trip release];
     [_dateFormatter release];
-    [_mapView release];
+    [_mapCell release];
     [super dealloc];
 }
 
@@ -184,32 +183,20 @@ enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView mapCellForRow:(NSInteger)row {
     static NSString *CellIdentifier = @"MapCell";
 
-    if (_mapView == nil) {
-        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
-        _mapView.mapType = MKMapTypeStandard;
-        _mapView.showsUserLocation = NO;
-        _mapView.userInteractionEnabled = NO;
-        _mapView.layer.cornerRadius = 10.0;
-        _mapView.delegate = self;
+    if (_mapCell == nil) {
+        _mapCell = [[[MapCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        _mapCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         MKPolyline *polyline = [_trip mapAnnotation];
-        [_mapView addOverlay:polyline];
+        [_mapCell.mapView addOverlay:polyline];
 
         MKCoordinateRegion coordinateRegion = MKCoordinateRegionForMapRect(polyline.boundingMapRect);
         coordinateRegion.span.latitudeDelta += 0.01;
         coordinateRegion.span.longitudeDelta += 0.01;
-
-        [_mapView setRegion:coordinateRegion animated:NO];
+        [_mapCell.mapView setRegion:coordinateRegion animated:NO];
     }
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.contentView addSubview:_mapView];
-    }
-
-    return cell;
+    return _mapCell;
 }
 
 #pragma mark -- MapView delegate

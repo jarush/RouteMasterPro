@@ -42,6 +42,7 @@
 		68D78BC816A22D9A0099E64B /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BC016A22D9A0099E64B /* stats.png */; };
 		68D78BC916A22D9A0099E64B /* stats@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BC116A22D9A0099E64B /* stats@2x.png */; };
 		68D78BCC16A22E4D0099E64B /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D78BCB16A22E4D0099E64B /* StatsViewController.m */; };
+		68DDF77A16AB3C7200512B5D /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DDF77916AB3C7200512B5D /* MapCell.m */; };
 		68F5C75E169FC6BC0083170C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F5C75D169FC6BC0083170C /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +98,8 @@
 		68D78BC116A22D9A0099E64B /* stats@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats@2x.png"; sourceTree = "<group>"; };
 		68D78BCA16A22E4D0099E64B /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
 		68D78BCB16A22E4D0099E64B /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
+		68DDF77816AB3C7200512B5D /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
+		68DDF77916AB3C7200512B5D /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		68F5C75D169FC6BC0083170C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -160,6 +163,8 @@
 				682BC6AB16A268730070FBEA /* constants.h */,
 				6879392B16A4D90300A4292B /* CurrentTripViewController.h */,
 				6879392C16A4D90300A4292B /* CurrentTripViewController.m */,
+				68DDF77816AB3C7200512B5D /* MapCell.h */,
+				68DDF77916AB3C7200512B5D /* MapCell.m */,
 				687FABCE169F09320031C25B /* MapViewController.h */,
 				687FABCF169F09320031C25B /* MapViewController.m */,
 				687D7AB416A9E3B5002A7110 /* NSOutputStream+Utils.h */,
@@ -315,6 +320,7 @@
 				68A97C3816A7837D00FC2318 /* BufferedReader.m in Sources */,
 				68A8AA5016A8D7AA0088CFEC /* Vec3D.m in Sources */,
 				687D7AB616A9E3B5002A7110 /* NSOutputStream+Utils.m in Sources */,
+				68DDF77A16AB3C7200512B5D /* MapCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
