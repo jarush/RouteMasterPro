@@ -9,6 +9,7 @@
 #import "CurrentTripViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
+#import "Ecef.h"
 #import "constants.h"
 
 enum {
@@ -261,27 +262,34 @@ enum {
     CLLocation *currentLocation = [locations lastObject];
 
     if (_tracking) {
-        // Add the locations to the trip
+        // Compute the distance travled since the last point
         double currentDistance = [_lastLocation distanceFromLocation:currentLocation];
-        if (currentDistance > LOCATION_DISTANCE_FILTER || _lastLocation == nil) {
-            [_trip addLocation:currentLocation];
-        }
 
-        // Update the distance calculation
+        // Update the total distance calculation
         _distance += currentDistance;
 
         // Check if we're in the stop region
         AppDelegate *appDelegate = [AppDelegate appDelegate];
         if ([appDelegate.stopRegion containsCoordinate:currentLocation.coordinate]) {
+            // Add the stop point to the trip
+            [_trip addLocation:currentLocation];
+
+            // Stop tracking
             [self stopTracking];
 
+            // Signal the user that we've stopped by vibrating
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
+            // Notify the user that we've stopped tracking
             UILocalNotification *localNotification = [[[UILocalNotification alloc] init] autorelease];
             localNotification.alertBody = @"Stop region reached";
             localNotification.soundName = UILocalNotificationDefaultSoundName;
-
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+        } else {
+            // Add the point if it's moved enough since the last point
+            if (currentDistance > LOCATION_DISTANCE_FILTER || _lastLocation == nil) {
+                [_trip addLocation:currentLocation];
+            }
         }
     }
     
