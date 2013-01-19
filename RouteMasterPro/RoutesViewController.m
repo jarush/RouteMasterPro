@@ -71,7 +71,6 @@
         // Load the trip
         Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
         if (trip != nil) {
-            // FIXME
             [AppDelegate matchTrip:trip tripPath:tripPath];
         }
     }
