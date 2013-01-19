@@ -148,6 +148,9 @@
         tripPath = [documentsPath stringByAppendingPathComponent:file];
     }
 
+    // Reduce the points in the trip
+    [trip reducePoints];
+
     // Save the trip to the file
     [trip writeToPath:tripPath];
 
