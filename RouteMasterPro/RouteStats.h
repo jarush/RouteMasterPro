@@ -13,7 +13,11 @@
 
 @property (nonatomic, assign) NSInteger numberSamples;
 @property (nonatomic, assign) double meanDuration;
+@property (nonatomic, assign) double minDuration;
+@property (nonatomic, assign) double maxDuration;
 @property (nonatomic, assign) double meanDistance;
+@property (nonatomic, assign) double minDistance;
+@property (nonatomic, assign) double maxDistance;
 
 - (void)updateTripStats:(Trip *)trip;
 
