@@ -7,6 +7,8 @@
 //
 
 #import "StatsViewController.h"
+#import "Route.h"
+#import "AppDelegate.h"
 
 @interface StatsViewController () <UIWebViewDelegate> {
     UIWebView *_webView;
@@ -43,13 +45,34 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSMutableString *str = [NSMutableString string];
-    [str appendString:@"var line1 = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,1],[6,1],[7,1.5],[8,2.5],[9,2],[10,1.5],[11,0],[12,0],[13,0],[14,0],[15,1.5],[16,1.5],[17,2.5],[18,2],[19,1.5],[20,0],[21,0],[22,0],[23,0],[24,0]];"];
-    [str appendString:@"var line2 = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0.9],[6,1],[7,1.3],[8,1.7],[9,2],[10,1.1],[11,0],[12,0],[13,0],[14,0],[15,1],[16,1.1],[17,2.3],[18,3],[19,2.5],[20,0],[21,0],[22,0],[23,0],[24,0]];"];
-    [str appendString:@"var plot1 = $.jqplot('chart1', [line1, line2], options1);"];
-    [str appendString:@"var plot2 = $.jqplot('chart2', [line1, line2], options2);"];
-    [str appendString:@"var plot3 = $.jqplot('chart3', [line1, line2], options3);"];
-    [_webView stringByEvaluatingJavaScriptFromString:str];
+    NSMutableString *dataStr = [NSMutableString string];
+    NSInteger seriesNumber = 0;
+
+    // Loop through the route files
+    for (NSString *routePath in [AppDelegate routePaths]) {
+        // Load the route
+        Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
+        if (route != nil) {
+            NSMutableString *seriesStr = [NSMutableString string];
+
+            // Add the hourly route stats
+            [seriesStr appendFormat:@"var s%d = [", seriesNumber];
+            for (NSInteger hour = 0; hour <= 24; hour++) {
+                RouteStats *routeStats = [route.hourlyRouteStats objectAtIndex:hour % 24];
+                [seriesStr appendFormat:@"[%d,%0.1f],", hour, routeStats.meanDuration / 3600];
+            }
+            [seriesStr appendString:@"];"];
+            [_webView stringByEvaluatingJavaScriptFromString:seriesStr];
+
+            // Add the series to the data string
+            [dataStr appendFormat:@"s%d,", seriesNumber];
+            seriesNumber++;
+        }
+    }
+
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot1 = $.jqplot('chart1', [%@], options1);", dataStr]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot2 = $.jqplot('chart2', [%@], options2);", dataStr]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot3 = $.jqplot('chart3', [%@], options3);", dataStr]];
 }
 
 @end
