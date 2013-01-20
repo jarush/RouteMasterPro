@@ -38,10 +38,10 @@
     }
 
     if (distance < _minDuration) {
-        _minDuration = distance;
+        _minDuration = duration;
     }
     if (distance > _maxDuration) {
-        _maxDuration = distance;
+        _maxDuration = duration;
     }
 
     if (distance < _minDistance) {
