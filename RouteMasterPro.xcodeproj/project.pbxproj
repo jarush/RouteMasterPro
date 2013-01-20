@@ -44,6 +44,10 @@
 		68D78BCC16A22E4D0099E64B /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D78BCB16A22E4D0099E64B /* StatsViewController.m */; };
 		68DDF77A16AB3C7200512B5D /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DDF77916AB3C7200512B5D /* MapCell.m */; };
 		68F5C75E169FC6BC0083170C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F5C75D169FC6BC0083170C /* MapKit.framework */; };
+		68F8691416AB8C3200FF076F /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = 68F8691016AB8C3200FF076F /* graph.html */; };
+		68F8691516AB8C3200FF076F /* jquery.jqplot.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 68F8691116AB8C3200FF076F /* jquery.jqplot.min.css */; };
+		68F8691916AB8C4E00FF076F /* jquery.jqplot.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 68F8691216AB8C3200FF076F /* jquery.jqplot.min.js */; };
+		68F8691A16AB8C4E00FF076F /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 68F8691316AB8C3200FF076F /* jquery.min.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +105,10 @@
 		68DDF77816AB3C7200512B5D /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
 		68DDF77916AB3C7200512B5D /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		68F5C75D169FC6BC0083170C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		68F8691016AB8C3200FF076F /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
+		68F8691116AB8C3200FF076F /* jquery.jqplot.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = jquery.jqplot.min.css; sourceTree = "<group>"; };
+		68F8691216AB8C3200FF076F /* jquery.jqplot.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.jqplot.min.js; sourceTree = "<group>"; };
+		68F8691316AB8C3200FF076F /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.min.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +218,7 @@
 				68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */,
 				68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */,
 				68D78BB916A22D9A0099E64B /* icons */,
+				68F8690F16AB8C3200FF076F /* web */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -228,6 +237,17 @@
 			);
 			name = icons;
 			path = RouteMasterPro/icons;
+			sourceTree = "<group>";
+		};
+		68F8690F16AB8C3200FF076F /* web */ = {
+			isa = PBXGroup;
+			children = (
+				68F8691016AB8C3200FF076F /* graph.html */,
+				68F8691116AB8C3200FF076F /* jquery.jqplot.min.css */,
+				68F8691216AB8C3200FF076F /* jquery.jqplot.min.js */,
+				68F8691316AB8C3200FF076F /* jquery.min.js */,
+			);
+			path = web;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +301,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68F8691916AB8C4E00FF076F /* jquery.jqplot.min.js in Resources */,
+				68F8691A16AB8C4E00FF076F /* jquery.min.js in Resources */,
 				687FABB8169F090F0031C25B /* InfoPlist.strings in Resources */,
 				687FABC0169F090F0031C25B /* Default.png in Resources */,
 				687FABC2169F090F0031C25B /* Default@2x.png in Resources */,
@@ -297,6 +319,8 @@
 				68D78BC716A22D9A0099E64B /* map@2x.png in Resources */,
 				68D78BC816A22D9A0099E64B /* stats.png in Resources */,
 				68D78BC916A22D9A0099E64B /* stats@2x.png in Resources */,
+				68F8691416AB8C3200FF076F /* graph.html in Resources */,
+				68F8691516AB8C3200FF076F /* jquery.jqplot.min.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +419,10 @@
 				GCC_PREFIX_HEADER = "RouteMasterPro/RouteMasterPro-Prefix.pch";
 				INFOPLIST_FILE = "RouteMasterPro/RouteMasterPro-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -407,6 +435,10 @@
 				GCC_PREFIX_HEADER = "RouteMasterPro/RouteMasterPro-Prefix.pch";
 				INFOPLIST_FILE = "RouteMasterPro/RouteMasterPro-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

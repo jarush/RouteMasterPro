@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <link class="include" rel="stylesheet" type="text/css" href="jquery.jqplot.min.css" />
+    <script class="include" type="text/javascript" src="jquery.min.js"></script>
+    <script class="include" type="text/javascript" src="jquery.jqplot.min.js"></script>
+    <script type="text/javascript">
+      window.onorientationchange = function() {
+        switch (window.orientation) {
+          case -90:
+          case 90:
+            $("#chart").width(540);
+            $("#chart").height(200);
+            plot1.replot({resetAxes: true});
+            break;
+
+          default:
+            $("#chart").width(300);
+            $("#chart").height(420);
+            plot1.replot({resetAxes: true});
+            break;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart" style="height:420px; width:300px;"></div>
+  </body>
+</html>
