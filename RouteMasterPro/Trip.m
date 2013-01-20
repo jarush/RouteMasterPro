@@ -206,7 +206,7 @@
     if (self) {
         NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:path];
         [inputStream open];
-        BufferedReader *reader = [[BufferedReader alloc] initWithInputStream:inputStream];
+        BufferedReader *reader = [[[BufferedReader alloc] initWithInputStream:inputStream] autorelease];
 
         // Skip the first line since it's the header
         [reader readLine];
@@ -226,13 +226,13 @@
             double speed = [[tokens objectAtIndex:6] doubleValue];
             NSDate *timestamp = [dateFormatter dateFromString:[tokens objectAtIndex:7]];
 
-            CLLocation *location = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude)
-                                                                 altitude:altitude
-                                                       horizontalAccuracy:horizontalAccuracy
-                                                         verticalAccuracy:verticalAccuracy
-                                                                   course:course
-                                                                    speed:speed
-                                                                timestamp:timestamp];
+            CLLocation *location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(latitude, longitude)
+                                                                  altitude:altitude
+                                                        horizontalAccuracy:horizontalAccuracy
+                                                          verticalAccuracy:verticalAccuracy
+                                                                    course:course
+                                                                     speed:speed
+                                                                 timestamp:timestamp] autorelease];
             [_locations addObject:location];
         }
 
@@ -284,7 +284,7 @@
         NSMutableArray *resultList = [NSMutableArray arrayWithArray:results1];
         [resultList removeLastObject];
         [resultList addObjectsFromArray:results2];
-
+        
         return resultList;
     } else {
         return @[[points objectAtIndex:0], [points objectAtIndex:count - 1]];

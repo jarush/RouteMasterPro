@@ -107,7 +107,7 @@
     for (NSString *tripPath in [AppDelegate tripPaths]) {
         NSString *kmlPath = [[tripPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"kml"];
 
-        Trip *trip = [[Trip alloc] initWithPath:tripPath];
+        Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
         [trip writeKmlToPath:kmlPath];
 
         [viewController addAttachmentData:[NSData dataWithContentsOfFile:kmlPath]

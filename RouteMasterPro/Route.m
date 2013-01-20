@@ -53,7 +53,7 @@
     [_routeStats updateTripStats:trip];
 
     // Update the hourly stats
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
     NSDateComponents *dateComponents = [calendar components:NSHourCalendarUnit fromDate:[trip firstLocation].timestamp];
     NSInteger hour = [dateComponents hour];
     RouteStats *routeStats = [_hourlyRouteStats objectAtIndex:hour];
