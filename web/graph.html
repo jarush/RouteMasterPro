@@ -38,7 +38,8 @@
                 var chart3 = $("#chart3");
                 chart3.width(screen.height - 20);
                 chart3.height(screen.width - 120);
-                chart3.hide();
+
+                window.onorientationchange();
             });
 
             // Set up options for the plots
