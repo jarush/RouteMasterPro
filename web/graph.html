@@ -4,6 +4,7 @@
         <script class="include" type="text/javascript" src="jquery.min.js"></script>
         <script class="include" type="text/javascript" src="jquery.jqplot.min.js"></script>
         <script type="text/javascript">
+            // Change which plots are visible when the device rotates
             window.onorientationchange = function() {
                 switch (window.orientation) {
                     case -90:
@@ -24,46 +25,7 @@
                 }
             }
 
-            var options1 = {
-                legend: {
-                    show: true,
-                    location:'nw'
-                },
-                axes: {
-                    xaxis: {
-                        ticks: [[0, '12am'], [3, '3am'], [6, '6am'], [9, '9am'], [12, '12pm']]
-                    },
-                    yaxis: {
-                        pad: 0
-                    }
-                }
-            };
-
-            var options2 = {
-                legend: {show:true, location:'ne'},
-                axes: {
-                    xaxis: {
-                        ticks: [[12, '12pm'], [15, '3pm'], [18, '6pm'], [21, '9pm'], [24, '12am']]
-                    },
-                    yaxis: {
-                        pad: 0
-                    }
-                }
-            };
-
-            var options3 = {
-                legend: {show:true, location:'nw'},
-                axes: {
-                    xaxis: {
-                        ticks: [[0, '12am'], [3, '3am'], [6, '6am'], [9, '9am'],
-                                [12, '12pm'], [15, '3pm'], [18, '6pm'], [21, '9pm'], [24, '12am']]
-                    },
-                    yaxis: {
-                        pad: 0
-                    }
-                }
-            };
-
+            // Adjust the sizes of the charts
             $(document).ready(function() {
                 var chart1 = $("#chart1");
                 chart1.width(screen.width - 20);
@@ -78,11 +40,50 @@
                 chart3.height(screen.width - 120);
                 chart3.hide();
             });
+
+            // Set up options for the plots
+            var options1 = {
+                legend: {
+                    show: true,
+                    location:'nw'
+                },
+                axes: {
+                    xaxis: {
+                        ticks: [[0, '12am'], [3, '3am'], [6, '6am'], [9, '9am'], [12, '12pm']]
+                    },
+                    yaxis: {
+                        pad: 0
+                    }
+                }
+            };
+            var options2 = {
+                legend: {show:true, location:'ne'},
+                axes: {
+                    xaxis: {
+                        ticks: [[12, '12pm'], [15, '3pm'], [18, '6pm'], [21, '9pm'], [24, '12am']]
+                    },
+                    yaxis: {
+                        pad: 0
+                    }
+                }
+            };
+            var options3 = {
+                legend: {show:true, location:'nw'},
+                axes: {
+                    xaxis: {
+                        ticks: [[0, '12am'], [3, '3am'], [6, '6am'], [9, '9am'],
+                                [12, '12pm'], [15, '3pm'], [18, '6pm'], [21, '9pm'], [24, '12am']]
+                    },
+                    yaxis: {
+                        pad: 0
+                    }
+                }
+            };
             </script>
     </head>
     <body>
-        <div id="chart1" style="height:210px; width:300px;"></div>
-        <div id="chart2" style="height:210px; width:300px;"></div>
-        <div id="chart3" style="height:200px; width:540px;"></div>
+        <div id="chart1"></div>
+        <div id="chart2"></div>
+        <div id="chart3"></div>
     </body>
 </html>
