@@ -194,7 +194,7 @@ enum {
     static NSString *CellIdentifier = @"MapCell";
 
     if (_mapCell == nil) {
-        _mapCell = [[[MapCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        _mapCell = [[MapCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
         _mapCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         // Get the path to the template
