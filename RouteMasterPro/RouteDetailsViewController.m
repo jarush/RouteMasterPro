@@ -7,12 +7,14 @@
 //
 
 #import "RouteDetailsViewController.h"
+#import "MapCell.h"
 #import "TripDetailsViewController.h"
 #import "AppDelegate.h"
 #import "constants.h"
 
 enum {
     SectionDetails = 0,
+    SectionMap,
     SectionTrips,
     SectionCount
 };
@@ -26,6 +28,11 @@ enum {
     RowDetailsCount
 };
 
+@interface RouteDetailsViewController () {
+    MapCell *_mapCell;
+}
+@end
+
 @implementation RouteDetailsViewController
 
 - (id)init {
@@ -34,12 +41,15 @@ enum {
         self.title = @"Route Details";
 
         _route = nil;
+
+        _mapCell = nil;
     }
     return self;
 }
 
 - (void)dealloc {
     [_route release];
+    [_mapCell release];
     [super dealloc];
 }
 
@@ -53,6 +63,9 @@ enum {
     switch (section) {
         case SectionDetails:
             return RowDetailsCount;
+
+        case SectionMap:
+            return 1;
 
         case SectionTrips:
             return [_route.tripFiles count];
@@ -79,12 +92,29 @@ enum {
     return nil;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case SectionMap:
+            return 300;
+
+        default:
+            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+    }
+
+    return 0;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
 
     switch (indexPath.section) {
         case SectionDetails: {
             cell = [self tableView:tableView detailCellForRow:indexPath.row];
+            break;
+        }
+
+        case SectionMap: {
+            cell = [self tableView:tableView mapCellForRow:indexPath.row];
             break;
         }
 
@@ -158,6 +188,32 @@ enum {
     }
 
     return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView mapCellForRow:(NSInteger)row {
+    static NSString *CellIdentifier = @"MapCell";
+
+    if (_mapCell == nil) {
+        _mapCell = [[[MapCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        _mapCell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+        // Get the path to the template
+        NSString *tripPath = [[AppDelegate documentsPath] stringByAppendingPathComponent:_route.templateFile];
+
+        // Load the trip
+        Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
+        if (trip != nil) {
+            MKPolyline *polyline = [trip mapAnnotation];
+            [_mapCell.mapView addOverlay:polyline];
+
+            MKCoordinateRegion coordinateRegion = MKCoordinateRegionForMapRect(polyline.boundingMapRect);
+            coordinateRegion.span.latitudeDelta += 0.01;
+            coordinateRegion.span.longitudeDelta += 0.01;
+            [_mapCell.mapView setRegion:coordinateRegion animated:NO];
+        }
+    }
+
+    return _mapCell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView tripCellForRow:(NSInteger)row {
