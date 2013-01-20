@@ -53,6 +53,7 @@
     NSMutableString *seriesNames = [NSMutableString string];
     NSMutableString *dataStr = [NSMutableString string];
     NSInteger seriesNumber;
+    double divisor = 0.0;
 
     // Loop through the route files
     seriesNumber = 0;
@@ -60,16 +61,21 @@
         // Load the route
         Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
         if (route != nil) {
+            // Add the route name to the chart series
             [seriesNames appendFormat:@"{label: '%@'}, ", route.name];
 
-            // Determine the units for the chart
-            double divisor;
-            if (route.routeStats.maxDuration > 3600) {
-                divisor = 3600.0;
-            } else if (route.routeStats.maxDuration > 60) {
-                divisor = 60.0;
-            } else {
-                divisor = 1.0;
+            // Calculate the divisor if it hasn't been calculated
+            if (divisor == 0.0) {
+                if (route.routeStats.maxDuration > 3600) {
+                    // Hours
+                    divisor = 3600.0;
+                } else if (route.routeStats.maxDuration > 60) {
+                    // Minutes
+                    divisor = 60.0;
+                } else {
+                    // Seconds
+                    divisor = 1.0;
+                }
             }
 
             // Add the hourly route stats
