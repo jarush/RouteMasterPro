@@ -54,7 +54,7 @@
     NSMutableString *dataStr = [NSMutableString string];
     NSInteger seriesNumber;
     double divisor = 0.0;
-    NSString *yUnits;
+    NSString *yUnits = @"";
 
     // Loop through the route files
     seriesNumber = 0;
