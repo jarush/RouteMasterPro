@@ -20,7 +20,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.title = @"Stats";
+        self.title = @"Average Duration";
         self.tabBarItem.title = @"Stats";
         self.tabBarItem.image = [UIImage imageNamed:@"stats"];
 
