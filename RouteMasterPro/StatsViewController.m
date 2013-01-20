@@ -27,6 +27,7 @@
 
         _webView = [[UIWebView alloc] init];
         _webView.backgroundColor = [UIColor whiteColor];
+        _webView.dataDetectorTypes = UIDataDetectorTypeNone;
         _webView.userInteractionEnabled = NO;
         _webView.delegate = self;
         [_webView loadRequest:[NSURLRequest requestWithURL:url]];
@@ -43,13 +44,11 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSMutableString *str = [NSMutableString string];
-    [str appendString:@"var line1 = [3,7,9,1,5,3,8,2,5];"];
-    [str appendString:@"var line2 = [1,2,5,2,5,1,1,7,5];"];
-    [str appendString:@"var options = {"];
-    [str appendString:@"  legend: {show:true, location:'ne'},"];
-    [str appendString:@"  axesDefaults: {labelRenderer:$.jqplot.CanvasAxisLabelRenderer}"];
-    [str appendString:@"};"];
-    [str appendString:@"var plot1 = $.jqplot('chart', [line1, line2], options);"];
+    [str appendString:@"var line1 = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,1],[6,1],[7,1.5],[8,2.5],[9,2],[10,1.5],[11,0],[12,0],[13,0],[14,0],[15,1.5],[16,1.5],[17,2.5],[18,2],[19,1.5],[20,0],[21,0],[22,0],[23,0],[24,0]];"];
+    [str appendString:@"var line2 = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0.9],[6,1],[7,1.3],[8,1.7],[9,2],[10,1.1],[11,0],[12,0],[13,0],[14,0],[15,1],[16,1.1],[17,2.3],[18,3],[19,2.5],[20,0],[21,0],[22,0],[23,0],[24,0]];"];
+    [str appendString:@"var plot1 = $.jqplot('chart1', [line1, line2], options1);"];
+    [str appendString:@"var plot2 = $.jqplot('chart2', [line1, line2], options2);"];
+    [str appendString:@"var plot3 = $.jqplot('chart3', [line1, line2], options3);"];
     [_webView stringByEvaluatingJavaScriptFromString:str];
 }
 

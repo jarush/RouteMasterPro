@@ -1,28 +1,88 @@
 <html>
-  <head>
-    <link class="include" rel="stylesheet" type="text/css" href="jquery.jqplot.min.css" />
-    <script class="include" type="text/javascript" src="jquery.min.js"></script>
-    <script class="include" type="text/javascript" src="jquery.jqplot.min.js"></script>
-    <script type="text/javascript">
-      window.onorientationchange = function() {
-        switch (window.orientation) {
-          case -90:
-          case 90:
-            $("#chart").width(540);
-            $("#chart").height(200);
-            plot1.replot({resetAxes: true});
-            break;
+    <head>
+        <link class="include" rel="stylesheet" type="text/css" href="jquery.jqplot.min.css" />
+        <script class="include" type="text/javascript" src="jquery.min.js"></script>
+        <script class="include" type="text/javascript" src="jquery.jqplot.min.js"></script>
+        <script type="text/javascript">
+            window.onorientationchange = function() {
+                switch (window.orientation) {
+                    case -90:
+                    case 90:
+                        $("#chart1").hide();
+                        $("#chart2").hide();
+                        $("#chart3").show();
+                        plot3.replot({resetAxes: true});
+                    break;
 
-          default:
-            $("#chart").width(300);
-            $("#chart").height(420);
-            plot1.replot({resetAxes: true});
-            break;
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <div id="chart" style="height:420px; width:300px;"></div>
-  </body>
+                    default:
+                        $("#chart1").show();
+                        $("#chart2").show();
+                        $("#chart3").hide();
+                        plot1.replot({resetAxes: true});
+                        plot2.replot({resetAxes: true});
+                    break;
+                }
+            }
+
+            var options1 = {
+                legend: {
+                    show: true,
+                    location:'nw'
+                },
+                axes: {
+                    xaxis: {
+                        ticks: [[0, '12am'], [3, '3am'], [6, '6am'], [9, '9am'], [12, '12pm']]
+                    },
+                    yaxis: {
+                        pad: 0
+                    }
+                }
+            };
+
+            var options2 = {
+                legend: {show:true, location:'ne'},
+                axes: {
+                    xaxis: {
+                        ticks: [[12, '12pm'], [15, '3pm'], [18, '6pm'], [21, '9pm'], [24, '12am']]
+                    },
+                    yaxis: {
+                        pad: 0
+                    }
+                }
+            };
+
+            var options3 = {
+                legend: {show:true, location:'nw'},
+                axes: {
+                    xaxis: {
+                        ticks: [[0, '12am'], [3, '3am'], [6, '6am'], [9, '9am'],
+                                [12, '12pm'], [15, '3pm'], [18, '6pm'], [21, '9pm'], [24, '12am']]
+                    },
+                    yaxis: {
+                        pad: 0
+                    }
+                }
+            };
+
+            $(document).ready(function() {
+                var chart1 = $("#chart1");
+                chart1.width(screen.width - 20);
+                chart1.height((screen.height - 130) / 2);
+
+                var chart2 = $("#chart2");
+                chart2.width(screen.width - 20);
+                chart2.height((screen.height - 130) / 2);
+
+                var chart3 = $("#chart3");
+                chart3.width(screen.height - 20);
+                chart3.height(screen.width - 120);
+                chart3.hide();
+            });
+            </script>
+    </head>
+    <body>
+        <div id="chart1" style="height:210px; width:300px;"></div>
+        <div id="chart2" style="height:210px; width:300px;"></div>
+        <div id="chart3" style="height:200px; width:540px;"></div>
+    </body>
 </html>
