@@ -24,15 +24,12 @@
         self.tabBarItem.title = @"Stats";
         self.tabBarItem.image = [UIImage imageNamed:@"stats"];
 
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"graph" ofType:@"html"];
-        NSURL *url = [NSURL fileURLWithPath:path];
 
         _webView = [[UIWebView alloc] init];
         _webView.backgroundColor = [UIColor whiteColor];
         _webView.dataDetectorTypes = UIDataDetectorTypeNone;
         _webView.userInteractionEnabled = NO;
         _webView.delegate = self;
-        [_webView loadRequest:[NSURLRequest requestWithURL:url]];
 
         self.view = _webView;
     }
@@ -44,15 +41,27 @@
     [super dealloc];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"graph" ofType:@"html"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    [_webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    NSMutableString *seriesNames = [NSMutableString string];
     NSMutableString *dataStr = [NSMutableString string];
-    NSInteger seriesNumber = 0;
+    NSInteger seriesNumber;
 
     // Loop through the route files
+    seriesNumber = 0;
     for (NSString *routePath in [AppDelegate routePaths]) {
         // Load the route
         Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
         if (route != nil) {
+            [seriesNames appendFormat:@"{label: '%@'}, ", route.name];
+
             // Determine the units for the chart
             double divisor;
             if (route.routeStats.maxDuration > 3600) {
@@ -79,6 +88,12 @@
         }
     }
 
+    // Label all the series
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.series = [%@];", seriesNames]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options2.series = [%@];", seriesNames]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options3.series = [%@];", seriesNames]];
+
+    // Generate the plots
     [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot1 = $.jqplot('chart1', [%@], options1);", dataStr]];
     [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot2 = $.jqplot('chart2', [%@], options2);", dataStr]];
     [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot3 = $.jqplot('chart3', [%@], options3);", dataStr]];
