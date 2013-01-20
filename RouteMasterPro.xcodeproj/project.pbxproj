@@ -33,6 +33,7 @@
 		68BCCE4C16A1D4D400C369C1 /* Icon@2x~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */; };
 		68BCCE4E16A1D4D900C369C1 /* Icon~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4D16A1D4D900C369C1 /* Icon~iPad.png */; };
 		68BCCE5616A1D6A700C369C1 /* RoutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */; };
+		68D06A1916AC5BA600D6347D /* RouteStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D06A1816AC5BA600D6347D /* RouteStats.m */; };
 		68D78BC216A22D9A0099E64B /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBA16A22D9A0099E64B /* list.png */; };
 		68D78BC316A22D9A0099E64B /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBB16A22D9A0099E64B /* list@2x.png */; };
 		68D78BC416A22D9A0099E64B /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBC16A22D9A0099E64B /* location.png */; };
@@ -92,6 +93,8 @@
 		68BCCE4D16A1D4D900C369C1 /* Icon~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPad.png"; sourceTree = "<group>"; };
 		68BCCE5416A1D6A700C369C1 /* RoutesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutesViewController.h; sourceTree = "<group>"; };
 		68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutesViewController.m; sourceTree = "<group>"; };
+		68D06A1716AC5BA600D6347D /* RouteStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteStats.h; sourceTree = "<group>"; };
+		68D06A1816AC5BA600D6347D /* RouteStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteStats.m; sourceTree = "<group>"; };
 		68D78BBA16A22D9A0099E64B /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
 		68D78BBB16A22D9A0099E64B /* list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@2x.png"; sourceTree = "<group>"; };
 		68D78BBC16A22D9A0099E64B /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
@@ -181,6 +184,8 @@
 				6879392F16A4DBA700A4292B /* Route.m */,
 				6879393516A5089F00A4292B /* RouteDetailsViewController.h */,
 				6879393616A5089F00A4292B /* RouteDetailsViewController.m */,
+				68D06A1716AC5BA600D6347D /* RouteStats.h */,
+				68D06A1816AC5BA600D6347D /* RouteStats.m */,
 				68BCCE5416A1D6A700C369C1 /* RoutesViewController.h */,
 				68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */,
 				68D78BCA16A22E4D0099E64B /* StatsViewController.h */,
@@ -345,6 +350,7 @@
 				68A8AA5016A8D7AA0088CFEC /* Vec3D.m in Sources */,
 				687D7AB616A9E3B5002A7110 /* NSOutputStream+Utils.m in Sources */,
 				68DDF77A16AB3C7200512B5D /* MapCell.m in Sources */,
+				68D06A1916AC5BA600D6347D /* RouteStats.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

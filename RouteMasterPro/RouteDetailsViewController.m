@@ -149,7 +149,7 @@ enum {
         case RowDetailsAvgDuration: {
             cell.textLabel.text = @"Avg Duration";
 
-            NSInteger duration = _route.meanDuration;
+            NSInteger duration = _route.routeStats.meanDuration;
             NSInteger hour = duration / 3600;
             NSInteger min = (duration / 60) % 60;
             NSInteger sec = duration % 60;
@@ -160,18 +160,18 @@ enum {
 
         case RowDetailsAvgDistance: {
             cell.textLabel.text = @"Avg Distance";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _route.meanDistance * METER_TO_MILES];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _route.routeStats.meanDistance * METER_TO_MILES];
             break;
         }
 
         case RowDetailsAvgSpeed: {
             cell.textLabel.text = @"Avg Speed";
 
-            double duration = _route.meanDuration;
+            double duration = _route.routeStats.meanDuration;
             if (duration == 0.0) {
                 cell.detailTextLabel.text = @"Unknown";
             } else {
-                double avgSpeed = _route.meanDistance / duration;
+                double avgSpeed = _route.routeStats.meanDistance / duration;
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%d MPH", (int)round(avgSpeed * MPS_TO_MIPH)];
             }
             break;
@@ -179,7 +179,7 @@ enum {
 
         case RowDetailsNumberSamples: {
             cell.textLabel.text = @"Num Samples";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", _route.numberSamples];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", _route.routeStats.numberSamples];
             break;
         }
 

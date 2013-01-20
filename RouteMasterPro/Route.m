@@ -22,8 +22,13 @@
     self = [super init];
     if (self) {
         _tripFiles = [[NSMutableArray alloc] init];
-        _numberSamples = 0;
-        _meanDuration = 0.0;
+        _routeStats = [[RouteStats alloc] init];
+
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:24];
+        for (int i = 0; i < 24; i++) {
+            [array addObject:[[[RouteStats alloc] init] autorelease]];
+        }
+        _hourlyRouteStats = [array retain];
     }
     return self;
 }
@@ -44,14 +49,15 @@
 }
 
 - (void)updateTripStats:(Trip *)trip {
-    _numberSamples += 1;
-    if (_numberSamples == 1) {
-        _meanDuration = [trip duration];
-        _meanDistance = [trip distance];
-    } else {
-        _meanDuration += ([trip duration] - _meanDuration) / _numberSamples;
-        _meanDistance += ([trip distance] - _meanDistance) / _numberSamples;
-    }
+    // Update the overall stats
+    [_routeStats updateTripStats:trip];
+
+    // Update the hourly stats
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComponents = [calendar components:NSHourCalendarUnit fromDate:[trip firstLocation].timestamp];
+    NSInteger hour = [dateComponents hour];
+    RouteStats *routeStats = [_hourlyRouteStats objectAtIndex:hour];
+    [routeStats updateTripStats:trip];
 }
 
 #pragma mark -- Route Matching
@@ -87,9 +93,8 @@
 #define kName @"Name"
 #define kTemplateFile @"TemplateFile"
 #define kTripFiles @"TripFiles"
-#define kNumberSamples @"NumberSamples"
-#define kMeanDuration @"MeanDuration"
-#define kMeanDistance @"MeanDistance"
+#define kRouteStats @"RouteStats"
+#define kHourlyRouteStats @"HourlyRouteStats"
 
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super init];
@@ -97,9 +102,8 @@
         _name = [[coder decodeObjectForKey:kName] copy];
         _templateFile = [[coder decodeObjectForKey:kTemplateFile] copy];
         _tripFiles = [[coder decodeObjectForKey:kTripFiles] retain];
-        _numberSamples = [coder decodeIntegerForKey:kNumberSamples];
-        _meanDuration = [coder decodeDoubleForKey:kMeanDuration];
-        _meanDistance = [coder decodeDoubleForKey:kMeanDistance];
+        _routeStats = [[coder decodeObjectForKey:kRouteStats] retain];
+        _hourlyRouteStats = [[coder decodeObjectForKey:kHourlyRouteStats] retain];
     }
     return self;
 }
@@ -108,9 +112,8 @@
     [coder encodeObject:_name forKey:kName];
     [coder encodeObject:_templateFile forKey:kTemplateFile];
     [coder encodeObject:_tripFiles forKey:kTripFiles];
-    [coder encodeInteger:_numberSamples forKey:kNumberSamples];
-    [coder encodeDouble:_meanDuration forKey:kMeanDuration];
-    [coder encodeDouble:_meanDistance forKey:kMeanDistance];
+    [coder encodeObject:_routeStats forKey:kRouteStats];
+    [coder encodeObject:_hourlyRouteStats forKey:kHourlyRouteStats];
 }
 
 @end

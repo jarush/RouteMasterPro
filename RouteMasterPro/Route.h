@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RouteStats.h"
 #import "Trip.h"
 
 @interface Route : NSObject <NSCoding>
@@ -14,9 +15,8 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *templateFile;
 @property (nonatomic, readonly) NSArray *tripFiles;
-@property (nonatomic, assign) NSInteger numberSamples;
-@property (nonatomic, assign) double meanDuration;
-@property (nonatomic, assign) double meanDistance;
+@property (nonatomic, readonly) RouteStats *routeStats;
+@property (nonatomic, readonly) NSArray *hourlyRouteStats;
 
 - (void)addTripFile:(NSString *)tripFile;
 - (void)removeTripFile:(NSString *)tripFile;
