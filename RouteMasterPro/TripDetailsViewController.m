@@ -26,7 +26,7 @@ enum {
     RowDetailsCount
 };
 
-@interface TripDetailsViewController () <MKMapViewDelegate> {
+@interface TripDetailsViewController () {
     NSDateFormatter *_dateFormatter;
     MapCell *_mapCell;
 }
@@ -80,14 +80,11 @@ enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case SectionDetails:
-            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-
         case SectionMap:
             return 300;
 
         default:
-            break;
+            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
 
     return 0;
@@ -197,14 +194,6 @@ enum {
     }
 
     return _mapCell;
-}
-
-#pragma mark -- MapView delegate
-
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay {
-    MKPolylineView *polylineView = [[[MKPolylineView alloc] initWithPolyline:overlay] autorelease];
-    polylineView.strokeColor = [UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:0.5f];
-    return polylineView;
 }
 
 @end
