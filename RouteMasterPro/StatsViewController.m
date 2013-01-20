@@ -53,13 +53,22 @@
         // Load the route
         Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
         if (route != nil) {
-            NSMutableString *seriesStr = [NSMutableString string];
+            // Determine the units for the chart
+            double divisor;
+            if (route.routeStats.maxDuration > 3600) {
+                divisor = 3600.0;
+            } else if (route.routeStats.maxDuration > 60) {
+                divisor = 60.0;
+            } else {
+                divisor = 1.0;
+            }
 
             // Add the hourly route stats
+            NSMutableString *seriesStr = [NSMutableString string];
             [seriesStr appendFormat:@"var s%d = [", seriesNumber];
             for (NSInteger hour = 0; hour <= 24; hour++) {
                 RouteStats *routeStats = [route.hourlyRouteStats objectAtIndex:hour % 24];
-                [seriesStr appendFormat:@"[%d,%0.1f],", hour, routeStats.meanDuration / 3600];
+                [seriesStr appendFormat:@"[%d,%0.1f],", hour, routeStats.meanDuration / divisor];
             }
             [seriesStr appendString:@"];"];
             [_webView stringByEvaluatingJavaScriptFromString:seriesStr];
