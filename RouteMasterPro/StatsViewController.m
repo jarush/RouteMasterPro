@@ -54,6 +54,7 @@
     NSMutableString *dataStr = [NSMutableString string];
     NSInteger seriesNumber;
     double divisor = 0.0;
+    NSString *yUnits;
 
     // Loop through the route files
     seriesNumber = 0;
@@ -69,12 +70,15 @@
                 if (route.routeStats.maxDuration > 3600) {
                     // Hours
                     divisor = 3600.0;
+                    yUnits = @"h";
                 } else if (route.routeStats.maxDuration > 60) {
                     // Minutes
                     divisor = 60.0;
+                    yUnits = @"m";
                 } else {
                     // Seconds
                     divisor = 1.0;
+                    yUnits = @"s";
                 }
             }
 
@@ -93,6 +97,11 @@
             seriesNumber++;
         }
     }
+
+    // Update the y axis units
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.axes.yaxis.tickOptions = {formatString: '%%d%@'};", yUnits]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options2.axes.yaxis.tickOptions = {formatString: '%%d%@'};", yUnits]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options3.axes.yaxis.tickOptions = {formatString: '%%d%@'};", yUnits]];
 
     // Label all the series
     [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.series = [%@];", seriesNames]];
