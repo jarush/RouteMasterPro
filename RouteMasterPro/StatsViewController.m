@@ -99,9 +99,9 @@
     }
 
     // Update the y axis units
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.axes.yaxis.tickOptions = {formatString: '%%d%@'};", yUnits]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options2.axes.yaxis.tickOptions = {formatString: '%%d%@'};", yUnits]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options3.axes.yaxis.tickOptions = {formatString: '%%d%@'};", yUnits]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.axes.yaxis.tickOptions = {suffix: '%@'};", yUnits]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options2.axes.yaxis.tickOptions = {suffix: '%@'};", yUnits]];
+    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options3.axes.yaxis.tickOptions = {suffix: '%@'};", yUnits]];
 
     // Label all the series
     [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.series = [%@];", seriesNames]];
