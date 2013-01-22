@@ -55,6 +55,7 @@
     [super viewWillAppear:animated];
 
     // Load the list of route files
+    [_paths release];
     _paths = [[AppDelegate routePaths] mutableCopy];
 
     [self.tableView reloadData];
