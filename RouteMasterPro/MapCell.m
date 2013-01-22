@@ -20,7 +20,7 @@
         _mapView.mapType = MKMapTypeStandard;
         _mapView.showsUserLocation = NO;
         _mapView.userInteractionEnabled = NO;
-        _mapView.layer.cornerRadius = 10.0;
+        _mapView.layer.cornerRadius = 7.0;
         _mapView.delegate = self;
         [self.contentView addSubview:_mapView];
     }
@@ -33,11 +33,9 @@
 }
 
 - (void)layoutSubviews {
-    CGRect frame = self.bounds;
-    frame.size.width -= 20;
-    frame.origin.x += 10;
+    [super layoutSubviews];
 
-    _mapView.frame = frame;
+    _mapView.frame = self.contentView.bounds;
 }
 
 #pragma mark -- MapView delegate
