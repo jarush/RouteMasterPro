@@ -131,6 +131,11 @@
 }
 
 + (void)processTrip:(Trip *)trip {
+    // Skip trips w/o enough points
+    if ([trip.locations count] < 2) {
+        return;
+    }
+
     // Get the current timestamp for the filename
     NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     dateFormatter.dateFormat = @"yyyyMMdd'T'HHmmss";
