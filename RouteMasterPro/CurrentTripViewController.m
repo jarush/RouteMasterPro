@@ -26,12 +26,12 @@ enum {
 
 @interface CurrentTripViewController () <CLLocationManagerDelegate> {
     UIBarButtonItem *_monitorButtonItem;
-    UIBarButtonItem *_startStopButtonItem;
+    UIBarButtonItem *_recordButtonItem;
     CLLocationManager *_locationManager;
     CLLocation *_lastLocation;
     CLLocationDistance _distance;
     BOOL _monitoring;
-    BOOL _tracking;
+    BOOL _recording;
 }
 @end
 
@@ -50,18 +50,18 @@ enum {
                                                              action:@selector(toggleMonitor)];
         self.navigationItem.leftBarButtonItem = _monitorButtonItem;
 
-        _startStopButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Track"
+        _recordButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Record"
                                                                 style:UIBarButtonItemStyleBordered
                                                                target:self
-                                                               action:@selector(toggleTracking)];
-        self.navigationItem.rightBarButtonItem = _startStopButtonItem;
+                                                               action:@selector(toggleRecord)];
+        self.navigationItem.rightBarButtonItem = _recordButtonItem;
 
         _trip = nil;
 
         _lastLocation = nil;
         _distance = 0.0;
         _monitoring = NO;
-        _tracking = NO;
+        _recording = NO;
 
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
@@ -71,7 +71,7 @@ enum {
 }
 
 - (void)dealloc {
-    [_startStopButtonItem release];
+    [_recordButtonItem release];
     [_trip release];
     [_lastLocation release];
     [_locationManager release];
@@ -100,8 +100,8 @@ enum {
     }
 }
 
-- (void)startTracking {
-    _tracking = YES;
+- (void)startRecording {
+    _recording = YES;
 
     [_trip release];
     _trip = [[Trip alloc] init];
@@ -112,11 +112,11 @@ enum {
 
     _monitorButtonItem.enabled = NO;
 
-    _startStopButtonItem.style = UIBarButtonItemStyleDone;
+    _recordButtonItem.style = UIBarButtonItemStyleDone;
 }
 
-- (void)stopTracking {
-    _tracking = NO;
+- (void)stopRecord {
+    _recording = NO;
 
     // Process the trip
     [AppDelegate processTrip:_trip];
@@ -125,14 +125,14 @@ enum {
 
     _monitorButtonItem.enabled = YES;
 
-    _startStopButtonItem.style = UIBarButtonItemStyleBordered;
+    _recordButtonItem.style = UIBarButtonItemStyleBordered;
 }
 
-- (void)toggleTracking {
-    if (_tracking) {
-        [self stopTracking];
+- (void)toggleRecord {
+    if (_recording) {
+        [self stopRecord];
     } else {
-        [self startTracking];
+        [self startRecording];
     }
 }
 
@@ -190,7 +190,7 @@ enum {
         case RowAvgSpeed: {
             cell.textLabel.text = @"Avg Speed";
 
-            if (_tracking) {
+            if (_recording) {
                 CLLocation *firstLocation = [_trip firstLocation];
                 NSTimeInterval duration = [_lastLocation.timestamp timeIntervalSinceDate:firstLocation.timestamp];
 
@@ -209,7 +209,7 @@ enum {
         case RowDistance: {
             cell.textLabel.text = @"Distance";
 
-            if (_tracking) {
+            if (_recording) {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _distance * METER_TO_MILES];
             } else {
                 cell.detailTextLabel.text = @"";
@@ -220,7 +220,7 @@ enum {
         case RowDuration: {
             cell.textLabel.text = @"Duration";
 
-            if (_tracking) {
+            if (_recording) {
                 NSInteger duration = (NSInteger)[_trip duration];
                 NSInteger hour = duration / 3600;
                 NSInteger min = (duration / 60) % 60;
@@ -236,7 +236,7 @@ enum {
         case RowPoints: {
             cell.textLabel.text = @"Points";
 
-            if (_tracking) {
+            if (_recording) {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [_trip.locations count]];
             } else {
                 cell.detailTextLabel.text = @"";
@@ -260,7 +260,7 @@ enum {
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *currentLocation = [locations lastObject];
 
-    if (_tracking) {
+    if (_recording) {
         // Compute the distance travled since the last point
         double currentDistance = [_lastLocation distanceFromLocation:currentLocation];
 
@@ -273,8 +273,8 @@ enum {
             // Add the stop point to the trip
             [_trip addLocation:currentLocation];
 
-            // Stop tracking
-            [self stopTracking];
+            // Stop recording
+            [self stopRecord];
 
             // Signal the user that we've stopped by vibrating
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
