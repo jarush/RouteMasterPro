@@ -8,6 +8,7 @@
 
 #import "RouteDetailsViewController.h"
 #import "MapCell.h"
+#import "RenameRouteViewController.h"
 #import "TripDetailsViewController.h"
 #import "AppDelegate.h"
 #import "constants.h"
@@ -43,6 +44,12 @@ enum {
         _route = nil;
 
         _mapCell = nil;
+
+        UIBarButtonItem *renameBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Rename"
+                                                                                 style:UIBarButtonItemStyleBordered
+                                                                                target:self
+                                                                                action:@selector(renamePressed)] autorelease];
+        self.navigationItem.rightBarButtonItem = renameBarButtonItem;
     }
     return self;
 }
@@ -51,6 +58,20 @@ enum {
     [_route release];
     [_mapCell release];
     [super dealloc];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [self.tableView reloadData];
+}
+
+- (void)renamePressed {
+    RenameRouteViewController *renameRouteViewController = [[RenameRouteViewController alloc] init];
+    renameRouteViewController.route = _route;
+    
+    UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:renameRouteViewController] autorelease];
+    [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

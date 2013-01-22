@@ -77,7 +77,7 @@
     return distance;
 }
 
-#pragma mark -- Saving
+#pragma mark -- Saving/Renaming
 
 - (void)save {
     // Create a path for the route file in the Documents folder
@@ -86,6 +86,22 @@
 
     // Save the route to the file
     [NSKeyedArchiver archiveRootObject:self toFile:routePath];
+}
+
+- (void)delete {
+    // Create a path for the route file in the Documents folder
+    NSString *routeFile = [_name stringByAppendingPathExtension:@"route"];
+    NSString *routePath = [[AppDelegate documentsPath] stringByAppendingPathComponent:routeFile];
+
+    [[NSFileManager defaultManager] removeItemAtPath:routePath error:nil];
+}
+
+- (void)rename:(NSString *)newName {
+    [self delete];
+
+    self.name = newName;
+
+    [self save];
 }
 
 #pragma mark -- NSCoding

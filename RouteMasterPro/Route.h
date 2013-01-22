@@ -25,5 +25,7 @@
 - (CLLocationDistance)distanceToTrip:(Trip *)inTrip;
 
 - (void)save;
+- (void)delete;
+- (void)rename:(NSString *)newName;
 
 @end
