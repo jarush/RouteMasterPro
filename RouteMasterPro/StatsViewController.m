@@ -24,7 +24,6 @@
         self.tabBarItem.title = @"Stats";
         self.tabBarItem.image = [UIImage imageNamed:@"stats"];
 
-
         _webView = [[UIWebView alloc] init];
         _webView.backgroundColor = [UIColor whiteColor];
         _webView.dataDetectorTypes = UIDataDetectorTypeNone;
