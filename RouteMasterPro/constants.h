@@ -21,6 +21,12 @@
 // Minimum distance in meters to collect locations
 #define LOCATION_DISTANCE_FILTER 10.0
 
+// Maximum distance in meters to accept for horizontal accuracy
+#define MAX_HORIZONTAL_ACCURACY 20.0
+
+// Maximum number of seconds old a location update can be and still be recorded
+#define MAX_LOCATION_AGE 4
+
 // Maximum distance in meters to consider two trips to belong to the same route
 #define MAX_TRIP_MATCH_DISTANCE 25.0
 

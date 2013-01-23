@@ -110,6 +110,8 @@ enum {
 
     [self startMonitoring];
 
+    self.tabBarItem.badgeValue = @" ";
+
     _monitorButtonItem.enabled = NO;
 
     _recordButtonItem.style = UIBarButtonItemStyleDone;
@@ -122,6 +124,8 @@ enum {
     [AppDelegate processTrip:_trip];
 
     [self stopMonitoring];
+
+    self.tabBarItem.badgeValue = nil;
 
     _monitorButtonItem.enabled = YES;
 
@@ -257,10 +261,24 @@ enum {
 
 #pragma mark - Location manager data source
 
+- (BOOL)isValidLocation:(CLLocation *)location {
+    // Check if the location update is current
+    if (ABS([location.timestamp timeIntervalSinceNow]) > MAX_LOCATION_AGE) {
+        return NO;
+    }
+
+    // Check of the location accuracy is good enough
+    if (location.horizontalAccuracy > MAX_HORIZONTAL_ACCURACY) {
+        return NO;
+    }
+
+    return YES;
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *currentLocation = [locations lastObject];
 
-    if (_recording) {
+    if (_recording && [self isValidLocation:currentLocation]) {
         // Compute the distance travled since the last point
         double currentDistance = [_lastLocation distanceFromLocation:currentLocation];
 
