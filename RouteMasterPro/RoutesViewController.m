@@ -109,7 +109,9 @@
         NSString *kmlPath = [[tripPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"kml"];
 
         Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
-        [trip writeKmlToPath:kmlPath];
+        if (trip != nil) {
+            [trip writeKmlToPath:kmlPath];
+        }
 
         [viewController addAttachmentData:[NSData dataWithContentsOfFile:kmlPath]
                                  mimeType:@"text/xml"
