@@ -255,7 +255,7 @@
     // Can't reduce polylines less than 3 points
     int count = [points count];
     if (count < 3) {
-        return points;
+        return [NSArray arrayWithArray:points];
     }
 
     // Find the point with the maximum perpendicular distance
