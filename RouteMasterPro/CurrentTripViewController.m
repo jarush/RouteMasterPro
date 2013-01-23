@@ -103,15 +103,17 @@ enum {
 - (void)startRecording {
     _recording = YES;
 
+    // Reset the trip
     [_trip release];
     _trip = [[Trip alloc] init];
 
     _distance = 0.0;
 
+    // Start monitoring location updates
     [self startMonitoring];
 
+    // Update the UI to indicate we're recording
     self.tabBarItem.badgeValue = @" ";
-
     _monitorButtonItem.enabled = NO;
     _recordButtonItem.tintColor = [UIColor colorWithRed:0.8f green:0.0f blue:0.0f alpha:1.0f];
 }
@@ -119,13 +121,14 @@ enum {
 - (void)stopRecord {
     _recording = NO;
 
+    // Stop monitoring location updates
+    [self stopMonitoring];
+
     // Process the trip
     [AppDelegate processTrip:_trip];
 
-    [self stopMonitoring];
-
+    // Update the UI to indicate we're not recording
     self.tabBarItem.badgeValue = nil;
-
     _monitorButtonItem.enabled = YES;
     _recordButtonItem.tintColor = nil;
 }
