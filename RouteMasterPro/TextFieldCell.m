@@ -21,6 +21,8 @@
         _textField = [[UITextField alloc] init];
         _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _textField.clearButtonMode = UITextFieldViewModeAlways;
+
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [self.contentView addSubview:_textField];
     }
