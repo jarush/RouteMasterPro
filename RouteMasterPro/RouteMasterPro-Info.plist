@@ -60,5 +60,45 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>RouteMaster Trip File</string>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>Icon~iPhone.png</string>
+				<string>Icon~iPhone@2x.png</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.flushsoftware.RouteMaster.trip</string>
+			</array>
+		</dict>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.flushsoftware.RouteMaster.trip</string>
+			<key>UTTypeDescription</key>
+			<string>RouteMaster Trip File</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.comma-separated-values-text</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.mime-type</key>
+				<string>text/csv</string>
+				<key>public.filename-extension</key>
+				<string>trip</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>

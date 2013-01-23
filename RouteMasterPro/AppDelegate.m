@@ -43,6 +43,22 @@
     [super dealloc];
 }
 
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    NSString *tripPath = [url path];
+    Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
+    if (trip != nil) {
+        // Process it like a new trip to reduce points, save, and match
+        [AppDelegate processTrip:trip];
+    }
+
+    [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
+
+    return YES;
+}
+
 - (CLRegion *)stopRegion {
     if (_stopRegion != nil) {
         return _stopRegion;
