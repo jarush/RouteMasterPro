@@ -113,8 +113,7 @@ enum {
     self.tabBarItem.badgeValue = @" ";
 
     _monitorButtonItem.enabled = NO;
-
-    _recordButtonItem.style = UIBarButtonItemStyleDone;
+    _recordButtonItem.tintColor = [UIColor colorWithRed:0.8f green:0.0f blue:0.0f alpha:1.0f];
 }
 
 - (void)stopRecord {
@@ -128,8 +127,7 @@ enum {
     self.tabBarItem.badgeValue = nil;
 
     _monitorButtonItem.enabled = YES;
-
-    _recordButtonItem.style = UIBarButtonItemStyleBordered;
+    _recordButtonItem.tintColor = nil;
 }
 
 - (void)toggleRecord {
