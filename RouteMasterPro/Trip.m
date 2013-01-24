@@ -73,8 +73,34 @@
 
 #pragma mark -- Trip matching methods
 
+- (BOOL)isSameEndPoints:(Trip *)trip {
+    CLLocation *firstLocation1 = [self firstLocation];
+    CLLocation *lastLocation1 = [self firstLocation];
+    CLLocation *firstLocation2 = [trip firstLocation];
+    CLLocation *lastLocation2 = [trip firstLocation];
+
+    // Check if they have the same first and last points
+    if (([firstLocation1 distanceFromLocation:firstLocation2] < RADIUS_STOP_MONITORING) &&
+        ([lastLocation1 distanceFromLocation:lastLocation2] < RADIUS_STOP_MONITORING)) {
+        return YES;
+    }
+
+    // Check if they have swapped first and last points
+    if (([firstLocation1 distanceFromLocation:lastLocation2] < RADIUS_STOP_MONITORING) &&
+        ([lastLocation1 distanceFromLocation:firstLocation2] < RADIUS_STOP_MONITORING)) {
+        return YES;
+    }
+
+    return NO;
+}
+
 - (CLLocationDistance)distanceToTrip:(Trip *)trip {
     CLLocationDistance maxDistance = -INFINITY;
+
+    // Check if the trips share end points
+    if ([self isSameEndPoints:trip]) {
+        return -INFINITY;
+    }
 
     for (CLLocation *currentLocation in _locations) {
         // Compute the distance from the current location and the supplied location
