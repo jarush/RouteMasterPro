@@ -8,12 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6822F28016A7BE03008683B4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6822F27F16A7BE03008683B4 /* MessageUI.framework */; };
-		6879392916A4D86500A4292B /* Trip.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392616A4D86500A4292B /* Trip.m */; };
 		6879392A16A4D86500A4292B /* TripDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392816A4D86500A4292B /* TripDetailsViewController.m */; };
 		6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392C16A4D90300A4292B /* CurrentTripViewController.m */; };
-		6879393016A4DBA700A4292B /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879392F16A4DBA700A4292B /* Route.m */; };
 		6879393716A5089F00A4292B /* RouteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6879393616A5089F00A4292B /* RouteDetailsViewController.m */; };
-		687D7AB616A9E3B5002A7110 /* NSOutputStream+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */; };
 		687D7AB916A9EBE4002A7110 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687D7AB816A9EBE4002A7110 /* AudioToolbox.framework */; };
 		687FABAE169F090F0031C25B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAD169F090F0031C25B /* UIKit.framework */; };
 		687FABB0169F090F0031C25B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABAF169F090F0031C25B /* Foundation.framework */; };
@@ -26,8 +23,12 @@
 		687FABC4169F090F0031C25B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 687FABC3169F090F0031C25B /* Default-568h@2x.png */; };
 		687FABD0169F09320031C25B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 687FABCF169F09320031C25B /* MapViewController.m */; };
 		687FABD3169F0A1F0031C25B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687FABD2169F0A1F0031C25B /* CoreLocation.framework */; };
-		68A8AA5016A8D7AA0088CFEC /* Vec3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A8AA4F16A8D7AA0088CFEC /* Vec3D.m */; };
-		68A97C3816A7837D00FC2318 /* BufferedReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A97C3716A7837C00FC2318 /* BufferedReader.m */; };
+		6890D1FA16B4798C004A7E1A /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1EE16B4798C004A7E1A /* Route.m */; };
+		6890D1FB16B4798C004A7E1A /* RouteStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F016B4798C004A7E1A /* RouteStats.m */; };
+		6890D1FC16B4798C004A7E1A /* Trip.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F216B4798C004A7E1A /* Trip.m */; };
+		6890D1FD16B4798C004A7E1A /* BufferedReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F516B4798C004A7E1A /* BufferedReader.m */; };
+		6890D1FE16B4798C004A7E1A /* NSOutputStream+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F716B4798C004A7E1A /* NSOutputStream+Utils.m */; };
+		6890D1FF16B4798C004A7E1A /* Vec3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F916B4798C004A7E1A /* Vec3D.m */; };
 		68BCCE4816A1D4CA00C369C1 /* Icon@2x~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */; };
 		68BCCE4A16A1D4D000C369C1 /* Icon~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */; };
 		68BCCE4C16A1D4D400C369C1 /* Icon@2x~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */; };
@@ -35,7 +36,6 @@
 		68BCCE5616A1D6A700C369C1 /* RoutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */; };
 		68D02A2716AEC97F0022A043 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D02A2616AEC97F0022A043 /* TextFieldCell.m */; };
 		68D02A2B16AECBDF0022A043 /* RenameRouteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D02A2A16AECBDF0022A043 /* RenameRouteViewController.m */; };
-		68D06A1916AC5BA600D6347D /* RouteStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D06A1816AC5BA600D6347D /* RouteStats.m */; };
 		68D78BC216A22D9A0099E64B /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBA16A22D9A0099E64B /* list.png */; };
 		68D78BC316A22D9A0099E64B /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBB16A22D9A0099E64B /* list@2x.png */; };
 		68D78BC416A22D9A0099E64B /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBC16A22D9A0099E64B /* location.png */; };
@@ -56,18 +56,12 @@
 /* Begin PBXFileReference section */
 		6822F27F16A7BE03008683B4 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		682BC6AB16A268730070FBEA /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
-		6879392516A4D86500A4292B /* Trip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trip.h; sourceTree = "<group>"; };
-		6879392616A4D86500A4292B /* Trip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trip.m; sourceTree = "<group>"; };
 		6879392716A4D86500A4292B /* TripDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripDetailsViewController.h; sourceTree = "<group>"; };
 		6879392816A4D86500A4292B /* TripDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripDetailsViewController.m; sourceTree = "<group>"; };
 		6879392B16A4D90300A4292B /* CurrentTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentTripViewController.h; sourceTree = "<group>"; };
 		6879392C16A4D90300A4292B /* CurrentTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentTripViewController.m; sourceTree = "<group>"; };
-		6879392E16A4DBA700A4292B /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
-		6879392F16A4DBA700A4292B /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		6879393516A5089F00A4292B /* RouteDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDetailsViewController.h; sourceTree = "<group>"; };
 		6879393616A5089F00A4292B /* RouteDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteDetailsViewController.m; sourceTree = "<group>"; };
-		687D7AB416A9E3B5002A7110 /* NSOutputStream+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+Utils.h"; sourceTree = "<group>"; };
-		687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+Utils.m"; sourceTree = "<group>"; };
 		687D7AB816A9EBE4002A7110 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		687FABA9169F090F0031C25B /* RouteMasterPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMasterPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		687FABAD169F090F0031C25B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -85,10 +79,18 @@
 		687FABCE169F09320031C25B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		687FABCF169F09320031C25B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		687FABD2169F0A1F0031C25B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		68A8AA4E16A8D7AA0088CFEC /* Vec3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec3D.h; sourceTree = "<group>"; };
-		68A8AA4F16A8D7AA0088CFEC /* Vec3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vec3D.m; sourceTree = "<group>"; };
-		68A97C3616A7837C00FC2318 /* BufferedReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferedReader.h; sourceTree = "<group>"; };
-		68A97C3716A7837C00FC2318 /* BufferedReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferedReader.m; sourceTree = "<group>"; };
+		6890D1ED16B4798C004A7E1A /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		6890D1EE16B4798C004A7E1A /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
+		6890D1EF16B4798C004A7E1A /* RouteStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteStats.h; sourceTree = "<group>"; };
+		6890D1F016B4798C004A7E1A /* RouteStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteStats.m; sourceTree = "<group>"; };
+		6890D1F116B4798C004A7E1A /* Trip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trip.h; sourceTree = "<group>"; };
+		6890D1F216B4798C004A7E1A /* Trip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trip.m; sourceTree = "<group>"; };
+		6890D1F416B4798C004A7E1A /* BufferedReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferedReader.h; sourceTree = "<group>"; };
+		6890D1F516B4798C004A7E1A /* BufferedReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferedReader.m; sourceTree = "<group>"; };
+		6890D1F616B4798C004A7E1A /* NSOutputStream+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutputStream+Utils.h"; sourceTree = "<group>"; };
+		6890D1F716B4798C004A7E1A /* NSOutputStream+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+Utils.m"; sourceTree = "<group>"; };
+		6890D1F816B4798C004A7E1A /* Vec3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec3D.h; sourceTree = "<group>"; };
+		6890D1F916B4798C004A7E1A /* Vec3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vec3D.m; sourceTree = "<group>"; };
 		68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPad.png"; sourceTree = "<group>"; };
@@ -99,8 +101,6 @@
 		68D02A2616AEC97F0022A043 /* TextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
 		68D02A2916AECBDF0022A043 /* RenameRouteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenameRouteViewController.h; sourceTree = "<group>"; };
 		68D02A2A16AECBDF0022A043 /* RenameRouteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenameRouteViewController.m; sourceTree = "<group>"; };
-		68D06A1716AC5BA600D6347D /* RouteStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteStats.h; sourceTree = "<group>"; };
-		68D06A1816AC5BA600D6347D /* RouteStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteStats.m; sourceTree = "<group>"; };
 		68D78BBA16A22D9A0099E64B /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
 		68D78BBB16A22D9A0099E64B /* list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list@2x.png"; sourceTree = "<group>"; };
 		68D78BBC16A22D9A0099E64B /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
@@ -175,8 +175,6 @@
 			children = (
 				687FABBC169F090F0031C25B /* AppDelegate.h */,
 				687FABBD169F090F0031C25B /* AppDelegate.m */,
-				68A97C3616A7837C00FC2318 /* BufferedReader.h */,
-				68A97C3716A7837C00FC2318 /* BufferedReader.m */,
 				682BC6AB16A268730070FBEA /* constants.h */,
 				6879392B16A4D90300A4292B /* CurrentTripViewController.h */,
 				6879392C16A4D90300A4292B /* CurrentTripViewController.m */,
@@ -184,28 +182,20 @@
 				68DDF77916AB3C7200512B5D /* MapCell.m */,
 				687FABCE169F09320031C25B /* MapViewController.h */,
 				687FABCF169F09320031C25B /* MapViewController.m */,
-				687D7AB416A9E3B5002A7110 /* NSOutputStream+Utils.h */,
-				687D7AB516A9E3B5002A7110 /* NSOutputStream+Utils.m */,
 				68D02A2916AECBDF0022A043 /* RenameRouteViewController.h */,
 				68D02A2A16AECBDF0022A043 /* RenameRouteViewController.m */,
-				6879392E16A4DBA700A4292B /* Route.h */,
-				6879392F16A4DBA700A4292B /* Route.m */,
 				6879393516A5089F00A4292B /* RouteDetailsViewController.h */,
 				6879393616A5089F00A4292B /* RouteDetailsViewController.m */,
-				68D06A1716AC5BA600D6347D /* RouteStats.h */,
-				68D06A1816AC5BA600D6347D /* RouteStats.m */,
 				68BCCE5416A1D6A700C369C1 /* RoutesViewController.h */,
 				68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */,
 				68D78BCA16A22E4D0099E64B /* StatsViewController.h */,
 				68D78BCB16A22E4D0099E64B /* StatsViewController.m */,
 				68D02A2516AEC97F0022A043 /* TextFieldCell.h */,
 				68D02A2616AEC97F0022A043 /* TextFieldCell.m */,
-				6879392516A4D86500A4292B /* Trip.h */,
-				6879392616A4D86500A4292B /* Trip.m */,
 				6879392716A4D86500A4292B /* TripDetailsViewController.h */,
 				6879392816A4D86500A4292B /* TripDetailsViewController.m */,
-				68A8AA4E16A8D7AA0088CFEC /* Vec3D.h */,
-				68A8AA4F16A8D7AA0088CFEC /* Vec3D.m */,
+				6890D1EC16B4798C004A7E1A /* Model */,
+				6890D1F316B4798C004A7E1A /* Util */,
 				687FABB4169F090F0031C25B /* Supporting Files */,
 			);
 			path = RouteMasterPro;
@@ -223,6 +213,32 @@
 				687FABC3169F090F0031C25B /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6890D1EC16B4798C004A7E1A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6890D1ED16B4798C004A7E1A /* Route.h */,
+				6890D1EE16B4798C004A7E1A /* Route.m */,
+				6890D1EF16B4798C004A7E1A /* RouteStats.h */,
+				6890D1F016B4798C004A7E1A /* RouteStats.m */,
+				6890D1F116B4798C004A7E1A /* Trip.h */,
+				6890D1F216B4798C004A7E1A /* Trip.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6890D1F316B4798C004A7E1A /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				6890D1F416B4798C004A7E1A /* BufferedReader.h */,
+				6890D1F516B4798C004A7E1A /* BufferedReader.m */,
+				6890D1F616B4798C004A7E1A /* NSOutputStream+Utils.h */,
+				6890D1F716B4798C004A7E1A /* NSOutputStream+Utils.m */,
+				6890D1F816B4798C004A7E1A /* Vec3D.h */,
+				6890D1F916B4798C004A7E1A /* Vec3D.m */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		68BCCE5016A1D4ED00C369C1 /* Resources */ = {
@@ -351,18 +367,18 @@
 				687FABD0169F09320031C25B /* MapViewController.m in Sources */,
 				68BCCE5616A1D6A700C369C1 /* RoutesViewController.m in Sources */,
 				68D78BCC16A22E4D0099E64B /* StatsViewController.m in Sources */,
-				6879392916A4D86500A4292B /* Trip.m in Sources */,
 				6879392A16A4D86500A4292B /* TripDetailsViewController.m in Sources */,
 				6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */,
-				6879393016A4DBA700A4292B /* Route.m in Sources */,
 				6879393716A5089F00A4292B /* RouteDetailsViewController.m in Sources */,
-				68A97C3816A7837D00FC2318 /* BufferedReader.m in Sources */,
-				68A8AA5016A8D7AA0088CFEC /* Vec3D.m in Sources */,
-				687D7AB616A9E3B5002A7110 /* NSOutputStream+Utils.m in Sources */,
 				68DDF77A16AB3C7200512B5D /* MapCell.m in Sources */,
-				68D06A1916AC5BA600D6347D /* RouteStats.m in Sources */,
 				68D02A2716AEC97F0022A043 /* TextFieldCell.m in Sources */,
 				68D02A2B16AECBDF0022A043 /* RenameRouteViewController.m in Sources */,
+				6890D1FA16B4798C004A7E1A /* Route.m in Sources */,
+				6890D1FB16B4798C004A7E1A /* RouteStats.m in Sources */,
+				6890D1FC16B4798C004A7E1A /* Trip.m in Sources */,
+				6890D1FD16B4798C004A7E1A /* BufferedReader.m in Sources */,
+				6890D1FE16B4798C004A7E1A /* NSOutputStream+Utils.m in Sources */,
+				6890D1FF16B4798C004A7E1A /* Vec3D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
