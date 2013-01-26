@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "CurrentTripViewController.h"
 #import "MapViewController.h"
-#import "RoutesViewController.h"
+#import "FoldersViewController.h"
 #import "StatsViewController.h"
 #import "constants.h"
 
@@ -20,14 +20,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     CurrentTripViewController *currentTripViewController = [[[CurrentTripViewController alloc] init] autorelease];
     MapViewController *mapViewController = [[[MapViewController alloc] init] autorelease];
-    RoutesViewController *routesViewController = [[[RoutesViewController alloc] init] autorelease];
+    FoldersViewController *foldersViewController = [[[FoldersViewController alloc] init] autorelease];
     StatsViewController *statsViewController = [[[StatsViewController alloc] init] autorelease];
 
     UITabBarController *tabBarController = [[[UITabBarController alloc] init] autorelease];
     tabBarController.viewControllers = @[
         [[[UINavigationController alloc] initWithRootViewController:currentTripViewController] autorelease],
         [[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease],
-        [[[UINavigationController alloc] initWithRootViewController:routesViewController] autorelease],
+        [[[UINavigationController alloc] initWithRootViewController:foldersViewController] autorelease],
         [[[UINavigationController alloc] initWithRootViewController:statsViewController] autorelease]
     ];
 
@@ -97,6 +97,24 @@
     return [paths objectAtIndex:0];
 }
 
++ (NSArray *)folderPaths {
+    // Get the list of files in the Documents folder
+    NSString *documentsPath = [AppDelegate documentsPath];
+    NSArray *filenames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:nil];
+
+    // Filter the list of filename for names ending in .route
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self endswith[c] '.folder'"];
+    filenames = [filenames filteredArrayUsingPredicate:predicate];
+
+    // Append the filtered filenames to the Documents folder to create absolute paths
+    NSMutableArray *paths = [NSMutableArray array];
+    for (NSString *filename in filenames) {
+        [paths addObject:[documentsPath stringByAppendingPathComponent:filename]];
+    }
+
+    return paths;
+}
+
 + (NSArray *)routePaths {
     // Get the list of files in the Documents folder
     NSString *documentsPath = [AppDelegate documentsPath];
@@ -133,25 +151,20 @@
     return paths;
 }
 
-+ (Route *)findMatchingRoute:(Trip *)trip {
-    CLLocationDistance minDistance = INFINITY;
-    Route *minRoute = nil;
-
-    // Loop through the route files
-    for (NSString *routePath in [AppDelegate routePaths]) {
-        // Load the route
-        Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
-        if (route != nil) {
-            // Get the distance of the trip to the route
-            CLLocationDistance distance = [route distanceToTrip:trip];
-            if (distance < minDistance && distance < MAX_TRIP_MATCH_DISTANCE) {
-                minDistance = distance;
-                minRoute = route;;
++ (Folder *)findMatchingFolder:(Trip *)trip {
+    // Loop through the folder paths
+    for (NSString *folderPath in [AppDelegate folderPaths]) {
+        // Load the folder
+        Folder *folder = [NSKeyedUnarchiver unarchiveObjectWithFile:folderPath];
+        if (folder != nil) {
+            // Check if this trip belongs in this folder
+            if ([folder isSameEndPoints:trip]) {
+                return folder;
             }
         }
     }
 
-    return minRoute;
+    return nil;
 }
 
 + (void)processTrip:(Trip *)trip {
@@ -188,8 +201,20 @@
 }
 
 + (void)matchTrip:(Trip *)trip tripPath:(NSString *)tripPath {
+    // Find the matching folder for the trip
+    Folder *folder = [AppDelegate findMatchingFolder:trip];
+    if (folder == nil) {
+        NSString *name = [[tripPath lastPathComponent] stringByDeletingPathExtension];
+
+        // Create a new route
+        folder = [[[Folder alloc] init] autorelease];
+        folder.name = name;
+        folder.startLocation = [trip firstLocation];
+        folder.stopLocation = [trip lastLocation];
+    }
+
     // Find a matching route for the trip
-    Route *route = [AppDelegate findMatchingRoute:trip];
+    Route *route = [folder findMatchingRoute:trip];
     if (route == nil) {
         NSString *name = [[tripPath lastPathComponent] stringByDeletingPathExtension];
 
@@ -197,16 +222,18 @@
         route = [[[Route alloc] init] autorelease];
         route.name = name;
         route.templateFile = [tripPath lastPathComponent];
+
+        NSString *routeFile = [name stringByAppendingPathExtension:@"route"];
+        [folder addRouteFile:routeFile];
     }
 
-    // Add the trip to the route
+    // Add the trip to the route, update the route stats, and save the route
     [route addTripFile:[tripPath lastPathComponent]];
-
-    // Add this trip's stats to the route
-    [route updateTripStats:trip];
-
-    // Save the route
+    [route updateStats:trip];
     [route save];
+
+    // Save the folder
+    [folder save];
 }
 
 @end

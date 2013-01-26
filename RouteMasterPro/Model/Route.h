@@ -10,8 +10,11 @@
 #import "RouteStats.h"
 #import "Trip.h"
 
+@class Folder;
+
 @interface Route : NSObject <NSCoding>
 
+@property (nonatomic, retain) Folder *folder;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *templateFile;
 @property (nonatomic, readonly) NSArray *tripFiles;
@@ -20,12 +23,11 @@
 
 - (void)addTripFile:(NSString *)tripFile;
 - (void)removeTripFile:(NSString *)tripFile;
-- (void)updateTripStats:(Trip *)trip;
+- (void)updateStats:(Trip *)trip;
 
 - (CLLocationDistance)distanceToTrip:(Trip *)inTrip;
 
 - (void)save;
 - (void)delete;
-- (void)rename:(NSString *)newName;
 
 @end

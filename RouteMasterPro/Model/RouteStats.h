@@ -19,6 +19,6 @@
 @property (nonatomic, assign) double minDistance;
 @property (nonatomic, assign) double maxDistance;
 
-- (void)updateTripStats:(Trip *)trip;
+- (void)updateStats:(Trip *)trip;
 
 @end

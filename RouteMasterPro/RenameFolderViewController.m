@@ -1,26 +1,25 @@
 //
-//  RenameRouteViewController.m
+//  RenameFolderViewController.m
 //  RouteMasterPro
 //
-//  Created by Jason Rush on 1/22/13.
+//  Created by Jason Rush on 1/26/13.
 //  Copyright (c) 2013 Flush Software LLC. All rights reserved.
 //
 
-#import "RenameRouteViewController.h"
+#import "RenameFolderViewController.h"
 #import "TextFieldCell.h"
-#import "Folder.h"
 
-@interface RenameRouteViewController () <UITextFieldDelegate> {
+@interface RenameFolderViewController () <UITextFieldDelegate> {
     TextFieldCell *_textFieldCell;
 }
 @end
 
-@implementation RenameRouteViewController
+@implementation RenameFolderViewController
 
 - (id)init {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.title = @"Rename Route";
+        self.title = @"Rename Folder";
 
         UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                        target:self
@@ -54,23 +53,23 @@
 
 - (void)donePressed:(id)sender {
     if ([_textFieldCell.textField.text length] != 0) {
-        [_route.folder renameRoute:_route newName:_textFieldCell.textField.text];
+        [_folder rename:_textFieldCell.textField.text];
 
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
-- (void)setRoute:(Route *)route {
-    [_route release];
-    _route = [route retain];
+- (void)setFolder:(Folder *)folder {
+    [_folder release];
+    _folder = [folder retain];
 
-    _textFieldCell.textField.text = _route.name;
+    _textFieldCell.textField.text = _folder.name;
 }
 
 #pragma mark - Table view data source
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Enter a new name for the route";
+    return @"Enter a new name for the folder";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

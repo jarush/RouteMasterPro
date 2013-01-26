@@ -29,11 +29,14 @@
 		6890D1FD16B4798C004A7E1A /* BufferedReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F516B4798C004A7E1A /* BufferedReader.m */; };
 		6890D1FE16B4798C004A7E1A /* NSOutputStream+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F716B4798C004A7E1A /* NSOutputStream+Utils.m */; };
 		6890D1FF16B4798C004A7E1A /* Vec3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D1F916B4798C004A7E1A /* Vec3D.m */; };
+		6890D20216B47BF7004A7E1A /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D20116B47BF7004A7E1A /* Folder.m */; };
+		6890D20516B47D7A004A7E1A /* FolderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D20416B47D7A004A7E1A /* FolderDetailsViewController.m */; };
+		6890D20C16B4804B004A7E1A /* RenameFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D20B16B4804B004A7E1A /* RenameFolderViewController.m */; };
 		68BCCE4816A1D4CA00C369C1 /* Icon@2x~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */; };
 		68BCCE4A16A1D4D000C369C1 /* Icon~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */; };
 		68BCCE4C16A1D4D400C369C1 /* Icon@2x~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */; };
 		68BCCE4E16A1D4D900C369C1 /* Icon~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4D16A1D4D900C369C1 /* Icon~iPad.png */; };
-		68BCCE5616A1D6A700C369C1 /* RoutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */; };
+		68BCCE5616A1D6A700C369C1 /* FoldersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BCCE5516A1D6A700C369C1 /* FoldersViewController.m */; };
 		68D02A2716AEC97F0022A043 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D02A2616AEC97F0022A043 /* TextFieldCell.m */; };
 		68D02A2B16AECBDF0022A043 /* RenameRouteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D02A2A16AECBDF0022A043 /* RenameRouteViewController.m */; };
 		68D78BC216A22D9A0099E64B /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBA16A22D9A0099E64B /* list.png */; };
@@ -91,12 +94,18 @@
 		6890D1F716B4798C004A7E1A /* NSOutputStream+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutputStream+Utils.m"; sourceTree = "<group>"; };
 		6890D1F816B4798C004A7E1A /* Vec3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec3D.h; sourceTree = "<group>"; };
 		6890D1F916B4798C004A7E1A /* Vec3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vec3D.m; sourceTree = "<group>"; };
+		6890D20016B47BF7004A7E1A /* Folder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
+		6890D20116B47BF7004A7E1A /* Folder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Folder.m; sourceTree = "<group>"; };
+		6890D20316B47D7A004A7E1A /* FolderDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderDetailsViewController.h; sourceTree = "<group>"; };
+		6890D20416B47D7A004A7E1A /* FolderDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderDetailsViewController.m; sourceTree = "<group>"; };
+		6890D20A16B4804B004A7E1A /* RenameFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenameFolderViewController.h; sourceTree = "<group>"; };
+		6890D20B16B4804B004A7E1A /* RenameFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenameFolderViewController.m; sourceTree = "<group>"; };
 		68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPad.png"; sourceTree = "<group>"; };
 		68BCCE4D16A1D4D900C369C1 /* Icon~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPad.png"; sourceTree = "<group>"; };
-		68BCCE5416A1D6A700C369C1 /* RoutesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutesViewController.h; sourceTree = "<group>"; };
-		68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutesViewController.m; sourceTree = "<group>"; };
+		68BCCE5416A1D6A700C369C1 /* FoldersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldersViewController.h; sourceTree = "<group>"; };
+		68BCCE5516A1D6A700C369C1 /* FoldersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldersViewController.m; sourceTree = "<group>"; };
 		68D02A2516AEC97F0022A043 /* TextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldCell.h; sourceTree = "<group>"; };
 		68D02A2616AEC97F0022A043 /* TextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
 		68D02A2916AECBDF0022A043 /* RenameRouteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenameRouteViewController.h; sourceTree = "<group>"; };
@@ -178,16 +187,20 @@
 				682BC6AB16A268730070FBEA /* constants.h */,
 				6879392B16A4D90300A4292B /* CurrentTripViewController.h */,
 				6879392C16A4D90300A4292B /* CurrentTripViewController.m */,
+				6890D20316B47D7A004A7E1A /* FolderDetailsViewController.h */,
+				6890D20416B47D7A004A7E1A /* FolderDetailsViewController.m */,
+				68BCCE5416A1D6A700C369C1 /* FoldersViewController.h */,
+				68BCCE5516A1D6A700C369C1 /* FoldersViewController.m */,
 				68DDF77816AB3C7200512B5D /* MapCell.h */,
 				68DDF77916AB3C7200512B5D /* MapCell.m */,
 				687FABCE169F09320031C25B /* MapViewController.h */,
 				687FABCF169F09320031C25B /* MapViewController.m */,
+				6890D20A16B4804B004A7E1A /* RenameFolderViewController.h */,
+				6890D20B16B4804B004A7E1A /* RenameFolderViewController.m */,
 				68D02A2916AECBDF0022A043 /* RenameRouteViewController.h */,
 				68D02A2A16AECBDF0022A043 /* RenameRouteViewController.m */,
 				6879393516A5089F00A4292B /* RouteDetailsViewController.h */,
 				6879393616A5089F00A4292B /* RouteDetailsViewController.m */,
-				68BCCE5416A1D6A700C369C1 /* RoutesViewController.h */,
-				68BCCE5516A1D6A700C369C1 /* RoutesViewController.m */,
 				68D78BCA16A22E4D0099E64B /* StatsViewController.h */,
 				68D78BCB16A22E4D0099E64B /* StatsViewController.m */,
 				68D02A2516AEC97F0022A043 /* TextFieldCell.h */,
@@ -218,6 +231,8 @@
 		6890D1EC16B4798C004A7E1A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6890D20016B47BF7004A7E1A /* Folder.h */,
+				6890D20116B47BF7004A7E1A /* Folder.m */,
 				6890D1ED16B4798C004A7E1A /* Route.h */,
 				6890D1EE16B4798C004A7E1A /* Route.m */,
 				6890D1EF16B4798C004A7E1A /* RouteStats.h */,
@@ -365,7 +380,7 @@
 				687FABBA169F090F0031C25B /* main.m in Sources */,
 				687FABBE169F090F0031C25B /* AppDelegate.m in Sources */,
 				687FABD0169F09320031C25B /* MapViewController.m in Sources */,
-				68BCCE5616A1D6A700C369C1 /* RoutesViewController.m in Sources */,
+				68BCCE5616A1D6A700C369C1 /* FoldersViewController.m in Sources */,
 				68D78BCC16A22E4D0099E64B /* StatsViewController.m in Sources */,
 				6879392A16A4D86500A4292B /* TripDetailsViewController.m in Sources */,
 				6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */,
@@ -379,6 +394,9 @@
 				6890D1FD16B4798C004A7E1A /* BufferedReader.m in Sources */,
 				6890D1FE16B4798C004A7E1A /* NSOutputStream+Utils.m in Sources */,
 				6890D1FF16B4798C004A7E1A /* Vec3D.m in Sources */,
+				6890D20216B47BF7004A7E1A /* Folder.m in Sources */,
+				6890D20516B47D7A004A7E1A /* FolderDetailsViewController.m in Sources */,
+				6890D20C16B4804B004A7E1A /* RenameFolderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

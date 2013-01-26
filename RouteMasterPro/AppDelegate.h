@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Folder.h"
 #import "Route.h"
 #import "Trip.h"
 
@@ -19,10 +20,11 @@
 + (AppDelegate *)appDelegate;
 
 + (NSString *)documentsPath;
++ (NSArray *)folderPaths;
 + (NSArray *)routePaths;
 + (NSArray *)tripPaths;
 
-+ (Route *)findMatchingRoute:(Trip *)trip;
++ (Folder *)findMatchingFolder:(Trip *)trip;
 + (void)processTrip:(Trip *)trip;
 + (void)matchTrip:(Trip *)trip tripPath:(NSString *)tripPath;
 

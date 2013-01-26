@@ -1,5 +1,5 @@
 //
-//  RoutesViewController.h
+//  FoldersViewController.h
 //  RouteMasterPro
 //
 //  Created by Jason Rush on 1/12/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RoutesViewController : UITableViewController
+@interface FoldersViewController : UITableViewController
 
 @end

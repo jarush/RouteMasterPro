@@ -24,7 +24,7 @@
     return self;
 }
 
-- (void)updateTripStats:(Trip *)trip {
+- (void)updateStats:(Trip *)trip {
     double duration = [trip duration];
     double distance = [trip distance];
     

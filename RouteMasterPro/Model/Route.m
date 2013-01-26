@@ -48,16 +48,16 @@
     [_tripFiles removeObject:tripFile];
 }
 
-- (void)updateTripStats:(Trip *)trip {
+- (void)updateStats:(Trip *)trip {
     // Update the overall stats
-    [_routeStats updateTripStats:trip];
+    [_routeStats updateStats:trip];
 
     // Update the hourly stats
     NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
     NSDateComponents *dateComponents = [calendar components:NSHourCalendarUnit fromDate:[trip firstLocation].timestamp];
     NSInteger hour = [dateComponents hour];
     RouteStats *routeStats = [_hourlyRouteStats objectAtIndex:hour];
-    [routeStats updateTripStats:trip];
+    [routeStats updateStats:trip];
 }
 
 #pragma mark -- Route Matching
@@ -94,14 +94,6 @@
     NSString *routePath = [[AppDelegate documentsPath] stringByAppendingPathComponent:routeFile];
 
     [[NSFileManager defaultManager] removeItemAtPath:routePath error:nil];
-}
-
-- (void)rename:(NSString *)newName {
-    [self delete];
-
-    self.name = newName;
-
-    [self save];
 }
 
 #pragma mark -- NSCoding
