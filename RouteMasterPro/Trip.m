@@ -75,19 +75,19 @@
 
 - (BOOL)isSameEndPoints:(Trip *)trip {
     CLLocation *firstLocation1 = [self firstLocation];
-    CLLocation *lastLocation1 = [self firstLocation];
+    CLLocation *lastLocation1 = [self lastLocation];
     CLLocation *firstLocation2 = [trip firstLocation];
-    CLLocation *lastLocation2 = [trip firstLocation];
+    CLLocation *lastLocation2 = [trip lastLocation];
 
     // Check if they have the same first and last points
-    if (([firstLocation1 distanceFromLocation:firstLocation2] < RADIUS_STOP_MONITORING) &&
-        ([lastLocation1 distanceFromLocation:lastLocation2] < RADIUS_STOP_MONITORING)) {
+    if (([firstLocation1 distanceFromLocation:firstLocation2] < RADIUS_STOP_MONITORING * 2) &&
+        ([lastLocation1 distanceFromLocation:lastLocation2] < RADIUS_STOP_MONITORING * 2)) {
         return YES;
     }
 
     // Check if they have swapped first and last points
-    if (([firstLocation1 distanceFromLocation:lastLocation2] < RADIUS_STOP_MONITORING) &&
-        ([lastLocation1 distanceFromLocation:firstLocation2] < RADIUS_STOP_MONITORING)) {
+    if (([firstLocation1 distanceFromLocation:lastLocation2] < RADIUS_STOP_MONITORING * 2) &&
+        ([lastLocation1 distanceFromLocation:firstLocation2] < RADIUS_STOP_MONITORING * 2)) {
         return YES;
     }
 
@@ -98,8 +98,9 @@
     CLLocationDistance maxDistance = -INFINITY;
 
     // Check if the trips share end points
-    if ([self isSameEndPoints:trip]) {
-        return -INFINITY;
+    if (![self isSameEndPoints:trip]) {
+        // These trips don't match if they don't start/stop in the same locations
+        return INFINITY;
     }
 
     for (CLLocation *currentLocation in _locations) {
