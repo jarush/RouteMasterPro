@@ -2,115 +2,82 @@
 //  StatsViewController.m
 //  RouteMasterPro
 //
-//  Created by Jason Rush on 1/12/13.
+//  Created by Jason Rush on 1/26/13.
 //  Copyright (c) 2013 Flush Software LLC. All rights reserved.
 //
 
 #import "StatsViewController.h"
-#import "Route.h"
+#import "StatsAvgDurationViewController.h"
 #import "AppDelegate.h"
+#import "Folder.h"
 
-@interface StatsViewController () <UIWebViewDelegate> {
-    UIWebView *_webView;
+@interface StatsViewController () {
+    NSMutableArray *_paths;
 }
 @end
 
 @implementation StatsViewController
 
 - (id)init {
-    self = [super init];
+    self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.title = @"Average Duration";
+        self.title = @"Stats";
         self.tabBarItem.title = @"Stats";
         self.tabBarItem.image = [UIImage imageNamed:@"stats"];
-
-        _webView = [[UIWebView alloc] init];
-        _webView.backgroundColor = [UIColor whiteColor];
-        _webView.dataDetectorTypes = UIDataDetectorTypeNone;
-        _webView.userInteractionEnabled = NO;
-        _webView.delegate = self;
-
-        self.view = _webView;
     }
     return self;
 }
 
 - (void)dealloc {
-    [_webView release];
+    [_paths release];
     [super dealloc];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"graph" ofType:@"html"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-    [_webView loadRequest:[NSURLRequest requestWithURL:url]];
+    // Load the list of folder files
+    [_paths release];
+    _paths = [[AppDelegate folderPaths] mutableCopy];
+
+    [self.tableView reloadData];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSMutableString *seriesNames = [NSMutableString string];
-    NSMutableString *dataStr = [NSMutableString string];
-    NSInteger seriesNumber;
-    double divisor = 0.0;
-    NSString *yUnits = @"";
+#pragma mark - Table view data source
 
-    // Loop through the route files
-    seriesNumber = 0;
-    for (NSString *routePath in [AppDelegate routePaths]) {
-        // Load the route
-        Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
-        if (route != nil) {
-            // Add the route name to the chart series
-            [seriesNames appendFormat:@"{label: '%@'}, ", route.name];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_paths count];
+}
 
-            // Calculate the divisor if it hasn't been calculated
-            if (divisor == 0.0) {
-                if (route.routeStats.maxDuration > 3600) {
-                    // Hours
-                    divisor = 3600.0;
-                    yUnits = @"h";
-                } else if (route.routeStats.maxDuration > 60) {
-                    // Minutes
-                    divisor = 60.0;
-                    yUnits = @"m";
-                } else {
-                    // Seconds
-                    divisor = 1.0;
-                    yUnits = @"s";
-                }
-            }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
 
-            // Add the hourly route stats
-            NSMutableString *seriesStr = [NSMutableString string];
-            [seriesStr appendFormat:@"var s%d = [", seriesNumber];
-            for (NSInteger hour = 0; hour <= 24; hour++) {
-                RouteStats *routeStats = [route.hourlyRouteStats objectAtIndex:hour % 24];
-                [seriesStr appendFormat:@"[%d,%0.1f],", hour, routeStats.meanDuration / divisor];
-            }
-            [seriesStr appendString:@"];"];
-            [_webView stringByEvaluatingJavaScriptFromString:seriesStr];
-
-            // Add the series to the data string
-            [dataStr appendFormat:@"s%d,", seriesNumber];
-            seriesNumber++;
-        }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
-    // Update the y axis units
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.axes.yaxis.tickOptions = {suffix: '%@'};", yUnits]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options2.axes.yaxis.tickOptions = {suffix: '%@'};", yUnits]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options3.axes.yaxis.tickOptions = {suffix: '%@'};", yUnits]];
+    NSString *path = [_paths objectAtIndex:indexPath.row];
+    NSString *folderName = [[path lastPathComponent] stringByDeletingPathExtension];
+    cell.textLabel.text = folderName;
 
-    // Label all the series
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options1.series = [%@];", seriesNames]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options2.series = [%@];", seriesNames]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"options3.series = [%@];", seriesNames]];
+    return cell;
+}
 
-    // Generate the plots
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot1 = $.jqplot('chart1', [%@], options1);", dataStr]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot2 = $.jqplot('chart2', [%@], options2);", dataStr]];
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"var plot3 = $.jqplot('chart3', [%@], options3);", dataStr]];
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *folderPath = [_paths objectAtIndex:indexPath.row];
+
+    // Load the route
+    Folder *folder = [NSKeyedUnarchiver unarchiveObjectWithFile:folderPath];
+    if (folder != nil) {
+        // Push on a folder details view
+        StatsAvgDurationViewController *statsAvgDurationViewController = [[[StatsAvgDurationViewController alloc] init] autorelease];
+        statsAvgDurationViewController.folder = folder;
+        [self.navigationController pushViewController:statsAvgDurationViewController animated:YES];
+    }
 }
 
 @end

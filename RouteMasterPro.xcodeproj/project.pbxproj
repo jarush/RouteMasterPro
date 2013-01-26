@@ -32,6 +32,7 @@
 		6890D20216B47BF7004A7E1A /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D20116B47BF7004A7E1A /* Folder.m */; };
 		6890D20516B47D7A004A7E1A /* FolderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D20416B47D7A004A7E1A /* FolderDetailsViewController.m */; };
 		6890D20C16B4804B004A7E1A /* RenameFolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D20B16B4804B004A7E1A /* RenameFolderViewController.m */; };
+		6890D21316B49022004A7E1A /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6890D21216B49022004A7E1A /* StatsViewController.m */; };
 		68BCCE4816A1D4CA00C369C1 /* Icon@2x~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */; };
 		68BCCE4A16A1D4D000C369C1 /* Icon~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */; };
 		68BCCE4C16A1D4D400C369C1 /* Icon@2x~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */; };
@@ -47,7 +48,7 @@
 		68D78BC716A22D9A0099E64B /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BBF16A22D9A0099E64B /* map@2x.png */; };
 		68D78BC816A22D9A0099E64B /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BC016A22D9A0099E64B /* stats.png */; };
 		68D78BC916A22D9A0099E64B /* stats@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D78BC116A22D9A0099E64B /* stats@2x.png */; };
-		68D78BCC16A22E4D0099E64B /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D78BCB16A22E4D0099E64B /* StatsViewController.m */; };
+		68D78BCC16A22E4D0099E64B /* StatsAvgDurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D78BCB16A22E4D0099E64B /* StatsAvgDurationViewController.m */; };
 		68DDF77A16AB3C7200512B5D /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DDF77916AB3C7200512B5D /* MapCell.m */; };
 		68F5C75E169FC6BC0083170C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F5C75D169FC6BC0083170C /* MapKit.framework */; };
 		68F8691416AB8C3200FF076F /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = 68F8691016AB8C3200FF076F /* graph.html */; };
@@ -100,6 +101,8 @@
 		6890D20416B47D7A004A7E1A /* FolderDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderDetailsViewController.m; sourceTree = "<group>"; };
 		6890D20A16B4804B004A7E1A /* RenameFolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenameFolderViewController.h; sourceTree = "<group>"; };
 		6890D20B16B4804B004A7E1A /* RenameFolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenameFolderViewController.m; sourceTree = "<group>"; };
+		6890D21116B49022004A7E1A /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
+		6890D21216B49022004A7E1A /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
 		68BCCE4716A1D4CA00C369C1 /* Icon@2x~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4916A1D4D000C369C1 /* Icon~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~iPhone.png"; sourceTree = "<group>"; };
 		68BCCE4B16A1D4D400C369C1 /* Icon@2x~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~iPad.png"; sourceTree = "<group>"; };
@@ -118,8 +121,8 @@
 		68D78BBF16A22D9A0099E64B /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map@2x.png"; sourceTree = "<group>"; };
 		68D78BC016A22D9A0099E64B /* stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stats.png; sourceTree = "<group>"; };
 		68D78BC116A22D9A0099E64B /* stats@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats@2x.png"; sourceTree = "<group>"; };
-		68D78BCA16A22E4D0099E64B /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
-		68D78BCB16A22E4D0099E64B /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
+		68D78BCA16A22E4D0099E64B /* StatsAvgDurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsAvgDurationViewController.h; sourceTree = "<group>"; };
+		68D78BCB16A22E4D0099E64B /* StatsAvgDurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsAvgDurationViewController.m; sourceTree = "<group>"; };
 		68DDF77816AB3C7200512B5D /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
 		68DDF77916AB3C7200512B5D /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		68F5C75D169FC6BC0083170C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -201,8 +204,10 @@
 				68D02A2A16AECBDF0022A043 /* RenameRouteViewController.m */,
 				6879393516A5089F00A4292B /* RouteDetailsViewController.h */,
 				6879393616A5089F00A4292B /* RouteDetailsViewController.m */,
-				68D78BCA16A22E4D0099E64B /* StatsViewController.h */,
-				68D78BCB16A22E4D0099E64B /* StatsViewController.m */,
+				68D78BCA16A22E4D0099E64B /* StatsAvgDurationViewController.h */,
+				68D78BCB16A22E4D0099E64B /* StatsAvgDurationViewController.m */,
+				6890D21116B49022004A7E1A /* StatsViewController.h */,
+				6890D21216B49022004A7E1A /* StatsViewController.m */,
 				68D02A2516AEC97F0022A043 /* TextFieldCell.h */,
 				68D02A2616AEC97F0022A043 /* TextFieldCell.m */,
 				6879392716A4D86500A4292B /* TripDetailsViewController.h */,
@@ -381,7 +386,7 @@
 				687FABBE169F090F0031C25B /* AppDelegate.m in Sources */,
 				687FABD0169F09320031C25B /* MapViewController.m in Sources */,
 				68BCCE5616A1D6A700C369C1 /* FoldersViewController.m in Sources */,
-				68D78BCC16A22E4D0099E64B /* StatsViewController.m in Sources */,
+				68D78BCC16A22E4D0099E64B /* StatsAvgDurationViewController.m in Sources */,
 				6879392A16A4D86500A4292B /* TripDetailsViewController.m in Sources */,
 				6879392D16A4D90300A4292B /* CurrentTripViewController.m in Sources */,
 				6879393716A5089F00A4292B /* RouteDetailsViewController.m in Sources */,
@@ -397,6 +402,7 @@
 				6890D20216B47BF7004A7E1A /* Folder.m in Sources */,
 				6890D20516B47D7A004A7E1A /* FolderDetailsViewController.m in Sources */,
 				6890D20C16B4804B004A7E1A /* RenameFolderViewController.m in Sources */,
+				6890D21316B49022004A7E1A /* StatsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

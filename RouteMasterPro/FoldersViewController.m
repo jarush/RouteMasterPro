@@ -56,7 +56,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    // Load the list of route files
+    // Load the list of folder files
     [_paths release];
     _paths = [[AppDelegate folderPaths] mutableCopy];
 
