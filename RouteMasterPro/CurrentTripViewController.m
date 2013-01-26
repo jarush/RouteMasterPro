@@ -11,17 +11,30 @@
 #import "AppDelegate.h"
 #import "constants.h"
 
+
 enum {
-    RowLatitude = 0,
-    RowLongitude,
-    RowAltitude,
-    RowCourse,
-    RowSpeed,
-    RowAvgSpeed,
-    RowDistance,
-    RowDuration,
-    RowPoints,
-    RowCount
+    SectionGps = 0,
+    SectionTrip,
+    SectionCount
+};
+
+enum {
+    RowGpsLatitude = 0,
+    RowGpsLongitude,
+    RowGpsAltitude,
+    RowGpsCourse,
+    RowGpsSpeed,
+    RowGpsHorAcc,
+    RowGpsVerAcc,
+    RowGpsCount
+};
+
+enum {
+    RowTripDistance,
+    RowTripDuration,
+    RowTripAvgSpeed,
+    RowTripPoints,
+    RowTripCount
 };
 
 @interface CurrentTripViewController () <CLLocationManagerDelegate> {
@@ -143,12 +156,63 @@ enum {
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return SectionCount;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return RowCount;
+    switch (section) {
+        case SectionGps:
+            return RowGpsCount;
+
+        case SectionTrip:
+            return RowTripCount;
+
+        default:
+            break;
+    }
+
+    return 0;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section)
+        case SectionGps: {
+            return @"GPS";
+
+        case SectionTrip:
+            return @"Trip";
+
+        default:
+            break;
+    }
+
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = nil;
+
+    switch (indexPath.section) {
+        case SectionGps: {
+            cell = [self tableView:tableView gpsCellForRow:indexPath.row];
+            break;
+        }
+
+        case SectionTrip: {
+            cell = [self tableView:tableView tripCellForRow:indexPath.row];
+            break;
+        }
+
+        default:
+            break;
+    }
+    
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView gpsCellForRow:(NSInteger)row {
+    static NSString *CellIdentifier = @"GpsCell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -156,26 +220,26 @@ enum {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    switch (indexPath.row) {
-        case RowLatitude: {
+    switch (row) {
+        case RowGpsLatitude: {
             cell.textLabel.text = @"Latitude";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.5f", _lastLocation.coordinate.latitude];
             break;
         }
 
-        case RowLongitude: {
+        case RowGpsLongitude: {
             cell.textLabel.text = @"Latitude";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.5f", _lastLocation.coordinate.longitude];
             break;
         }
 
-        case RowAltitude: {
+        case RowGpsAltitude: {
             cell.textLabel.text = @"Altitude";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f", _lastLocation.altitude];
             break;
         }
 
-        case RowCourse: {
+        case RowGpsCourse: {
             cell.textLabel.text = @"Course";
 
             if (_lastLocation.course != -1) {
@@ -186,13 +250,73 @@ enum {
             break;
         }
 
-        case RowSpeed: {
+        case RowGpsSpeed: {
             cell.textLabel.text = @"Speed";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%d MPH", (int)round(_lastLocation.speed * MPS_TO_MIPH)];
             break;
         }
 
-        case RowAvgSpeed: {
+        case RowGpsHorAcc: {
+            cell.textLabel.text = @"Hor. Accuracy";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%dm", (int)round(_lastLocation.horizontalAccuracy)];
+            break;
+        }
+
+        case RowGpsVerAcc: {
+            cell.textLabel.text = @"Ver. Accuracy";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%dm", (int)round(_lastLocation.horizontalAccuracy)];
+            break;
+        }
+
+        default:
+            break;
+    }
+    
+    if (_lastLocation == nil) {
+        cell.detailTextLabel.text = @"";
+    }
+    
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView tripCellForRow:(NSInteger)row {
+    static NSString *CellIdentifier = @"TripCell";
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+
+    switch (row) {
+        case RowTripDistance: {
+            cell.textLabel.text = @"Distance";
+
+            if (_recording) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _distance * METER_TO_MILES];
+            } else {
+                cell.detailTextLabel.text = @"";
+            }
+            break;
+        }
+
+        case RowTripDuration: {
+            cell.textLabel.text = @"Duration";
+
+            if (_recording) {
+                NSInteger duration = (NSInteger)[_trip duration];
+                NSInteger hour = duration / 3600;
+                NSInteger min = (duration / 60) % 60;
+                NSInteger sec = duration % 60;
+
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
+            } else {
+                cell.detailTextLabel.text = @"";
+            }
+            break;
+        }
+
+        case RowTripAvgSpeed: {
             cell.textLabel.text = @"Avg Speed";
 
             if (_recording) {
@@ -211,34 +335,7 @@ enum {
             break;
         }
 
-        case RowDistance: {
-            cell.textLabel.text = @"Distance";
-
-            if (_recording) {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.1f mi", _distance * METER_TO_MILES];
-            } else {
-                cell.detailTextLabel.text = @"";
-            }
-            break;
-        }
-
-        case RowDuration: {
-            cell.textLabel.text = @"Duration";
-
-            if (_recording) {
-                NSInteger duration = (NSInteger)[_trip duration];
-                NSInteger hour = duration / 3600;
-                NSInteger min = (duration / 60) % 60;
-                NSInteger sec = duration % 60;
-
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", hour, min, sec];
-            } else {
-                cell.detailTextLabel.text = @"";
-            }
-            break;
-        }
-
-        case RowPoints: {
+        case RowTripPoints: {
             cell.textLabel.text = @"Points";
 
             if (_recording) {
@@ -248,15 +345,15 @@ enum {
             }
             break;
         }
-
+            
         default:
             break;
     }
-
+    
     if (_lastLocation == nil) {
         cell.detailTextLabel.text = @"";
     }
-
+    
     return cell;
 }
 
