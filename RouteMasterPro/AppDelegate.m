@@ -47,11 +47,19 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    NSString *tripPath = [url path];
-    Trip *trip = [[[Trip alloc] initWithPath:tripPath] autorelease];
+    NSString *origTripPath = [url path]; 
+    Trip *trip = [[[Trip alloc] initWithPath:origTripPath] autorelease];
     if (trip != nil) {
-        // Process it like a new trip to reduce points, save, and match
-        [AppDelegate processTrip:trip];
+        // Reduce the points in the trip
+        [trip reducePoints];
+
+        // Save the trip to the file
+        NSString *documentsPath = [AppDelegate documentsPath];
+        NSString *newTripPath = [documentsPath stringByAppendingPathComponent:[origTripPath lastPathComponent]];
+        [trip writeToPath:newTripPath];
+
+        // Try and match the trip to the route
+        [AppDelegate matchTrip:trip tripPath:newTripPath];
     }
 
     [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
