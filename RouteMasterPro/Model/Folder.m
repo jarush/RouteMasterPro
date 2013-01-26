@@ -93,14 +93,12 @@
     // Check if they have the same start and stop points
     if (([_startLocation distanceFromLocation:tripStartLocation] < RADIUS_STOP_MONITORING * 2) &&
         ([_stopLocation distanceFromLocation:tripStopLocation] < RADIUS_STOP_MONITORING * 2)) {
-        NSLog(@"in dis");
         return YES;
     }
 
     // Check if they have swapped start and stop points
     if (([_startLocation distanceFromLocation:tripStopLocation] < RADIUS_STOP_MONITORING * 2) &&
         ([_stopLocation distanceFromLocation:tripStartLocation] < RADIUS_STOP_MONITORING * 2)) {
-        NSLog(@"rev dis: %f  %f", [_startLocation distanceFromLocation:tripStopLocation], [_stopLocation distanceFromLocation:tripStartLocation]);
         return YES;
     }
 
@@ -112,7 +110,9 @@
     Route *minRoute = nil;
 
     // Loop through the route files
-    for (NSString *routePath in _routeFiles) {
+    for (NSString *routeFile in _routeFiles) {
+        NSString *routePath = [[AppDelegate documentsPath] stringByAppendingPathComponent:routeFile];
+
         // Load the route
         Route *route = [NSKeyedUnarchiver unarchiveObjectWithFile:routePath];
         if (route != nil) {
