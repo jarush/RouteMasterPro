@@ -38,7 +38,7 @@
     _mapView.frame = self.contentView.bounds;
 }
 
-#pragma mark -- MapView delegate
+#pragma mark - MapView delegate
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay {
     MKPolylineView *polylineView = [[[MKPolylineView alloc] initWithPolyline:overlay] autorelease];

@@ -41,7 +41,7 @@
     [_routeFiles removeObject:routeFile];
 }
 
-#pragma mark -- Saving/Renaming
+#pragma mark - Saving/Renaming
 
 - (void)save {
     // Create a path for the route file in the Documents folder
@@ -84,7 +84,7 @@
     [self save];
 }
 
-#pragma mark -- Trip matching methods
+#pragma mark - Trip matching methods
 
 - (BOOL)isSameEndPoints:(Trip *)trip {
     CLLocation *tripStartLocation = [trip firstLocation];
@@ -128,7 +128,7 @@
     return minRoute;
 }
 
-#pragma mark -- NSCoding
+#pragma mark - NSCoding
 
 #define kName @"Name"
 #define kStartLocation @"StartLocation"

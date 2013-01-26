@@ -71,7 +71,7 @@
             [self distance], [self duration], [_locations count]];
 }
 
-#pragma mark -- Trip matching methods
+#pragma mark - Trip matching methods
 
 - (CLLocationDistance)distanceToTrip:(Trip *)trip {
     CLLocationDistance maxDistance = -INFINITY;
@@ -125,7 +125,7 @@
     return sqrt(minDistance2);
 }
 
-#pragma mark -- Mapping
+#pragma mark - Mapping
 
 - (MKPolyline *)mapAnnotation {
     NSUInteger n = [_locations count];
@@ -143,7 +143,7 @@
     return polyline;
 }
 
-#pragma mark -- Reading/Writing
+#pragma mark - Reading/Writing
 
 - (void)writeToPath:(NSString *)path {
     NSOutputStream *outputStream = [NSOutputStream outputStreamToFileAtPath:path append:NO];

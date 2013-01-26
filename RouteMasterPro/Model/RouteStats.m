@@ -52,7 +52,7 @@
     }
 }
 
-#pragma mark -- NSCoding
+#pragma mark - NSCoding
 
 #define kNumberSamples @"NumberSamples"
 #define kMeanDuration @"MeanDuration"

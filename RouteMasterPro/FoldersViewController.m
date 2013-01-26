@@ -89,7 +89,7 @@
     [self.tableView reloadData];
 }
 
-#pragma mark -- Export via mail
+#pragma mark - Export via mail
 
 - (void)exportTripsPressed {
     MFMailComposeViewController *viewController = [[[MFMailComposeViewController alloc] init] autorelease];

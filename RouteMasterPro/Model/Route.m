@@ -60,7 +60,7 @@
     [routeStats updateStats:trip];
 }
 
-#pragma mark -- Route Matching
+#pragma mark - Route Matching
 
 - (CLLocationDistance)distanceToTrip:(Trip *)inTrip {
     CLLocationDistance distance = INFINITY;
@@ -77,7 +77,7 @@
     return distance;
 }
 
-#pragma mark -- Saving/Renaming
+#pragma mark - Saving/Renaming
 
 - (void)save {
     // Create a path for the route file in the Documents folder
@@ -96,7 +96,7 @@
     [[NSFileManager defaultManager] removeItemAtPath:routePath error:nil];
 }
 
-#pragma mark -- NSCoding
+#pragma mark - NSCoding
 
 #define kName @"Name"
 #define kTemplateFile @"TemplateFile"

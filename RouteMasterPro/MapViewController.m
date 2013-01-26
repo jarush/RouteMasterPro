@@ -101,7 +101,7 @@
     }
 }
 
-#pragma mark -- Map view delegate
+#pragma mark - Map view delegate
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {
     _trackingButtonItem.style = mode == MKUserTrackingModeNone ? UIBarButtonItemStylePlain : UIBarButtonItemStyleDone;
